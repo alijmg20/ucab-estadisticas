@@ -1,0 +1,2 @@
+<img class="block h-8 w-auto lg:hidden" src="{{asset('/img/logos/LogoUCAB.png')}}" alt="Your Company">
+<img class="hidden h-8 w-auto lg:block" src="{{asset('/img/logos/LogoUCAB.png')}}" alt="Your Company">
