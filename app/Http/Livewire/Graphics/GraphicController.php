@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Graphics;
 
 use App\Models\Data;
+use App\Models\Register;
 use App\Models\Variable;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -42,7 +43,11 @@ class GraphicController extends Component
         $variables = Variable::where('file_id', $this->file->id)
         ->where('status', 2)
         ->get();
+        $registers = Register::where('file_id', $this->file->id)
+        // ->where('status', 2)
+        ->get();
         $this->variables = $variables;
+        $this->registers = $registers;
         return view('livewire.graphics.graphic-controller', compact('variables'));
     }
 
@@ -55,6 +60,12 @@ class GraphicController extends Component
     {
         
         $variables = $this->variables;
+        // $registers = $this->registers;
+        // $datos = [];
+        // foreach ($registers as $reg) {
+        //     $datos[] = $reg->datos;
+        // }
+        // dd($datos);
         $variablesActive = [];
         $data = [];
         foreach($variables as $variable){

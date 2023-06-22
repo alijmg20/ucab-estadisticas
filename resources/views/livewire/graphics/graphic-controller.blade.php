@@ -2,7 +2,7 @@
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div class="inline-block w-full shadow rounded-lg overflow-hidden">
                 @foreach ($variables as $variable)
-                    <div class="mb-4">
+                    <div  class="mb-4">
                         <div id="{{ $variable->id }}"></div>
                     </div>
                 @endforeach
