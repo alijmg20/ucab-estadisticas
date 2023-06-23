@@ -50,7 +50,7 @@ class FileModal extends Component
                     'status' => 'required',
                 ] : $this->rules
         );
-        
+
         set_time_limit(500);
         
         if ($this->file && $this->file->url) {
@@ -97,19 +97,19 @@ class FileModal extends Component
                 $registers[] = $registro;
             }
             
-            $registersTotal = 0;
-            foreach ($sheet->getRowIterator(2) as $column) {
-                $countColumn = 0;
-                foreach ($column->getCellIterator() as $cell) {
-                    Data::create([
-                        'value' =>$cell->getValue(),
-                        'variable_id' => $variables[$countColumn]->id,
-                        'register_id' => $registers[$registersTotal]->id,
-                    ]);
-                    $countColumn++;
-                }
-                $registersTotal++;
-            }
+            // $registersTotal = 0;
+            // foreach ($sheet->getRowIterator(2) as $column) {
+            //     $countColumn = 0;
+            //     foreach ($column->getCellIterator() as $cell) {
+            //         Data::create([
+            //             'value' =>$cell->getValue(),
+            //             'variable_id' => $variables[$countColumn]->id,
+            //             'register_id' => $registers[$registersTotal]->id,
+            //         ]);
+            //         $countColumn++;
+            //     }
+            //     $registersTotal++;
+            // }
         }
         $this->emit('fileAlert', 'terminado!', $this->file ? 'Archivo editado exitosamente' : 'Archivo creado exitosamente');
         $this->resetInputDefaults();

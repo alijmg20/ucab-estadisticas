@@ -11,7 +11,9 @@
                 <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
             </div>
             <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='searchVariable'></x-input>
-            @livewire('variable.variable-modal')
+            @if (!$detalle)
+                @livewire('variable.variable-modal')
+            @endif
         </div>
         <x-table>
             <x-slot name="headers">
@@ -41,35 +43,37 @@
                         <i class="fas fa-sort float-right"></i>
                     @endif
                 </th>
-                <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>
-                    estado
-                    {{-- SORT --}}
-                    @if ($sortVariable == 'status')
-                        @if ($directionVariable == 'asc')
-                            <i class="fas fa-sort-alpha-up-alt float-right"></i>
+                @if (!$detalle)
+                    <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>
+                        estado
+                        {{-- SORT --}}
+                        @if ($sortVariable == 'status')
+                            @if ($directionVariable == 'asc')
+                                <i class="fas fa-sort-alpha-up-alt float-right"></i>
+                            @else
+                                <i class="fas fa-sort-alpha-down-alt float-right"></i>
+                            @endif
                         @else
-                            <i class="fas fa-sort-alpha-down-alt float-right"></i>
+                            <i class="fas fa-sort float-right"></i>
                         @endif
-                    @else
-                        <i class="fas fa-sort float-right"></i>
-                    @endif
-                </th>
-                <th class="cursor-pointer px-4 py-3" wire:click='order("created_at")'>
-                    Fecha de creación
-                    {{-- SORT --}}
-                    @if ($sortVariable == 'created_at')
-                        @if ($directionVariable == 'asc')
-                            <i class="fas fa-sort-alpha-up-alt float-right"></i>
+                    </th>
+                    <th class="cursor-pointer px-4 py-3" wire:click='order("created_at")'>
+                        Fecha de creación
+                        {{-- SORT --}}
+                        @if ($sortVariable == 'created_at')
+                            @if ($directionVariable == 'asc')
+                                <i class="fas fa-sort-alpha-up-alt float-right"></i>
+                            @else
+                                <i class="fas fa-sort-alpha-down-alt float-right"></i>
+                            @endif
                         @else
-                            <i class="fas fa-sort-alpha-down-alt float-right"></i>
+                            <i class="fas fa-sort float-right"></i>
                         @endif
-                    @else
-                        <i class="fas fa-sort float-right"></i>
-                    @endif
-                </th>
-                <th class="px-4 py-3">
-                    Acciones
-                </th>
+                    </th>
+                    <th class="px-4 py-3">
+                        Acciones
+                    </th>
+                @endif
             </x-slot>
             <x-slot name="body">
                 @if ($variables && count($variables))
@@ -77,24 +81,26 @@
                         <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                             <td class="px-6 py-3 text-sm">{{ $var->id }}</td>
                             <td class="prose truncate px-4 py-3">{{ $var->name }}</td>
-                            <td class="cursor-pointer px-4 py-3 text-sm" >
-                                {{ $var->status == 1 ? 'No Publicado' : 'Publicado' }}
-                            </td>
-                            <td class="px-6 py-3 text-sm">{{ $var->created_at }}</td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    <button wire:click='$emitTo("variable.variable-modal","edit",{{ $var->id }})'
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                    <button wire:click='$emit("variableDelete",{{ $var->id }})'
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            @if (!$detalle)
+                                <td class="cursor-pointer px-4 py-3 text-sm">
+                                    {{ $var->status == 1 ? 'No Publicado' : 'Publicado' }}
+                                </td>
+                                <td class="px-6 py-3 text-sm">{{ $var->created_at }}</td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <button wire:click='$emitTo("variable.variable-modal","edit",{{ $var->id }})'
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button wire:click='$emit("variableDelete",{{ $var->id }})'
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 @else

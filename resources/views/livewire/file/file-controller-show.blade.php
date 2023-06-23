@@ -23,7 +23,7 @@
                     }"
                     href="#">Tabla</a>
             </li>
-            <li wire:click="$set('content',2)" class="w-full">
+            {{-- <li wire:click="$set('content',2)" class="w-full">
                 <a x-on:click.prevent="activeTab = 2"
                     :class="{
                         'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
@@ -32,7 +32,7 @@
                             2
                     }"
                     href="#">Editar Variables</a>
-            </li>
+            </li> --}}
             <li wire:click="$set('content',3)" class="w-full">
                 <a x-on:click.prevent="activeTab = 3"
                     :class="{
@@ -41,7 +41,7 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             3
                     }"
-                    href="#">General</a>
+                    href="#">Variables</a>
             </li>
             <li wire:click="$set('content',4)" class="w-full">
                 <a x-on:click.prevent="activeTab = 4"
@@ -51,7 +51,7 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             4
                     }"
-                    href="#">Detalle</a>
+                    href="#">General</a>
             </li>
         </ul>
 
@@ -61,7 +61,7 @@
                 @livewire('variable.variable-controller', ['file' => $file]) 
             </div>
             <div class="mt-4 mb-4" x-show="activeTab === 3"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
-            <div class="mt-4 mb-4" x-show="activeTab === 4"> Variables por detalle  </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 4"> @livewire('graphics.graphic', ['file' => $file]) </div>
         </div>
     </div>
 
@@ -82,13 +82,15 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo("variable.variable-controller", "delete", variable);
+                        $('#variable-' + variable).addClass('hidden');
+                        
                         Swal.fire(
                             'Eliminado!',
                             "Se ha sido eliminado.",
                             'success'
-                        )
-                    }
+                            )
+                        }
+                        Livewire.emitTo("variable.variable-controller", "delete", variable);
                 })
             });
         });

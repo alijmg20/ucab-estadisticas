@@ -1,4 +1,5 @@
 <div>
+    <x-loading />
     <x-button class="bg-green-600" wire:click="openModal">Nueva</x-button>
 
     <x-dialog-modal id="FileModal" wire:model='open'>
@@ -77,7 +78,8 @@
             <x-secondary-button class="mr-2" wire:click="closeModal()">
                 Cancelar
             </x-secondary-button>
-            <x-primary-button onclick="save()"
+
+            <x-primary-button wire:click="save" onclick="spinner()" wire:loading.attr='disabled' wire:target="save , file_data"
                 class="bg-blue-500 disabled:opacity-25">
                 <span wire:loading.remove wire:target="save">{{ $file ? 'actualizar' : 'Crear' }}</span>
                 <span wire:loading wire:loading.disabled wire:target="save">Guardando...</span>
@@ -85,4 +87,12 @@
         </x-slot>
         
     </x-dialog-modal>
+    <script>
+        function spinner() {
+            $('.spinner').addClass('loading-spinner');
+            $('.loading-overlay').removeClass('hidden');
+            $('.spinner').addClass('flex');
+            $('.loading-overlay').addClass('flex');
+        }
+    </script>
 </div>

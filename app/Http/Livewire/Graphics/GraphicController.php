@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Graphics;
 
 use App\Models\Data;
+use App\Models\Register;
 use App\Models\Variable;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -25,7 +26,7 @@ class GraphicController extends Component
         'searchGraphic' => ['except' => ''],
     ];
 
-    public $file;
+    public $file,$habilitar;
     public $variables = [];
     public $registers = [];
     public $stadistics = [];
@@ -40,10 +41,13 @@ class GraphicController extends Component
     public function render()
     {
         $variables = Variable::where('file_id', $this->file->id)
-        ->where('status', 2)
+        ->get();
+        $registers = Register::where('file_id', $this->file->id)
+        // ->where('status', 2)
         ->get();
         $this->variables = $variables;
-        return view('livewire.graphics.graphic-controller', compact('variables'));
+        $this->registers = $registers;
+        return view('livewire.graphics.graphic-controller');
     }
 
     public function loadgraphic()
@@ -55,6 +59,12 @@ class GraphicController extends Component
     {
         
         $variables = $this->variables;
+        // $registers = $this->registers;
+        // $datos = [];
+        // foreach ($registers as $reg) {
+        //     $datos[] = $reg->datos;
+        // }
+        // dd($datos);
         $variablesActive = [];
         $data = [];
         foreach($variables as $variable){
@@ -75,5 +85,12 @@ class GraphicController extends Component
         }
         // dd($variablesActive);
         $this->emit('ghaphicList',$variablesActive,$data);
+    }
+
+    public function habilitar($id){
+        $variable=Variable::find($id);
+        $variable->status= $variable->status==1 ? 2 : 1;
+        $variable->save();
+        $this->emit('actualizar');
     }
 }

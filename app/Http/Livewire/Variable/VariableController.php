@@ -18,10 +18,11 @@ class VariableController extends Component
     public $readyToLoad = false;
 
     public $file; //Variable que viene de fileController
-
+    public $detalle;
+    
     protected $variables = [];
 
-    protected $listeners = ['render', 'delete'];
+    protected $listeners = ['render', 'delete','actualizar'=>'render'];
 
     protected $queryString = [
         'cantVariable' => ['except' => '10'],
@@ -30,9 +31,10 @@ class VariableController extends Component
         'searchVariable' => ['except' => '']
     ];
 
-    public function mount($file)
+    public function mount($file,$detalle=false)
     {
         $this->file = $file;
+        $this->detalle=$detalle;
     }
 
     public function loadVariables()
@@ -53,7 +55,7 @@ class VariableController extends Component
     public function render()
     {
         if ($this->readyToLoad) {
-            $variables = Variable::where('file_id', $this->file->id)
+            $variables = Variable::where('file_id', $this->file->id)->where('status',2)
                 ->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->searchVariable . '%')
                         ->orWhere('id', 'like', '%' . $this->searchVariable . '%')
