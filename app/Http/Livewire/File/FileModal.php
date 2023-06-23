@@ -40,6 +40,10 @@ class FileModal extends Component
         return view('livewire.file.file-modal');
     }
 
+    public function spinner(){
+        $this->emit('spinnerOn');
+    }
+
     public function save()
     {
         $this->validate(
