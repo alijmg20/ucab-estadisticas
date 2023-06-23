@@ -43,12 +43,12 @@ class GraphicController extends Component
         $variables = Variable::where('file_id', $this->file->id)
         ->where('status', 2)
         ->get();
-        $registers = Register::where('file_id', $this->file->id)
+        // $registers = Register::where('file_id', $this->file->id)
         // ->where('status', 2)
-        ->get();
+        // ->get();
         $this->variables = $variables;
-        $this->registers = $registers;
-        return view('livewire.graphics.graphic-controller', compact('variables'));
+        // $this->registers = $registers;
+        return view('livewire.graphics.graphic-controller');
     }
 
     public function loadgraphic()

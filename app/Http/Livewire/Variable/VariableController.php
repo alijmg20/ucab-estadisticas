@@ -97,8 +97,10 @@ class VariableController extends Component
             $dat->save();
         }
         $variable->delete();
+        
         $this->emitTo('graphics.graphic-controller','render');
         $this->emitTo('graphics.graphic-controller','showGraphics');
+        $this->emitTo('graphics.graphic-variables','render');
     }
 
 }
