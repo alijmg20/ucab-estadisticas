@@ -3,7 +3,7 @@
     $active_line = request()->routeIs('admin.lines.*');
     $active_home = request()->routeIs('admin.home');
     $active_roles = request()->routeIs('admin.roles.*');
-    $active_roles = request()->routeIs('admin.roles.*');
+    $active_files = request()->routeIs('admin.files.*');
     $active_users = request()->routeIs('admin.users.*');
     $active_emails = request()->routeIs('admin.emails.*');
     $active_testimonials = request()->routeIs('admin.testimonials.*');
@@ -41,10 +41,10 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    @if ($active_project)
+                    @if ($active_project || $active_files)
                     @include('_partials.active')
                 @endif
-                    <a class="@if ($active_project) sidebar_active @else sidebar_default @endif"
+                    <a class="@if ($active_project || $active_files) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.projects.index') }}">
                         <i class="fas fa-folder"></i>
                         <span class="ml-4">Proyectos</span>
