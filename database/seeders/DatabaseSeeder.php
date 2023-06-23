@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        Storage::deleteDirectory('projects');
-        Storage::makeDirectory('projects');
-        Storage::deleteDirectory('files');
-        Storage::makeDirectory('files');
-        Storage::deleteDirectory('carrusel');
-        Storage::makeDirectory('carrusel');
-        Storage::deleteDirectory('lines');
-        Storage::makeDirectory('lines');
+        // Storage::deleteDirectory('projects');
+        // Storage::makeDirectory('projects');
+        // Storage::deleteDirectory('files');
+        // Storage::makeDirectory('files');
+        // Storage::deleteDirectory('carrusel');
+        // Storage::makeDirectory('carrusel');
+        // Storage::deleteDirectory('lines');
+        // Storage::makeDirectory('lines');
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(LineSeeder::class);

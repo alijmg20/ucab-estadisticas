@@ -43,7 +43,7 @@
                 </div>
                 <div class="container mt-4 mb-4">
                     <x-label class="mb-4" value="Editar nombre de variables" />
-                    @livewire('variable.variable-controller',['file' => $file])
+                    @livewire('variable.variable-controller', ['file' => $file])
                 </div>
             @else
                 <div class="container mt-4">
@@ -77,12 +77,12 @@
             <x-secondary-button class="mr-2" wire:click="closeModal()">
                 Cancelar
             </x-secondary-button>
-            <x-primary-button wire:click="save()" wire:loading.attr='disabled' wire:target="save , file_data"
+            <x-primary-button onclick="save()"
                 class="bg-blue-500 disabled:opacity-25">
                 <span wire:loading.remove wire:target="save">{{ $file ? 'actualizar' : 'Crear' }}</span>
                 <span wire:loading wire:loading.disabled wire:target="save">Guardando...</span>
             </x-primary-button>
         </x-slot>
+        
     </x-dialog-modal>
-
 </div>

@@ -22,7 +22,7 @@ class FileModal extends Component
 
     protected $variables = [];
 
-    protected $listeners = ['edit'];
+    protected $listeners = ['edit','save'];
 
     protected $rules = [
         'name' => 'required',
@@ -50,8 +50,9 @@ class FileModal extends Component
                     'status' => 'required',
                 ] : $this->rules
         );
-
+        
         set_time_limit(500);
+        
         if ($this->file && $this->file->url) {
             $file_data = $this->file->url;
         } else {
