@@ -96,6 +96,7 @@ class VariableController extends Component
             $dat->datos = $data_aux;
             $dat->save();
         }
+        
         $variable->delete();
         
         $this->emitTo('graphics.graphic-controller','render');

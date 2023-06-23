@@ -11,7 +11,7 @@
                             </div>
                             <div class="flex items-right text-sm">
                                 <button wire:click='$emitTo("variable.variable-modal","edit",{{ $variable->id }})'
-                                    class="flex items-center  text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    class="flex mr-2 items-center  text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="Edit">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>

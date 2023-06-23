@@ -34,7 +34,7 @@ class VariableModal extends Component
 
         $this->emitTo('graphics.graphic-controller','render');
         $this->emitTo('graphics.graphic-controller','showGraphics');
-        // $this->emitTo('graphics.graphic-variables','render');
+        $this->emitTo('graphics.graphic-variables','render');
         
         $this->emit('variableAlert', 'terminado!', 'Variable actualizada exitosamente');
     }
