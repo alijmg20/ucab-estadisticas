@@ -21,60 +21,67 @@
             </div>
             <ul class="mt-6">
                 <li class="relative px-6 py-3">
-                    <!-- Active items have the snippet below -->
-                    <!-- <span
-            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-            aria-hidden="true"
-          ></span> -->
-
-                    <!-- Add this classes to an active anchor (a tag) -->
-                    <!-- text-gray-800 dark:text-gray-100 -->
-                    <a class="@if ($active_home)sidebar_active @else sidebar_default @endif"
+                    @if ($active_home)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_home) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.home') }}">
                         <i class="fas fa-home"></i>
                         <span class="ml-4">Dashboard</span>
                     </a>
                 </li>
-            </ul>
-            <ul>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_line)sidebar_active @else sidebar_default @endif"
+                    @if ($active_line)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_line) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.lines.index') }}">
                         <i class="fas fa-briefcase"></i>
                         <span class="ml-4">Lineas de Investigación</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_project)sidebar_active @else sidebar_default @endif"
+                    @if ($active_project)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_project) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.projects.index') }}">
                         <i class="fas fa-folder"></i>
                         <span class="ml-4">Proyectos</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_roles)sidebar_active @else sidebar_default @endif"
+                    @if ($active_roles)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_roles) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.roles.index') }}">
                         <i class="fas fa-users-cog"></i>
                         <span class="ml-4">Roles de usuario</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_users)sidebar_active @else sidebar_default @endif"
+                    @if ($active_users)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_users) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.users.index') }}">
                         <i class="fas fa-users"></i>
                         <span class="ml-4">Usuarios</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_emails)sidebar_active @else sidebar_default @endif"
+                    @if ($active_emails)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_emails) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.emails.index') }}">
                         <i class="fas fa-envelope-square"></i>
                         <span class="ml-4">Mensajes</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="../charts.html">
+                    <a class="sidebar_default" href="../charts.html">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -84,7 +91,10 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="@if ($active_testimonials)sidebar_active @else sidebar_default @endif"
+                    @if ($active_testimonials)
+                    @include('_partials.active')
+                @endif
+                    <a class="@if ($active_testimonials) sidebar_active @else sidebar_default @endif"
                         href="{{ route('admin.testimonials.index') }}">
                         <i class="fas fa-quote-left"></i>
                         <span class="ml-4">Mis experiencias</span>
@@ -162,7 +172,7 @@
         x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
         @keydown.escape="closeSideMenu">
         <div class="py-4 text-gray-500 dark:text-gray-400">
-            <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
+             <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
                 Windmill
             </a>
             <ul class="mt-6">
@@ -175,8 +185,7 @@
 
                     <!-- Add this classes to an active anchor (a tag) -->
                     <!-- text-gray-800 dark:text-gray-100 -->
-                    <a class="sidebar_default"
-                        href="{{ route('admin.home') }}">
+                    <a class="sidebar_default" href="{{ route('admin.home') }}">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -189,8 +198,7 @@
             </ul>
             <ul>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="{{ route('admin.lines.index') }}">
+                    <a class="sidebar_default" href="{{ route('admin.lines.index') }}">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -201,8 +209,7 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="{{ route('admin.projects.index') }}">
+                    <a class="sidebar_default" href="{{ route('admin.projects.index') }}">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -213,8 +220,7 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="../charts.html">
+                    <a class="sidebar_default" href="../charts.html">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -224,8 +230,7 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="../buttons.html">
+                    <a class="sidebar_default" href="../buttons.html">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -236,8 +241,7 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="../modals.html">
+                    <a class="sidebar_default" href="../modals.html">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -248,8 +252,13 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a class="sidebar_default"
-                        href="../tables.html">
+                    <a class="sidebar_default" href="../tables.html">
+   </svg>
+                        <span class="ml-4">Modals</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <a class="sidebar_default" href="../tables.html">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
