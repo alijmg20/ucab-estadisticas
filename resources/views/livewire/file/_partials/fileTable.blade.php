@@ -17,7 +17,7 @@
             <x-table>
                 <x-slot name="headers">
                     @foreach ($variables as $variable)
-                    <th class="cursor-pointer px-4 py-3" wire:click=''>
+                    <th class="cursor-pointer px-4 py-3">
                         {{$variable->name}}
                     </th>
                     @endforeach

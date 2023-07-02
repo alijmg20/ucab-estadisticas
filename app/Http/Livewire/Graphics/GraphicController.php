@@ -28,8 +28,7 @@ class GraphicController extends Component
 
     public $file;
     public $variables = [];
-    public $registers = [];
-    public $stadistics = [];
+    public $variablesActive = [];
 
     protected $listeners = ['render','showGraphics'];
 
@@ -43,11 +42,7 @@ class GraphicController extends Component
         $variables = Variable::where('file_id', $this->file->id)
         ->where('status', 2)
         ->get();
-        // $registers = Register::where('file_id', $this->file->id)
-        // ->where('status', 2)
-        // ->get();
         $this->variables = $variables;
-        // $this->registers = $registers;
         return view('livewire.graphics.graphic-controller');
     }
 
@@ -60,12 +55,6 @@ class GraphicController extends Component
     {
         
         $variables = $this->variables;
-        // $registers = $this->registers;
-        // $datos = [];
-        // foreach ($registers as $reg) {
-        //     $datos[] = $reg->datos;
-        // }
-        // dd($datos);
         $variablesActive = [];
         $data = [];
         foreach($variables as $variable){
@@ -84,7 +73,7 @@ class GraphicController extends Component
             }
             
         }
-        // dd($variablesActive);
+        $this->variablesActive = $variablesActive;
         $this->emit('ghaphicList',$variablesActive,$data);
     }
 }

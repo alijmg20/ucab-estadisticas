@@ -3,14 +3,14 @@
         class="mb-8 text-center text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
         {{ $title }}
     </h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
         @foreach ($lines as $line)
             @if ($line->status == '2')
                 <div
-                    class="h-auto max-w-full rounded-lg max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    class="mx-auto h-auto max-w-full rounded-lg bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{route('lines.show',$line)}}">
-                        <img class="rounded-t-lg" src="{{ App\Helpers\Tools::StorageUrl($line->image->url) }}"
+                        <img class=" object-cover rounded-t-lg w-full h-16-25" src="{{ App\Helpers\Tools::StorageUrl($line->image->url) }}"
                             alt="{{ $line->name }}" />
                     </a>
                     <div class="p-5">

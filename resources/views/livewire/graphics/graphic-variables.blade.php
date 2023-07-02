@@ -3,7 +3,7 @@
         <div class=" w-full shadow rounded-lg p-3">
             <div class="grid grid-cols-2 md:grid-cols-3">
                 @foreach ($variables as $variable)
-                    <div id="variable-{{$variable->id}}"class="hover:bg-gray-300 rounded-md hover:shadow-lg  cursor-pointer border border-gray-100">
+                    <div id="variable-{{$variable->id}}"class="hover:bg-gray-300 rounded-md hover:shadow-lg border border-gray-100">
                         <div class="flex  p-2 justify-between">
                             <div>
                                 <input id="default-checkbox-{{ $variable->id }}" type="checkbox" value="" @if ($variable->status == 2) checked @endif wire:click="status({{ $variable->id }})" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

@@ -1,7 +1,7 @@
 <div wire:init='loadProjectShow'>
     @if ($project->image)
-        <figure>
-            <img class="cursor-pointer object-cover object-center" src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}"
+        <figure class="grid grid-cols-1">
+            <img class="cursor-pointer object-cover object-center w-full h-auto md:h-full" src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}"
                 alt="{{ $project->name }}">
         </figure>
     @endif
@@ -81,11 +81,11 @@
                                 <li class="mb-4 w-70 md:w-80">
                                     <a href="{{ route('projects.show', $similar) }}">
                                         @if ($similar->image)
-                                            <img width="480px" height="640px" class="mb-4 w-70 md:w-80"
+                                            <img class="p-4 mb-4 w-70 md:w-80 h-16-25"
                                                 src="{{ App\Helpers\Tools::StorageUrl($similar->image->url) }}"
                                                 alt="{{ $similar->name }}">
                                         @else
-                                            <img width="480px" height="640px" class="mb-4 w-70 md:w-80"
+                                            <img class="mb-4 w-70 md:w-80 h-16-25"
                                                 src="{{ asset('img/notfound.svg') }}" alt="{{ $similar->name }}">
                                         @endif
                                     </a>

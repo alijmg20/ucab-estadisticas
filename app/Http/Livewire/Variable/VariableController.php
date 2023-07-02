@@ -40,12 +40,12 @@ class VariableController extends Component
         $this->readyToLoad = true;
     }
 
-    public function updatingCant()
+    public function updatingCantVariable()
     {
         $this->resetPage('variablesPage');
     }
 
-    public function updatingSearch()
+    public function updatingSearchVariable()
     {
         $this->resetPage('variablesPage');
     }

@@ -48,6 +48,10 @@
     max-height: 600px;
 }
 
+.h-16-25 {
+    height: 16.25em;
+}
+
 .counter-container {
     display: flex;
     justify-content: center;
@@ -121,6 +125,9 @@
     }   
     .md\:h-40-h{
         height: 40rem !important;
+    }
+    .md\:h-30{
+        height: 30rem !important;
     }
     .lg\:w-1\/4 {
         width: 25%;

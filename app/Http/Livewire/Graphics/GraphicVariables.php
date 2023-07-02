@@ -35,6 +35,7 @@ class GraphicVariables extends Component
         $variable->save();
         $this->emitTo('graphics.graphic-controller','render');
         $this->emitTo('graphics.graphic-controller','showGraphics');
+        $this->emitTo('graphics.graphic-details','render');
     }
 
 }
