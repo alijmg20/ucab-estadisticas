@@ -1,6 +1,6 @@
 <div wire:init='loadgraphicvariables'>
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4">
-        <div class=" w-full shadow rounded-lg p-3">
+        <div class="bg-white w-full shadow rounded-lg p-3">
             <div class="grid grid-cols-2 md:grid-cols-3">
                 @foreach ($variables as $variable)
                     <div id="variable-{{$variable->id}}"class="hover:bg-gray-300 rounded-md hover:shadow-lg border border-gray-100">

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->enum('status',[1,2])->default(1); //1 No publicado //2 publicado
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('file_id');
-            $table->timestamps();
 
             $table->foreign('project_id')
                 ->references('id')

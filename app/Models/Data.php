@@ -9,7 +9,8 @@ class Data extends Model
 {
     use HasFactory;
     protected $fillable = ['value','register_id','project_id','variable_id'];
-
+    public $timestamps = false;
+    
     //Relacion uno a muchos con Variable(inversa)
     public function variable()
     {

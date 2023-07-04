@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Variable extends Model
 {
     use HasFactory;
-    protected $guarded = ['id','created_at','updated_at'];
-
+    protected $guarded = [];
+    public $timestamps = false;
+    
     //Relacion uno a muchos con projects(proyectos)
     public function project()
     {

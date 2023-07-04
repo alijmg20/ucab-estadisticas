@@ -54,19 +54,6 @@
                         <i class="fas fa-sort float-right"></i>
                     @endif
                 </th>
-                <th class="cursor-pointer px-4 py-3" wire:click='order("created_at")'>
-                    Fecha de creación
-                    {{-- SORT --}}
-                    @if ($sortVariable == 'created_at')
-                        @if ($directionVariable == 'asc')
-                            <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                        @else
-                            <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                        @endif
-                    @else
-                        <i class="fas fa-sort float-right"></i>
-                    @endif
-                </th>
                 <th class="px-4 py-3">
                     Acciones
                 </th>
@@ -80,7 +67,6 @@
                             <td class="cursor-pointer px-4 py-3 text-sm" >
                                 {{ $var->status == 1 ? 'No Publicado' : 'Publicado' }}
                             </td>
-                            <td class="px-6 py-3 text-sm">{{ $var->created_at }}</td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button wire:click='$emitTo("variable.variable-modal","edit",{{ $var->id }})'

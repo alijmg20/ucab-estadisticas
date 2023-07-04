@@ -57,7 +57,6 @@ class VariableController extends Component
                 ->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->searchVariable . '%')
                         ->orWhere('id', 'like', '%' . $this->searchVariable . '%')
-                        ->orWhere('created_at', 'like', '%' . $this->searchVariable . '%')
                         ;
                 })
                 ->orderBy($this->sortVariable, $this->directionVariable)

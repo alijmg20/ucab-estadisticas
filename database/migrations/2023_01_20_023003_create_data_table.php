@@ -18,7 +18,6 @@ return new class extends Migration
             $table->longText('value')->nullable();
             $table->unsignedBigInteger('variable_id');
             $table->unsignedBigInteger('register_id');
-            $table->timestamps();
 
             $table->foreign('variable_id')
                 ->references('id')
