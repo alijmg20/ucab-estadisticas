@@ -42,7 +42,7 @@ class Project extends Model
 
     //relacion uno a uno polimorfica
     public function image(){
-        return $this->morphOne(image::class,'imageable');
+        return $this->morphOne(Image::class,'imageable');
     }
 
     public function files()

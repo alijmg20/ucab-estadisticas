@@ -81,33 +81,46 @@
                             </th>
                         </x-slot>
                         <x-slot name="body">
-                            @if ($files && count($files))
+                            @if ($files && count($files) == 0)
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center">
+                                        <div class="container mt-4 mb-4">
+                                            <x-alert-loading-danger>
+                                                <x-slot name="title">¡No existen archivos del proyecto!</x-slot>
+                                                <x-slot name="subtitle">Agregue nuevos archivos en el botón <b>NUEVA</b>
+                                                </x-slot>
+                                            </x-alert-loading-danger>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @elseif ($files && count($files))
                                 @foreach ($files as $fil)
                                     <tr
                                         class="cursor-pointer text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
 
                                         <td class="px-6 py-3 text-sm">
-                                            <a  href="{{route('admin.files.showfile',$fil)}}">
+                                            <a href="{{ route('admin.files.showfile', $fil) }}">
                                                 {{ $fil->id }}
                                             </a>
                                         </td>
                                         <td class="px-4 py-3">
-                                            <a  href="{{route('admin.files.showfile',$fil)}}">
-                                            {{ $fil->name }}
+                                            <a href="{{ route('admin.files.showfile', $fil) }}">
+                                                {{ $fil->name }}
                                             </a>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            <a  href="{{route('admin.files.showfile',$fil)}}">
-                                            {{ $fil->status == 1 ? 'No Publicado' : 'Publicado' }}</td>
-                                            </a>
+                                            <a href="{{ route('admin.files.showfile', $fil) }}">
+                                                {{ $fil->status == 1 ? 'No Publicado' : 'Publicado' }}
+                                        </td>
+                                        </a>
                                         <td class="px-6 py-3 text-sm">
-                                            <a  href="{{route('admin.files.showfile',$fil)}}">
-                                            {{ $fil->created_at }}
+                                            <a href="{{ route('admin.files.showfile', $fil) }}">
+                                                {{ $fil->created_at }}
                                             </a>
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <a href="{{route('admin.files.showfile',$fil)}}"
+                                                <a href="{{ route('admin.files.showfile', $fil) }}"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="View">
                                                     <i class="far fa-eye"></i>
@@ -151,7 +164,6 @@
     </div>
 
     <script>
-
         document.addEventListener('livewire:load', function() {
             Livewire.on('fileAlert', (title, message) => {
                 alert(title, message)

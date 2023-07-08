@@ -1,5 +1,6 @@
 <div>
-    <x-front.front-carrusel />
+
+    @livewire('front.front-carrusel')
 
         {{-- Seccion de Informacion --}}
     <div id="section-information" class="container mt-4">
@@ -28,11 +29,14 @@
         </section>
     </div>
         {{-- Seccion de informacion lineas --}}
-    <x-front.front-lines>
-        <x-slot name="title">{{ __('Algunas de nuestras Lineas de Investigación') }}</x-slot>
-        <x-slot name="needButton">{{'true'}}</x-slot>
-        <x-slot name="titleButton">{{__('Conoce Nuestras lineas de Investigación')}}</x-slot>
-    </x-front.front-lines>
+        @livewire('front.front-lines', 
+            [
+            'same' => false,
+            'title' => 'Algunas de nuestras Lineas de Investigación',
+            'needButton' => true,
+            'titleButton' => 'Conoce Nuestras lineas de Investigación',
+            ]
+        )
 
     {{-- Seccion de informacion banner --}}
     <x-front.front-banner>

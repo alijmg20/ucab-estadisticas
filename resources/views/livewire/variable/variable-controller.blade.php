@@ -59,12 +59,23 @@
                 </th>
             </x-slot>
             <x-slot name="body">
-                @if ($variables && count($variables))
+                @if ($variables && count($variables) == 0)
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center">
+                            <div class="container mt-4 mb-4">
+                                <x-alert-loading-danger>
+                                    <x-slot name="title">¡No hay variables disponibles!</x-slot>
+                                    <x-slot name="subtitle">Vuelva a cargar el proyecto en el sistema</x-slot>
+                                </x-alert-loading-danger>
+                            </div>
+                        </td>
+                    </tr>
+                @elseif ($variables && count($variables))
                     @foreach ($variables as $var)
                         <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                             <td class="px-6 py-3 text-sm">{{ $var->id }}</td>
                             <td class="prose truncate px-4 py-3">{{ $var->name }}</td>
-                            <td class="cursor-pointer px-4 py-3 text-sm" >
+                            <td class="cursor-pointer px-4 py-3 text-sm">
                                 {{ $var->status == 1 ? 'No Publicado' : 'Publicado' }}
                             </td>
                             <td class="px-4 py-3">

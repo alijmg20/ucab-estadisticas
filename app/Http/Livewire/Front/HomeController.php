@@ -9,7 +9,6 @@ class HomeController extends Component
 
     public function render()
     {
-
         return view('livewire.front.home-controller');
     }
 }

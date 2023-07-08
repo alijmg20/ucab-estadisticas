@@ -17,7 +17,7 @@ class Line extends Model
     }
 
     public function image(){
-        return $this->morphOne(image::class,'imageable');
+        return $this->morphOne(Image::class,'imageable');
     }
 
     public function getRouteKeyName()   

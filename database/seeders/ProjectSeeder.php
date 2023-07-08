@@ -29,7 +29,7 @@ class ProjectSeeder extends Seeder
             'imageable_type' => Project::class
           ]);
           $project->users()->attach([
-            User::all()->random()->id,
+            1,
             User::all()->random()->id,
             User::all()->random()->id,
           ]);

@@ -7,9 +7,14 @@
 
 
     {{-- Seccion de informacion lineas --}}
-    <x-front.front-lines>
-        <x-slot name="title">{{ __('Nuestras Lineas de Investigación') }}</x-slot>
-    </x-front.front-lines>
+    @livewire('front.front-lines', 
+            [
+            'same' => false,
+            'title' => 'Nuestras lineas de Investigación',
+            'needButton' => false,
+            'titleButton' => '',
+            ]
+        )
 
     {{-- Seccion de informacion banner --}}
     <x-front.front-banner>
@@ -19,6 +24,5 @@
     {{-- Iconos azules --}}
     <x-front.front-big-icons />
 
-    {{-- Testimonials Front --}}
-    <x-front.front-testimonials/>
+    @livewire('front.front-testimonials')
 </div>

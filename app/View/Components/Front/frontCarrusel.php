@@ -9,9 +9,11 @@ use Illuminate\View\Component;
 
 class frontCarrusel extends Component
 {
+    public $carrusel;
+
     public function render(): View|Closure|string
     {
-        $carrusel = Carrusel::all();
-        return view('components.front.front-carrusel',compact('carrusel'));
+        $this->carrusel = Carrusel::all();
+        return view('components.front.front-carrusel');
     }
 }

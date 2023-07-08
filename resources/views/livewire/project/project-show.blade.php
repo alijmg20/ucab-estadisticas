@@ -1,8 +1,8 @@
 <div wire:init='loadProjectShow'>
     @if ($project->image)
         <figure class="grid grid-cols-1">
-            <img class="cursor-pointer object-cover object-center w-full h-auto md:h-full" src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}"
-                alt="{{ $project->name }}">
+            <img class="cursor-pointer object-cover object-center w-full h-auto md:h-full"
+                src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}" alt="{{ $project->name }}">
         </figure>
     @endif
 
@@ -114,11 +114,12 @@
         </div>
     </div>
     {{-- Seccion de informacion lineas --}}
-    <x-front.front-lines>
-        <x-slot name="title">{{ __('Algunas de nuestras Lineas de Investigación') }}</x-slot>
-        <x-slot name="needButton">{{ 'true' }}</x-slot>
-        <x-slot name="titleButton">{{ __('Conoce Nuestras lineas de Investigación') }}</x-slot>
-    </x-front.front-lines>
+    @livewire('front.front-lines', [
+        'same' => false,
+        'title' => 'Algunas de nuestras Lineas de Investigación',
+        'needButton' => true,
+        'titleButton' => 'Conoce Nuestras lineas de Investigación',
+    ])
 
     {{-- Seccion de informacion banner --}}
     <x-front.front-banner>

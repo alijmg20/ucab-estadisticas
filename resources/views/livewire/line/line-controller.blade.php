@@ -71,52 +71,64 @@
                             </th>
                         </x-slot>
                         <x-slot name="body">
-                            @if (count($lines))
-                                @foreach ($lines as $lin)
-                                <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                        <td class="px-4 py-3 text-sm">
-                                            {{ $lin->id }}
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <div>
-                                                <p class="font-semibold">{{ $lin->name }}</p>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            {{ $lin->status == 1 ? 'No Publicado' : 'Publicado' }}
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            {{ $lin->created_at }}
-                                        </td>
-                                        {{-- ACTIONS --}}
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center space-x-4 text-sm">
-                                                {{-- @livewire('line.line-modal-edit', ['line' => $line], key($line->id)) --}}
-                                                <button wire:click='edit({{ $lin->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Edit">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                                <button wire:click='$emit("lineDelete",{{ $lin->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
+                            @if ($lines && count($lines) == 0)
                                 <tr>
                                     <td colspan="5" class="px-6 py-4 text-center">
-                                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                            role="status">
-                                            <span
-                                                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                        <div class="container mt-4 mb-4">
+                                            <x-alert-loading-danger>
+                                                <x-slot name="title">¡No existen lineas de investigación!</x-slot>
+                                                <x-slot name="subtitle">Debe crear nuevas lineas en el botón <b>NUEVA</b></x-slot>
+                                            </x-alert-loading-danger>
                                         </div>
                                     </td>
                                 </tr>
-                            @endif
+                            @elseif (count($lines))
+                                    @foreach ($lines as $lin)
+                                        <tr
+                                            class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <td class="px-4 py-3 text-sm">
+                                                {{ $lin->id }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                <div>
+                                                    <p class="font-semibold">{{ $lin->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm">
+                                                {{ $lin->status == 1 ? 'No Publicado' : 'Publicado' }}
+                                            </td>
+                                            <td class="px-4 py-3 text-sm">
+                                                {{ $lin->created_at }}
+                                            </td>
+                                            {{-- ACTIONS --}}
+                                            <td class="px-4 py-3">
+                                                <div class="flex items-center space-x-4 text-sm">
+                                                    {{-- @livewire('line.line-modal-edit', ['line' => $line], key($line->id)) --}}
+                                                    <button wire:click='edit({{ $lin->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Edit">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button wire:click='$emit("lineDelete",{{ $lin->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5" class="px-6 py-4 text-center">
+                                            <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                                role="status">
+                                                <span
+                                                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                         </x-slot>
                     </x-table>
                     @if (count($lines) && $lines->hasPages())

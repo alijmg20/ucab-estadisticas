@@ -6,7 +6,6 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
         @foreach ($lines as $line)
-            @if ($line->status == '2')
                 <div
                     class="mx-auto h-auto max-w-full rounded-lg bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{route('lines.show',$line)}}">
@@ -28,7 +27,6 @@
                         </a>
                     </div>
                 </div>
-            @endif
         @endforeach
     </div>
     @if (isset($needButton))

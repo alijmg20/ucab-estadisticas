@@ -70,9 +70,21 @@
                             </th>
                         </x-slot>
                         <x-slot name="body">
-                            @if ($testimonials && count($testimonials))
+                            @if ($testimonials && count($testimonials) == 0)
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center">
+                                        <div class="container mt-4 mb-4">
+                                            <x-alert-loading-danger>
+                                                <x-slot name="title">¡No experiencias disponibles!</x-slot>
+                                                <x-slot name="subtitle">Agregue nuevas experiencias en el botón <b>NUEVA</b></x-slot>
+                                            </x-alert-loading-danger>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @elseif ($testimonials && count($testimonials))
                                 @foreach ($testimonials as $item)
-                                    <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <tr
+                                        class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="px-6 py-3 text-sm">
                                             {{ $item->id }}
                                         </td>
@@ -84,7 +96,8 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <button wire:click='$emitTo("testimonial.testimonial-modal","edit",{{ $item->id }})'
+                                                <button
+                                                    wire:click='$emitTo("testimonial.testimonial-modal","edit",{{ $item->id }})'
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit">
                                                     <i class="fas fa-pencil-alt"></i>
@@ -106,7 +119,7 @@
                                             <span
                                                 class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
                                                 Loading...
-                                            </span>                                        
+                                            </span>
                                         </div>
                                     </td>
                                 </tr>
@@ -149,6 +162,6 @@
                     }
                 })
             });
-        }); 
+        });
     </script>
 </div>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        <link rel="shortcut icon"  type="image/png" href="{{asset('/img/logos/favicon.png')}}">
         <title>{{ config('app.name', 'Iniciar Sesion') }}</title>
 
         <!-- Fonts -->
@@ -55,7 +55,7 @@
                         
                             <a href="/">
                                 <div class="mx-auto">
-                                    <img src="{{ asset('img/logos/logoUCAB.png') }}" alt="Logo de la empresa" class="w-16rem mx-auto">
+                                    <img src="{{ asset('img/logos/LogoUCAB.png') }}" alt="Logo de la empresa" class="w-16rem mx-auto">
                                 </div>
                             </a>
 

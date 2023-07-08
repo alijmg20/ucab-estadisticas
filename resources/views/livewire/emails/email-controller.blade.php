@@ -83,7 +83,18 @@
                             </th>
                         </x-slot>
                         <x-slot name="body">
-                            @if ($emails && count($emails))
+                            @if ($emails && count($emails) == 0)
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center">
+                                    <div class="container mt-4 mb-4">
+                                        <x-alert-loading-danger>
+                                            <x-slot name="title">¡No tiene mensajes disponibles!</x-slot>
+                                            <x-slot name="subtitle">Los mensajes que los usuarios enviarán apareceran en esta ventana</x-slot>
+                                        </x-alert-loading-danger>
+                                    </div>
+                                </td>
+                            </tr>
+                        @elseif ($emails && count($emails))
                                 @foreach ($emails as $item)
                                 <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="px-6 py-3 text-sm">

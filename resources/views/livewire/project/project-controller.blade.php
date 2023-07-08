@@ -81,7 +81,19 @@
                             </th>
                         </x-slot>
                         <x-slot name="body">
-                            @if ($projects && count($projects))
+                            @if ($projects && count($projects) == 0)
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center">
+                                        <div class="container mt-4 mb-4">
+                                            <x-alert-loading-danger>
+                                                <x-slot name="title">¡No existen proyectos a los que esté asociado!</x-slot>
+                                                <x-slot name="subtitle">Puede crear nuevos proyectos en el botón <b>NUEVA</b>
+                                                </x-slot>
+                                            </x-alert-loading-danger>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @elseif ($projects && count($projects))
                                 @foreach ($projects as $proj)
                                     <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="cursor-pointer px-6 py-3 text-sm">

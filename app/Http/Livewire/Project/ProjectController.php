@@ -75,7 +75,9 @@ class ProjectController extends Component
     public function render()
     {
         if($this->readyToLoad){
-            $projects = Project::where('user_id', $this->user_id)
+            $projects = Project::whereHas('users', function ($query) {
+                $query->where('users.id', $this->user_id);
+            })
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('id', 'like', '%' . $this->search . '%');

@@ -113,6 +113,10 @@
         line-height: 2rem;  
     }
 
+    .sm\:max-w-8xl {
+        max-width: 84rem;
+    }
+
 }
 
 @media (min-width: 1024px) {
