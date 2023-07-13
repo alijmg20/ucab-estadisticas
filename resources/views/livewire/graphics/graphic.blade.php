@@ -30,7 +30,6 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('graphicShow', (variable, data) => {
-                console.log(variable.graphic_type);
                 if (variable.graphic_type == 'barra')
                     bar(variable, data);
                 else if (variable.graphic_type == 'circulo') {

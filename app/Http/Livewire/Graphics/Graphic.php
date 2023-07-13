@@ -13,6 +13,7 @@ class Graphic extends Component
     public $entrysGraphic = ['circulo','barra'];
     public $typeGraphic;
     public $variable;
+    protected $listeners = ['render','loadGraphic'];
     public function mount($variable)
     {
 

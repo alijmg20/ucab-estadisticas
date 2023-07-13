@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Information extends Model
+class Group extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
+    public $timestamps = false;
+    
     //Relacion uno a muchos inversa
-    public function data()
+    public function variable()
     {
-        return $this->belongsTo(Data::class);
+        return $this->belongsTo(Variable::class);
     }
 
 }

@@ -12,7 +12,7 @@ class GraphicDetailsModal extends Component
     public $open = false;
     public $variable; //variable recibida
     protected $listeners = ['openModal'];
-    public $max = [],$min = [];
+    public $max = [], $min = [];
     public function render()
     {
         return view('livewire.graphics.graphic-details-modal');
@@ -22,19 +22,40 @@ class GraphicDetailsModal extends Component
     {
         $this->reset(['variable']);
         $this->variable = Variable::find($variable);
-        $this->max = $this->calcMaxOrMin($this->variable->id);
-        $this->min = $this->calcMaxOrMin($this->variable->id,'asc');
+        $this->max = $this->calcMaxOrMin($this->variable->id,'desc');
+        $this->min = $this->calcMaxOrMin($this->variable->id, 'asc');
         $this->open = true;
     }
 
-    public function calcMaxOrMin($variable,$direction = 'desc'){
+    public function calcMaxOrMin($variable, $direction)
+    {
         $calc = Data::select('value', DB::raw('count(*) as y'))
         ->where('variable_id', $variable)
         ->groupBy('value')
+        ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
         ->orderBy('y',$direction)
         ->pluck('y','value')
         ->toArray();
-        return [key($calc) => reset($calc)];
+        $value = reset($calc);
+        $total = $this->sumArray($calc);
+        $percentage = $this->percentage($value,$total);
+        return [key($calc) => $percentage.'%'];
+    }
+
+    public function sumArray($array)
+    {
+        if (!$array){
+            return 0;
+        }
+        $array_sum = 0;
+        foreach ($array as $value) {
+            $array_sum += $value;
+        }
+        return $array_sum;
+    }
+
+    public function percentage($value,$total){
+        return number_format(($value * 100) / $total, 2);
     }
 
     public function closeModal()
@@ -47,5 +68,4 @@ class GraphicDetailsModal extends Component
         $this->reset(['variable']);
         $this->open = false;
     }
-
 }

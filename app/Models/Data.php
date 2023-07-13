@@ -23,10 +23,4 @@ class Data extends Model
         return $this->belongsTo(Register::class);
     }
 
-    //Relacion uno a muchos con Information
-    public function informations()
-    {
-        return $this->hasMany(Information::class);
-    }
-
 }

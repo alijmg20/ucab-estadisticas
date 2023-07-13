@@ -9,7 +9,7 @@ class GraphicDetails extends Component
 {
     use WithPagination;
     public $searchGraphicDetails = '';
-    public $sortGraphicDetails = 'name';
+    public $sortGraphicDetails = 'id';
     public $directionGraphicDetails = 'asc';
     public $entrysGraphicDetails = [2, 5, 10, 20, 50, 100];
     public $cantGraphicDetails = '10';

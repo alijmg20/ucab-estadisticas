@@ -26,7 +26,11 @@ class GraphicController extends Component
     public $variables = [];
     public $variablesActive = [];
 
-    protected $listeners = ['render','showGraphics'];
+    protected $listeners = ['render'];
+
+    public function loadgraphic(){
+        $this->readyToLoad = true;
+    }
 
     public function mount($file)
     {

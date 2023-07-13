@@ -1,4 +1,4 @@
-<div>
+<div wire:init='loadgraphic'>
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div class="inline-block w-full shadow rounded-lg overflow-hidden">
             @if (count($variablesActive))

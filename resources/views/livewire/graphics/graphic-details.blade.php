@@ -15,6 +15,19 @@
         </div>
         <x-table>
             <x-slot name="headers">
+                <th class="cursor-pointer px-4 py-3" wire:click='order("id")'>
+                    ID
+                    {{-- SORT --}}
+                    @if ($sortGraphicDetails == 'id')
+                        @if ($directionGraphicDetails == 'asc')
+                            <i class="fas fa-sort-alpha-up-alt float-right"></i>
+                        @else
+                            <i class="fas fa-sort-alpha-down-alt float-right"></i>
+                        @endif
+                    @else
+                        <i class="fas fa-sort float-right"></i>
+                    @endif
+                </th>
                 <th class="cursor-pointer px-4 py-3" wire:click='order("name")'>
                     Nombre
                     {{-- SORT --}}
@@ -44,6 +57,7 @@
                 @elseif ($variables && count($variables))
                     @foreach ($variables as $var)
                         <tr class="cursor-pointer text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <td class="prose truncate px-4 py-3" ><span wire:click='$emitTo("graphics.graphic-details-modal","openModal",{{ $var->id }})'>{{ $var->id }}</span></td>
                             <td class="prose truncate px-4 py-3" ><span wire:click='$emitTo("graphics.graphic-details-modal","openModal",{{ $var->id }})'>{{ $var->name }}</span></td>
                         </tr>
                     @endforeach
