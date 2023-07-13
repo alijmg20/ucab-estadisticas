@@ -10,10 +10,10 @@ use Livewire\Component;
 class Graphic extends Component
 {
 
-    public $entrysGraphic = ['circulo','barra'];
+    public $entrysGraphic = ['circulo', 'barra'];
     public $typeGraphic;
     public $variable;
-    protected $listeners = ['render','loadGraphic'];
+    protected $listeners = ['render', 'loadGraphic'];
     public function mount($variable)
     {
 
@@ -22,28 +22,30 @@ class Graphic extends Component
 
     public function render()
     {
-        $this->typeGraphic = $this->variable->graphic_type;
+        $this->typeGraphic = $this->variable ? $this->variable->graphic_type : '';
         return view('livewire.graphics.graphic');
     }
 
     public function loadGraphic()
     {
-        $variableData = Data::select('value', DB::raw('count(*) as y'))
-            ->where('variable_id', $this->variable->id)
-            ->groupBy('value')
-            ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-            ->orderBy('value', 'asc')
-            ->pluck('y', 'value')
-            ->toArray();
-        if (count($variableData) < 15) {
-            $data_aux = [];
-            foreach ($variableData as $key => $value) {
-                $data_aux[] = ['name' => $key, 'y' => floatval($value)];
+        if ($this->variable) {
+            $variableData = Data::select('value', DB::raw('count(*) as y'))
+                ->where('variable_id', $this->variable->id)
+                ->groupBy('value')
+                ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
+                ->orderBy('value', 'asc')
+                ->pluck('y', 'value')
+                ->toArray();
+            if (count($variableData) < 15) {
+                $data_aux = [];
+                foreach ($variableData as $key => $value) {
+                    $data_aux[] = ['name' => $key, 'y' => floatval($value)];
+                }
+                $data = json_encode($data_aux);
             }
-            $data = json_encode($data_aux);
+            $variable = $this->variable;
+            $this->emit('graphicShow', $variable, $data);
         }
-        $variable = $this->variable;
-        $this->emit('graphicShow',$variable,$data);
     }
 
     public function selectGraphic()

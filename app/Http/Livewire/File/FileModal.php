@@ -40,7 +40,8 @@ class FileModal extends Component
         return view('livewire.file.file-modal');
     }
 
-    public function spinner(){
+    public function spinner()
+    {
         $this->emit('spinnerOn');
     }
 
@@ -70,52 +71,67 @@ class FileModal extends Component
         ]);
 
         if (!$this->file) {
-            
+
             $path = storage_path('app/public/' . $file_data);
             $sheet = IOFactory::load($path)->getActiveSheet();
             $filaVariable = $sheet->getRowIterator(1)->current();
-            $variables = [];
 
-            foreach ($filaVariable->getCellIterator() as $celdaCabecera) {
-                $variables[] = Variable::create([
-                    'name' => $celdaCabecera->getValue(),
-                    'project_id' => $this->project->id,
-                    'file_id' => $file->id,
-                ]);
-            }
-            $registers = [];
-            foreach ($sheet->getRowIterator(2) as $row) {
-                $datos = [];
-                $i = 0;
-                foreach ($row->getCellIterator() as $cell) {
-                    $datos[$variables[$i]->id] = $cell->getValue();
-                    $i++;
-                }
-                $registro = new Register();
-                $registro->datos = $datos;
-                $registro->project_id = $this->project->id;
-                $registro->file_id = $file->id;
-                $registro->save();
-                $registers[] = $registro;
-            }
-            
-            $registersTotal = 0;
-            foreach ($sheet->getRowIterator(2) as $column) {
-                $countColumn = 0;
-                foreach ($column->getCellIterator() as $cell) {
-                    Data::create([
-                        'value' =>$cell->getValue(),
-                        'variable_id' => $variables[$countColumn]->id,
-                        'register_id' => $registers[$registersTotal]->id,
-                    ]);
-                    $countColumn++;
-                }
-                $registersTotal++;
-            }
+            $variables = $this->addVariables($filaVariable, $file);
+            $registers = $this->addRegisters($sheet,$file,$variables);
+            $this->addData($sheet,$variables,$registers);
         }
         $this->emit('fileAlert', 'terminado!', $this->file ? 'Archivo editado exitosamente' : 'Archivo creado exitosamente');
         $this->resetInputDefaults();
         $this->emitTo('file.file-controller', 'render');
+    }
+
+    private function addVariables($filaVariable, $file)
+    {
+        $variables = [];
+        foreach ($filaVariable->getCellIterator() as $celdaCabecera) {
+            $variables[] = Variable::create([
+                'name' => $celdaCabecera->getValue(),
+                'project_id' => $this->project->id,
+                'file_id' => $file->id,
+            ]);
+        }
+        return $variables;
+    }
+
+    private function addRegisters($sheet,$file,$variables)
+    {
+        $registers = [];
+        foreach ($sheet->getRowIterator(2) as $row) {
+            $datos = [];
+            $i = 0;
+            foreach ($row->getCellIterator() as $cell) {
+                $datos[$variables[$i]->id] = $cell->getValue();
+                $i++;
+            }
+            $registro = new Register();
+            $registro->datos = $datos;
+            $registro->project_id = $this->project->id;
+            $registro->file_id = $file->id;
+            $registro->save();
+            $registers[] = $registro;
+        }
+        return $registers;
+    }
+
+    private function addData($sheet,$variables,$registers){
+        $registersTotal = 0;
+        foreach ($sheet->getRowIterator(2) as $column) {
+            $countColumn = 0;
+            foreach ($column->getCellIterator() as $cell) {
+                Data::create([
+                    'value' => $cell->getValue(),
+                    'variable_id' => $variables[$countColumn]->id,
+                    'register_id' => $registers[$registersTotal]->id,
+                ]);
+                $countColumn++;
+            }
+            $registersTotal++;
+        }
     }
 
     public function edit($id)
