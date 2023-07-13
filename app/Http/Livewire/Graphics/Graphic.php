@@ -36,13 +36,11 @@ class Graphic extends Component
                 ->orderBy('value', 'asc')
                 ->pluck('y', 'value')
                 ->toArray();
-            if (count($variableData) < 15) {
-                $data_aux = [];
-                foreach ($variableData as $key => $value) {
-                    $data_aux[] = ['name' => $key, 'y' => floatval($value)];
-                }
-                $data = json_encode($data_aux);
+            $data_aux = [];
+            foreach ($variableData as $key => $value) {
+                $data_aux[] = ['name' => $key, 'y' => floatval($value)];
             }
+            $data = json_encode($data_aux);
             $variable = $this->variable;
             $this->emit('graphicShow', $variable, $data);
         }
