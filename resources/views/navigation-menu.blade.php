@@ -1,261 +1,181 @@
-<nav x-data="{ open: false }" class="shadow-lg bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <x-application-mark class="block h-9 w-auto lg:block" />
-                    </a>
-                </div>
+<nav class="bg-white-100 shadow-lg" x-data="{ open: false }">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div class="relative flex h-16 items-center justify-between">
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{route('projects.index')}}" :active="request()->routeIs('projects.index')">
-                        {{ __('Proyectos') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{route('lines.index')}}" :active="request()->routeIs('lines.index')">
-                        {{ __('Lineas de Investigación') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{route('about')}}" :active="request()->routeIs('about')">
-                        {{ __('Sobre Nosotros') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{route('contact')}}" :active="request()->routeIs('contact')">
-                        {{ __('Contacto') }}
-                    </x-nav-link>
-                </div>
-            </div>
-            @auth
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <!-- Teams Dropdown -->
-                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                        <div class="ml-3 relative">
-                            <x-dropdown align="right" width="60">
-                                <x-slot name="trigger">
-                                    <span class="inline-flex rounded-md">
-                                        <button type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                            {{ Auth::user()->currentTeam->name }}
+        {{-- left nav --}}
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden md:hidden">
+            <!-- Mobile menu button-->        
+          <button x-on:click="open = true" type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <!--
+              Icon when menu is closed.
+  
+              Heroicon name: outline/bars-3
+  
+              Menu open: "hidden", Menu closed: "block"
+            -->
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <!--
+              Icon when menu is open.
+  
+              Heroicon name: outline/x-mark
+  
+              Menu open: "block", Menu closed: "hidden"
+            -->
+            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-                                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                            </svg>
-                                        </button>
-                                    </span>
-                                </x-slot>
+        {{-- center nav --}}
+        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 
-                                <x-slot name="content">
-                                    <div class="w-60">
-                                        <!-- Team Management -->
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Manage Team') }}
-                                        </div>
+            {{-- logotipo company --}}
+          <a href="/" class="flex flex-shrink-0 items-center">
+            <img class="block h-8 w-auto lg:hidden" src="{{asset('/img/logos/LogoUCAB.png')}}" alt="Your Company">
+            <img class="hidden h-8 w-auto lg:block" src="{{asset('/img/logos/LogoUCAB.png')}}" alt="Your Company">
+          </a>
 
-                                        <!-- Team Settings -->
-                                        <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                            {{ __('Team Settings') }}
-                                        </x-dropdown-link>
+          {{-- center menu --}}
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
-                                        @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                            <x-dropdown-link href="{{ route('teams.create') }}">
-                                                {{ __('Create New Team') }}
-                                            </x-dropdown-link>
-                                        @endcan
-
-                                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                                        <!-- Team Switcher -->
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Switch Teams') }}
-                                        </div>
-
-                                        @foreach (Auth::user()->allTeams() as $team)
-                                            <x-switchable-team :team="$team" />
-                                        @endforeach
-                                    </div>
-                                </x-slot>
-                            </x-dropdown>
-                        </div>
-                    @endif
-
-                    <!-- Settings Dropdown -->
-                    <div class="ml-3 relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                    <button
-                                        class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                        <img class="h-8 w-8 rounded-full object-cover"
-                                            src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                    </button>
-                                @else
-                                    <span class="inline-flex rounded-md">
-                                        <button type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                            {{ Auth::user()->name }}
-
-                                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        </button>
-                                    </span>
-                                @endif
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Mi cuenta') }}
-                                </div>
-
-                                <x-dropdown-link href="{{ route('profile.show') }}">
-                                    {{ __('Perfil') }}
-                                </x-dropdown-link>
-
-                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                    <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                        {{ __('API Tokens') }}
-                                    </x-dropdown-link>
-                                @endif
-                                @can('admin.home')
-                                <x-dropdown-link href="{{ route('admin.home') }}">
-                                  {{ __('Dashboard') }}
-                              </x-dropdown-link>
-                                @endcan
-                                <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}" x-data>
-                                    @csrf
-
-                                    <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                                        {{ __('Cerrar Sesión') }}
-                                    </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                </div>
-            @else
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"">
-                    <x-nav-link class="mr-2" href="{{ route('login') }}" :active="request()->routeIs('login')">
-                        {{ __('Iniciar Sesión') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                        {{ __('Registrarse') }}
-                      </x-nav-link>
-                </div>
+              {{-- <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a> --}}
+  
+              {{-- @foreach ($lines as $line) --}}
+              {{-- <a href="{{route('projects.index')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{{__('projects')}}</a>     --}}
+                <a href="{{route('projects.index')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Proyectos')}}</a>    
+              {{-- @endforeach --}}
+                {{-- <div x-data="{ open: false }" class="relative inline-block text-left">
+                  <div>
+                    <button x-on:click="open = true" type="button" class="inline-flex w-full justify-center rounded-md text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                      {{__('Lineas de investigacíon')}}
+                      <!-- Heroicon name: mini/chevron-down -->
+                      <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
                 
-                {{-- <a href="{{route('login')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Iniciar sesión</a>
-        <a href="{{route('register')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Registrarse</a> --}}
-
-            @endauth
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('admin.home') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-        @auth
-            <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-                <div class="flex items-center px-4">
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                        <div class="shrink-0 mr-3">
-                            <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                                alt="{{ Auth::user()->name }}" />
-                        </div>
-                    @endif
-
-                    <div>
-                        <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                  <!--
+                    Dropdown menu, show/hide based on menu state.
+                
+                    Entering: "transition ease-out duration-100"
+                      From: "transform opacity-0 scale-95"
+                      To: "transform opacity-100 scale-100"
+                    Leaving: "transition ease-in duration-75"
+                      From: "transform opacity-100 scale-100"
+                      To: "transform opacity-0 scale-95"
+                  -->
+                  <div x-show="open" x-on:click.away="open = false" class="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                      @foreach ($lines as $line)
+                      <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                      <a href="{{route('lines.show',$line);}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-0">{{$line->name}}</a>
+                      @endforeach
                     </div>
-                </div>
+                  </div>
+                </div> --}}
+                <a href="{{route('lines.index')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Sobre Nosotros')}}</a>    
+                <a href="{{route('about')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Sobre Nosotros')}}</a>    
+                <a href="{{route('contact')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Contacto')}}</a>    
+            </div>
+          </div>
+        </div>
 
-                <div class="mt-3 space-y-1">
-                    <!-- Account Management -->
-                    <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                        <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                            {{ __('API Tokens') }}
-                        </x-responsive-nav-link>
-                    @endif
-
-                    <!-- Authentication -->
+        @auth
+            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {{-- notification button --}}
+                {{-- <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span class="sr-only">View notifications</span>
+                    <!-- Heroicon name: outline/bell -->
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                    </svg>
+                </button> --}}
+        
+                <!-- Profile dropdown -->
+                <div class="relative ml-3 " x-data="{ open: false }">
+                    <div>
+                    <button x-on:click="open = true" type="button" class="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 " id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="h-8 w-8 rounded-full" src="{{auth()->user()->profile_photo_url}}" alt="">
+                    </button>
+                    </div>
+        
+                    <!--
+                        menu de navegacion
+                    -->
+                    <div x-show="open" x-on:click.away="open = false" class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                    <!-- Active: "bg-gray-100", Not Active: "" -->
+                    <a href="{{route( 'profile.show' )}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">{{__('Perfil')}}</a>
+                    @can('admin.home')
+                    <a href="{{route( 'admin.home' )}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">{{__('dashboard')}}</a>    
+                    @endcan
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
-
-                        <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
+                        <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-2" @click.prevent="$root.submit();">Cerrar sesión</a>
                     </form>
-
-                    <!-- Team Management -->
-                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Team') }}
-                        </div>
-
-                        <!-- Team Settings -->
-                        <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                            :active="request()->routeIs('teams.show')">
-                            {{ __('Team Settings') }}
-                        </x-responsive-nav-link>
-
-                        @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                            <x-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                                {{ __('Create New Team') }}
-                            </x-responsive-nav-link>
-                        @endcan
-
-                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                        <!-- Team Switcher -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Switch Teams') }}
-                        </div>
-
-                        @foreach (Auth::user()->allTeams() as $team)
-                            <x-switchable-team :team="$team" component="responsive-nav-link" />
-                        @endforeach
-                    @endif
+                    </div>
                 </div>
-            </div>
-        </div>
-    @else
-        <a href="{{ route('login') }}"
-            class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Iniciar
-            sesión</a>
-        <a href="{{ route('register') }}"
-            class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Registrarse</a>
+            </div>    
 
-    @endauth
-</nav>
+        @else
+        <a href="{{route( 'login' )}}" class="hidden sm:block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Iniciar sesión</a>    
+        <a href="{{route( 'register' )}}" class="hidden sm:block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Registrarse</a>        
+        <a href="{{route( 'login' )}}" class="sm:hidden px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0"><i class="fas fa-user"></i></a>        
+        @endauth
+        {{-- right nav --}}
+        
+      </div>
+    </div>
+  
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="sm:hidden" x-show="open" id="mobile-menu" x-on:click.away="open=false">
+      <div class="space-y-1 px-2 pt-2 pb-3">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        {{-- <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a> --}}
+        {{-- @foreach ($lines as $line) --}}
+          <a href="{{route('projects.index')}}" class="text-black hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium text-center">{{__('Proyectos')}}</a>
+        {{-- @endforeach --}}
+
+        {{-- <div x-data="{ open: false }" class="block px-3 py-2 rounded-md text-base font-medium">
+          <div>
+            <button x-on:click="open = true" type="button" class="inline-flex w-full justify-center rounded-md text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true">
+              {{__('Lineas de investigacíon')}}
+              <!-- Heroicon name: mini/chevron-down -->
+              <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        
+          <!--
+            Dropdown menu, show/hide based on menu state.
+        
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+          <div x-show="open" x-on:click.away="open = false" class="text-gray-300 block px-3 py-2 rounded-md text-base font-medium text-center" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+              @foreach ($lines as $line)
+              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+              <a href="{{route('lines.show',$line);}}" class="text-black hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium text-center" role="menuitem" tabindex="-1" id="menu-item-0">{{$line->name}}</a>
+              @endforeach
+            </div>
+          </div>
+        </div> --}}
+        <a href="{{route('lines.index')}}" class="text-black hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium text-center">{{__('Lineas de Investigación')}}</a>
+        <a href="{{route('about')}}" class="text-black hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium text-center">{{__('Sobre Nosotros')}}</a>
+        <a href="{{route('contact')}}" class="text-black hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium text-center">{{__('Contacto')}}</a>
+      </div>
+    </div>
+  </nav>
