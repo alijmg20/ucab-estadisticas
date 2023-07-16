@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TestimonialsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\ContactController;
+use App\Http\Controllers\Front\FileController as FrontFileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\LineController as FrontLineController;
 use App\Http\Controllers\Front\ProjectController as FrontProjectController;
@@ -35,6 +36,7 @@ Route::get('/projects/{project}',[FrontProjectController::class,'show'] )->name(
 Route::get('/projects',[FrontProjectController::class,'index'] )->name('projects.index');
 Route::get('/about',[AboutController::class,'index'] )->name('about');
 Route::get('/contact',[ContactController::class,'index'] )->name('contact');
+Route::get('/file/{file}',[FrontFileController::class,'show'] )->name('files.show');
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {

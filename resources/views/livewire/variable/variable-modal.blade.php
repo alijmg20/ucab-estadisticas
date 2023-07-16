@@ -30,6 +30,16 @@
                 <x-input-error for="status" />
             </div>
             <div class="container mt-4">
+                <x-label class="mb-4" for="graphic_type" value="Selecciona un gráfico" />
+                <x-select-dropdown class="w-full" wire:model.def='graphic_type'>
+                    <option value="">selecciona una opción</option>
+                    @foreach ($graphicList as $graphic)
+                        <option value="{{ $graphic}}">{{ $graphic }}</option>
+                    @endforeach
+                </x-select-dropdown>
+                <x-input-error for="graphic_type" class="mt-2" />
+            </div>
+            <div class="container mt-4">
                 <x-label class="mb-4" value="Valores de la variable" />
                 @if($variable_id)
                     @livewire('groups.group-controller',['variable' => $variable_id])

@@ -47,6 +47,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
         <script src="{{ asset('vendor/toastr/toastr.js') }}"></script>
         <script src="{{ asset('js/show_alerts.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
+        <script src="{{ asset('js/graphics.js') }}"></script>
+        <script src="{{ asset('vendor/highcharts/highcharts.js') }}"></script>
+        <script src="{{ asset('vendor/highcharts/exporting.js') }}"></script>
+        <script src="{{ asset('vendor/highcharts/export-data.js') }}"></script>
+        <script src="{{ asset('vendor/highcharts/accessibility.js') }}"></script>
         @stack('modals')
         @livewireScripts
     </body>

@@ -31,8 +31,8 @@
                             <div style="font-size: 160px" class="dark:text-gray-400 dark:bg-gray-800">  {{reset($min)}}</div>
                         </div>
                     </div>     
-                    <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">03</div>
-                    <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">04</div>
+                    {{-- <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">03</div>
+                    <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">04</div> --}}
                 </div>
                 {{-- {{$variable ? $variable : ''}} --}}
                 {{-- {{ var_Export($max) }}

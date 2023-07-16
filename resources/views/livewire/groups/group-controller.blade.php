@@ -21,7 +21,7 @@
                 <th class="px-4 py-3">
                     Valor
                 </th>
-                <th class="cursor-pointer px-4 py-3" {{--wire:click='order("position")'--}}>
+                <th class="px-4 py-3" {{--wire:click='order("position")'--}}>
                     Posición
                 </th>
                 {{-- <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>

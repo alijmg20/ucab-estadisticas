@@ -1,7 +1,7 @@
 <div wire:init='loadProjectShow'>
     @if ($project->image)
         <figure class="grid grid-cols-1">
-            <img class="cursor-pointer object-cover object-center w-full h-auto md:h-full"
+            <img class="cursor-pointer object-cover object-center w-full h-auto md:h-96"
                 src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}" alt="{{ $project->name }}">
         </figure>
     @endif
@@ -69,8 +69,10 @@
             </div>
             <hr class="mb-4 mt-4 font-semibold">
             {{-- Contenido secundario --}}
+            <aside class="mt-4 mb-4 project-files">
+                @livewire('front.front-controller-files', ['project' => $project])
+            </aside>
             <aside class="mt-4 project-related">
-                {{-- {{dump($similar)}} --}}
                 <h1 class="text-2xl md:text-xl-4 font-semibold mb-4 text-gray-600 text-center">
                     {{ __('Más proyectos de la Línea de Investigación ') }} {{ $project->line->name }}
                 </h1>
