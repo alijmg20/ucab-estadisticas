@@ -5,8 +5,10 @@ namespace App\Http\Livewire\File;
 use App\Helpers\Tools;
 use App\Models\Data;
 use App\Models\File;
+use App\Models\Group;
 use App\Models\Register;
 use App\Models\Variable;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -77,8 +79,9 @@ class FileModal extends Component
             $filaVariable = $sheet->getRowIterator(1)->current();
 
             $variables = $this->addVariables($filaVariable, $file);
-            $registers = $this->addRegisters($sheet,$file,$variables);
-            $this->addData($sheet,$variables,$registers);
+            $registers = $this->addRegisters($sheet, $file, $variables);
+            $this->addData($sheet, $variables, $registers);
+            $this->addGroups($variables);
         }
         $this->emit('fileAlert', 'terminado!', $this->file ? 'Archivo editado exitosamente' : 'Archivo creado exitosamente');
         $this->resetInputDefaults();
@@ -98,7 +101,7 @@ class FileModal extends Component
         return $variables;
     }
 
-    private function addRegisters($sheet,$file,$variables)
+    private function addRegisters($sheet, $file, $variables)
     {
         $registers = [];
         foreach ($sheet->getRowIterator(2) as $row) {
@@ -118,7 +121,8 @@ class FileModal extends Component
         return $registers;
     }
 
-    private function addData($sheet,$variables,$registers){
+    private function addData($sheet, $variables, $registers)
+    {
         $registersTotal = 0;
         foreach ($sheet->getRowIterator(2) as $column) {
             $countColumn = 0;
@@ -131,6 +135,30 @@ class FileModal extends Component
                 $countColumn++;
             }
             $registersTotal++;
+        }
+    }
+
+    private function addGroups($variables)
+    {
+        foreach ($variables as $variable) {
+            $variable_get = Data::select('value', DB::raw('count(*) as y'))
+                ->where('variable_id', $variable->id)
+                ->groupBy('value')
+                ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
+                ->orderBy('value', 'asc')
+                ->get();
+            if (count($variable_get) < 15 /*15 corresponde a un numero maximo para mostrar en el grafico*/) {
+                $i = 0;
+                foreach ($variable_get as $group) {
+                    Group::create([
+                        'name'  => $group->value,
+                        'value' => $group->y,
+                        'position' => $i,
+                        'variable_id' => $variable->id,
+                    ]);
+                    $i++;
+                }
+            }
         }
     }
 

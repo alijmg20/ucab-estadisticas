@@ -1,8 +1,8 @@
 <div>
-    <x-dialog-modal id="VariableModal" wire:model='open'>
+    <x-dialog-modal id="GroupModal" wire:model='open'>
         <x-slot name="title">
             <div class="container">
-                {{'Editar Variable'}}
+                {{'Editar Grupo'}}
                 <span wire:click='closeModal()' class="float-right text-gray-500 text-2xl cursor-pointer">&times;</span>
                 <!-- Botón de cierre -->
             </div>
@@ -10,9 +10,14 @@
 
         <x-slot name="content">
             <div class="container mt-4">
-                <x-label class="mb-4" value="Nombre de la variable" />
+                <x-label class="mb-4" value="Nombre del grupo" />
                 <x-input id="name" wire:model='name' type="text" class="w-full" />
                 <x-input-error for="name" />
+            </div>
+            <div class="container mt-4">
+                <x-label class="mb-4" value="Valor del grupo" />
+                <x-input id="value" wire:model='value' type="text" class="w-full" />
+                <x-input-error for="value" />
             </div>
             <div class="container mt-4">
                 <x-label class="mb-4" value="Estatus de publicación" />
@@ -28,12 +33,6 @@
                 </div>
                 {{-- {{$status}} --}}
                 <x-input-error for="status" />
-            </div>
-            <div class="container mt-4">
-                <x-label class="mb-4" value="Valores de la variable" />
-                @if($variable_id)
-                    @livewire('groups.group-controller',['variable' => $variable_id])
-                @endif
             </div>
         </x-slot>
 

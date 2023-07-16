@@ -162,7 +162,6 @@
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('fileAlert', (title, message) => {

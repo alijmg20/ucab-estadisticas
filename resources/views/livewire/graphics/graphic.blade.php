@@ -30,97 +30,15 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('graphicShow', (variable, data) => {
-                if (variable.graphic_type == 'barra')
-                    bar(variable, data);
+                if (variable.graphic_type == 'columna')
+                    column(variable, data);
                 else if (variable.graphic_type == 'circulo') {
                     circle(variable, data);
                 }
+                else if (variable.graphic_type == 'barra') {
+                    bar(variable, data);
+                }
             });
         });
-
-        function circle(variable, data) {
-            Highcharts.chart(variable['id'].toString(), {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: variable['name'],
-                    align: 'left'
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                accessibility: {
-                    point: {
-                        valueSuffix: '%'
-                    }
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
-                    }
-                },
-                series: [{
-                    name: variable['name'].toString(),
-                    colorByPoint: true,
-                    data: JSON.parse(data),
-                }]
-            });
-        }
-
-        function bar(variable, data) {
-
-            var keys = [];
-            var values = [];
-            var datas = JSON.parse(data);
-            datas.forEach(dat => {
-                keys.push(dat.name.toString());
-                values.push(parseFloat(dat.y));
-            });
-            // Calcular el total de los valores
-            var total = values.reduce(function(a, b) {
-                return a + b;
-            }, 0);
-            // Convertir los valores a porcentajes con dos decimales
-            var datosPorcentaje = values.map(function(valor) {
-                return parseFloat(((valor / total) * 100).toFixed(2));
-            });
-            // Configuración del gráfico
-            Highcharts.chart(variable['id'].toString(), {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: variable['name']
-                },
-                xAxis: {
-                    categories: keys
-                },
-                yAxis: {
-                    title: {
-                        text: 'Porcentaje'
-                    },
-                    labels: {
-                        format: '{value}%'
-                    }
-                },
-                series: [{
-                    name: variable['name'].toString(),
-                    data: datosPorcentaje,
-                    tooltip: {
-                        valueSuffix: '%'
-                    }
-                }]
-            });
-
-        }
     </script>
 </div>

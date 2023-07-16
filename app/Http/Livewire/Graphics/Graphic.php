@@ -10,7 +10,7 @@ use Livewire\Component;
 class Graphic extends Component
 {
 
-    public $entrysGraphic = ['circulo', 'barra'];
+    public $entrysGraphic = ['circulo', 'columna','barra'];
     public $typeGraphic;
     public $variable;
     protected $listeners = ['render', 'loadGraphic'];
@@ -29,13 +29,10 @@ class Graphic extends Component
     public function loadGraphic()
     {
         if ($this->variable) {
-            $variableData = Data::select('value', DB::raw('count(*) as y'))
-                ->where('variable_id', $this->variable->id)
-                ->groupBy('value')
-                ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-                ->orderBy('value', 'asc')
-                ->pluck('y', 'value')
-                ->toArray();
+            $variableData = $this->variable->groups()
+            ->orderBy('position', 'asc')
+            ->pluck('value','name')
+            ->toArray();
             $data_aux = [];
             foreach ($variableData as $key => $value) {
                 $data_aux[] = ['name' => $key, 'y' => floatval($value)];

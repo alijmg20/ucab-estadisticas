@@ -14,7 +14,7 @@
                     <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">
                         <div class="flex-none widget-header">
                             <div class="caption">
-                              <p style="text-align:center"><strong>Maximo obtenido. Respuesta {{key($max)}}</strong></p>
+                              <p style="text-align:center"><strong>Maximo obtenido. Respuesta "{{key($max)}}"</strong></p>
                             </div>
                           </div>
                         <div style="height:195.27045593261718px;" class="dark:text-gray-400 dark:bg-gray-800 widget-body flex-auto h-full w-full flex flex-col justify-center overflow-hidden">
@@ -24,7 +24,7 @@
                     <div class="p-4 rounded-lg shadow-lg bg-white dark:text-gray-400 dark:bg-gray-800">
                         <div class="flex-none widget-header">
                             <div class="caption">
-                              <p style="text-align:center"><strong>Minimo obtenido. Respuesta {{key($min)}}</strong></p>
+                              <p style="text-align:center"><strong>Minimo obtenido. Respuesta "{{key($min)}}"</strong></p>
                             </div>
                           </div>
                         <div style="height:195.27045593261718px;" class="dark:text-gray-400 dark:bg-gray-800 widget-body flex-auto w-full flex flex-col justify-center overflow-hidden">

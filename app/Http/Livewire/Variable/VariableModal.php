@@ -8,13 +8,14 @@ use Livewire\Component;
 class VariableModal extends Component
 {
     public $open = false;
-    public $name,$project_id,$file_id,$status = 0;
+    public $name,$project_id,$variable_id,$file_id,$status = 0;
     public $variable; //Variable para editar
     protected $listeners = ['edit'];
 
     protected $rules = [
         'name' => 'required',
-        'status' => 'required'
+        'status' => 'required',
+        'variable_id' =>'',
     ];
 
     public function render()
@@ -31,19 +32,20 @@ class VariableModal extends Component
         $this->resetInputDefaults();
 
         $this->emitTo('variable.variable-controller', 'render');
-
         $this->emitTo('graphics.graphic-controller','render');
+        $this->emitTo('graphics.graphic-variables','render');
         $this->emitTo('graphics.graphic','render');
         $this->emitTo('graphics.graphic','loadGraphic');
-        $this->emitTo('graphics.graphic-variables','render');
+        
         
         $this->emit('variableAlert', 'terminado!', 'Variable actualizada exitosamente');
     }
 
     public function edit($id)
     {
-        $this->reset(['name', 'project_id', 'file_id','status', 'variable']);
+        $this->reset(['name', 'project_id', 'file_id','status', 'variable','variable_id']);
         $this->variable = Variable::find($id);
+        $this->variable_id = $this->variable->id;
         $this->name = $this->variable->name;
         $this->status =  $this->variable->status == 2 ? 1 : 0;
         $this->file_id = $this->variable->file_id;
@@ -53,7 +55,7 @@ class VariableModal extends Component
 
     public function openModal()
     {
-        $this->reset(['name', 'project_id', 'file_id','status', 'variable']);
+        $this->reset(['name', 'project_id', 'file_id','status', 'variable','variable_id']);
         $this->open = true;
     }
     public function closeModal()
@@ -63,7 +65,7 @@ class VariableModal extends Component
 
     public function resetInputDefaults()
     {
-        $this->reset(['open', 'name', 'project_id', 'file_id','status', 'variable']);
+        $this->reset(['open', 'name', 'project_id', 'file_id','status', 'variable','variable_id']);
     }
 
 }

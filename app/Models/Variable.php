@@ -26,7 +26,7 @@ class Variable extends Model
     //Relacion uno a muchos 
     public function groups()
     {
-        return $this->hasMany(Groups::class);
+        return $this->hasMany(Group::class);
     }
 
 }

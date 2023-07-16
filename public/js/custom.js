@@ -5,7 +5,3 @@ function alert(title, message){
         'success'
     )
 }
-
-function dangerAlert(component,funcion,variable){
-
-}

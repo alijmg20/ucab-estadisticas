@@ -23,7 +23,7 @@ class GraphicDetails extends Component
 
     protected $queryString = [
         'cantGraphicDetails' => ['except' => '10'],
-        'sortGraphicDetails'  => ['except' => 'name'],
+        'sortGraphicDetails'  => ['except' => 'id'],
         'directionGraphicDetails'  => ['except' => 'asc'],
         'searchGraphicDetails' => ['except' => '']
     ];

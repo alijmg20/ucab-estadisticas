@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('value');
-            $table->integer('position');
+            $table->integer('value');
+            $table->unsignedBigInteger('position');
+            $table->enum('status',[1,2])->default(2); //1 No publicado //2 publicado
             $table->unsignedBigInteger('variable_id');
             
             $table->foreign('variable_id')
-                  ->references('id')
-                  ->on('variable')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('variables')
+                ->onDelete('cascade')
+                ->onUpdate(' cascade');
         });
     }
 

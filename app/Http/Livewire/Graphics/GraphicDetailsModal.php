@@ -29,13 +29,10 @@ class GraphicDetailsModal extends Component
 
     public function calcMaxOrMin($variable, $direction)
     {
-        $calc = Data::select('value', DB::raw('count(*) as y'))
-        ->where('variable_id', $variable)
-        ->groupBy('value')
-        ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-        ->orderBy('y',$direction)
-        ->pluck('y','value')
-        ->toArray();
+        $calc = $this->variable->groups()
+            ->orderBy('value', $direction)
+            ->pluck('value','name')
+            ->toArray();
         $value = reset($calc);
         $total = $this->sumArray($calc);
         $percentage = $this->percentage($value,$total);

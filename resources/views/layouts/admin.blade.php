@@ -31,6 +31,7 @@
     <script src="{{ asset('js/init-alpine.js') }}"></script>
     <script src="{{ asset('js/focus-trap.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/graphics.js') }}"></script>
     <script src="{{ asset('vendor/toastr/toastr.js') }}"></script>
     <script src="{{ asset('js/show_alerts.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert2/sweetalert2@11.js') }}"></script>

@@ -52,14 +52,7 @@ class GraphicController extends Component
         $variables = $this->variables;
         $variablesActive = [];
         foreach($variables as $variable){
-            $variables_get = Data::select('value', DB::raw('count(*) as y'))
-            ->where('variable_id', $variable->id)
-            ->groupBy('value')
-            ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-            ->orderBy('value', 'asc')
-            ->pluck('y', 'value')
-            ->toArray();
-            if(count($variables_get) < 15){
+            if($variable->groups){
                 $variablesActive[] = $variable;
             }
         }

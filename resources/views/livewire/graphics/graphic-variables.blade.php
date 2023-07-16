@@ -28,4 +28,32 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('groupAlert', (title, message) => {
+                alert(title, message)
+            });
+            Livewire.on('groupDelete', (group) => {
+                Swal.fire({
+                    title: '¿Estas seguro?',
+                    text: "¡Esta acción es irreversible!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, estoy seguro!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo("groups.group-controller", "delete", group);
+                        Swal.fire(
+                            'Eliminado!',
+                            "Se ha sido eliminado.",
+                            'success'
+                        )
+                    }
+                })
+            });
+        });
+    </script>
 </div>
