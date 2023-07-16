@@ -21,18 +21,8 @@
                 <th class="px-4 py-3">
                     Valor
                 </th>
-                <th class="cursor-pointer px-4 py-3" wire:click='order("position")'>
-                    orden
-                    {{-- SORT --}}
-                    @if ($sortGroup == 'position')
-                        @if ($directionGroup == 'asc')
-                            <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                        @else
-                            <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                        @endif
-                    @else
-                        <i class="fas fa-sort float-right"></i>
-                    @endif
+                <th class="cursor-pointer px-4 py-3" {{--wire:click='order("position")'--}}>
+                    Posición
                 </th>
                 {{-- <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>
                     estado
@@ -75,16 +65,20 @@
                             {{-- <td class="cursor-pointer px-4 py-3 text-sm">{{ $group->status == 1 ? 'No Publicado' : 'Publicado' }}</td> --}}
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
-                                    <button wire:click=''
+                                    @if($group->position > 0)
+                                    <button wire:click='upPosition({{$group->id}})'
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="chevron-up">
                                         <i class="fas fa-chevron-up"></i>
                                     </button>
-                                    <button wire:click=''
+                                    @endif
+                                    @if($group->position < $cantgroups)
+                                    <button wire:click='downPosition({{$group->id}})'
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="chevron-down">
                                         <i class="fas fa-chevron-down"></i>
                                     </button>
+                                    @endif
                                     <button wire:click='$emitTo("groups.group-modal","edit",{{ $group->id }})'
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit">

@@ -14,7 +14,7 @@ class GroupController extends Component
     public $searchGroup = '';
     public $sortGroup = 'position';
     public $directionGroup = 'asc';
-    public $entrysGroup = [2, 5, 10, 15], $cantGroup = '5';
+    public $entrysGroup = [2, 5, 10, 15], $cantGroup = '15';
     public $readyToLoad = false;
 
     public $variable;
@@ -23,7 +23,7 @@ class GroupController extends Component
     protected $listeners = ['render', 'delete'];
 
     protected $queryString = [
-        'cantGroup' => ['except' => '5'],
+        'cantGroup' => ['except' => '15'],
         'sortGroup'  => ['except' => 'position'],
         'directionGroup'  => ['except' => 'asc'],
         'searchGroup' => ['except' => '']
@@ -60,11 +60,13 @@ class GroupController extends Component
                 })
                 ->orderBy($this->sortGroup, $this->directionGroup)
                 ->paginate($this->cantGroup, ['*'], 'groupsPage');
+            $cantgroups = Group::where('variable_id', $this->variable->id)->count() - 1;
         } else {
             $groups = [];
+            $cantgroups = 0;
         }
         $this->groups = $groups;
-        return view('livewire.groups.group-controller', compact('groups'));
+        return view('livewire.groups.group-controller', compact('groups','cantgroups'));
     }
 
     public function order($sort)
@@ -101,4 +103,41 @@ class GroupController extends Component
         $this->emitTo('graphics.graphic', 'render');
         $this->emitTo('graphics.graphic', 'loadGraphic');
     }
+
+    public function upPosition($id){
+        $groupUp = Group::find($id);
+        $groupAux = Group::where('variable_id',$groupUp->variable_id)
+                    ->where('position',$groupUp->position - 1)
+                    ->get();
+        $groupDown = $groupAux[0];
+        $aux = $groupDown->position;
+        $groupDown->position = $groupUp->position;
+        $groupUp->position = $aux;
+        $groupUp->save();
+        $groupDown->save();
+        $this->emitTo('graphics.graphic-controller', 'render');
+        $this->emitTo('graphics.graphic-variables','render');
+        $this->emitTo('graphics.graphic-details', 'render');
+        $this->emitTo('graphics.graphic', 'render');
+        $this->emitTo('graphics.graphic', 'loadGraphic');
+    }
+
+    public function downPosition($id){
+        $groupDown = Group::find($id);
+        $groupAux = Group::where('variable_id',$groupDown->variable_id)
+                    ->where('position',$groupDown->position + 1)
+                    ->get();
+        $groupUp = $groupAux[0];
+        $aux = $groupUp->position;
+        $groupUp->position = $groupDown->position;
+        $groupDown->position = $aux;
+        $groupUp->save();
+        $groupDown->save();
+        $this->emitTo('graphics.graphic-controller', 'render');
+        $this->emitTo('graphics.graphic-variables','render');
+        $this->emitTo('graphics.graphic-details', 'render');
+        $this->emitTo('graphics.graphic', 'render');
+        $this->emitTo('graphics.graphic', 'loadGraphic');
+    }
+
 }
