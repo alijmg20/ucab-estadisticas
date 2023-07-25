@@ -3,11 +3,8 @@
 namespace App\Http\Livewire\Project;
 
 use App\Helpers\Tools;
-use App\Models\Line;
 use App\Models\Project;
-use App\Models\User;
 use Livewire\Component;
-use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 class ProjectController extends Component
@@ -31,17 +28,6 @@ class ProjectController extends Component
     protected $users = [];
 
     protected $listeners = ['render','delete'];
-
-    protected $rules = [
-        'project.name' => 'required',
-        'project.description' => 'required',
-        'project.status' => 'required',
-        'project.slug' => 'required||unique:projects,slug',
-        'user_id' => 'required',
-        'project.line_id' => 'required',
-        'project.image' => 'required',
-        'project.image.url' => 'required',
-    ];
 
     protected $queryString = [
         'cant' => ['except' => '10'], 
@@ -68,10 +54,6 @@ class ProjectController extends Component
         $this->resetPage('projectsPage');
     }
 
-    public function updatingSearchUserEdit(){
-        $this->resetPage('usersPage');
-    }
-
     public function render()
     {
         if($this->readyToLoad){
@@ -87,12 +69,8 @@ class ProjectController extends Component
         }else{
             $projects = [];
         }
-        $users = $this->users = User::where('id','like','%'.$this->searchUserEdit.'%')
-            ->orwhere('name','like','%'.$this->searchUserEdit.'%')
-            ->paginate(5, ['*'], 'usersPage');
-        $this->lines = Line::all();
         $this->projects = $projects;
-        return view('livewire.project.project-controller', compact('projects','users'));
+        return view('livewire.project.project-controller', compact('projects'));
     }
 
     public function order($sort)
@@ -109,46 +87,10 @@ class ProjectController extends Component
         }
     }
 
-    public function edit($id)
-    {
-        $this->project = Project::find($id);
-        $this->users_id = $this->project->users()
-        ->pluck('user_id')
-        ->all();
-        $this->open_edit = true;
-    }
-
-    public function update()
-    {
-        
-        $this->validate();
-
-        if ($this->file) {
-            Tools::DeleteStorageUrl($this->project->image->url);
-            $this->project->image->url = $this->file->store('projects');
-            $this->project->image->save();
-        }
-
-        if (is_array($this->users_id) && count($this->users_id)) {
-            $this->project->users()->sync($this->users_id);
-        }
-
-        $this->project->save();
-
-        $this->resetInputDefaults();
-        $this->emit('projectAlert', 'terminado!', 'Proyecto actualizado exitosamente');
-
-    }
-
     public function delete($id){
         $project = Project::find($id);
         Tools::DeleteStorageUrl($project->image->url);
         $project->delete();
-    }
-
-    public function generateSlug()
-    {
-        $this->project->slug = Str::slug($this->project->name);
     }
 
     public function goFiles($id){

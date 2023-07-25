@@ -13,6 +13,7 @@ class FileController extends Component
     public $search = '';
     public $sort = 'id';
     public $direction = 'desc';
+    public $content = 1;
     public $entrys = [2,5,10,20,50,100], $cant = '10';
     public $readyToLoad = false;
 

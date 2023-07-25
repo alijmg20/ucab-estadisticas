@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory('carrusel');
         Storage::deleteDirectory('lines');
         Storage::makeDirectory('lines');
+        Storage::deleteDirectory('attachments');
+        Storage::makeDirectory('attachments');
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(LineSeeder::class);

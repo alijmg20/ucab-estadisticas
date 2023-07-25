@@ -5,20 +5,30 @@
     <x-dialog-modal id="ProjectModal" wire:model='open'>
         <x-slot name="title">
             <div class="container">
+            @if ($project)
+                Editar Proyecto
+            @else
                 Nuevo Proyecto
-                <span wire:click='closeModal' class="float-right text-gray-500 text-2xl cursor-pointer">&times;</span> <!-- Botón de cierre -->
+            @endif
+                <span wire:click='closeModal' class="float-right text-gray-500 text-2xl cursor-pointer">&times;</span>
+                <!-- Botón de cierre -->
             </div>
         </x-slot>
 
         <x-slot name="content">
             <div class="container mt-4 mb-4">
-                <x-alert-loading-danger wire:loading wire:target='file'>
+                <x-alert-loading-danger class="mb-4" wire:loading wire:target='file'>
                     <x-slot name="title">Imagen Cargando!</x-slot>
                     <x-slot name="subtitle">Espere que la imagen termine de cargar</x-slot>
                 </x-alert-loading-danger>
                 @if ($file)
                     <div class="min-w-full">
                         <img id="picture" src="{{ $file->temporaryUrl() }}" alt="">
+                    </div>
+                @elseif($project && optional($project->image)->url)
+                    <div class="min-w-full">
+                        <img id="picture" src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}"
+                            alt="">
                     </div>
                 @endif
             </div>
@@ -93,8 +103,7 @@
                                         {{ $user->name }}
                                     </td>
                                     <td class="px-6 py-3 text-sm">
-                                        <x-checkbox wire:model="users_id"
-                                            value="{{ $user->id }}" />
+                                        <x-checkbox wire:model="users_id" value="{{ $user->id }}" />
                                     </td>
                                 </tr>
                             @endif
@@ -122,10 +131,17 @@
             <x-secondary-button class="mr-2" wire:click="closeModal()">
                 Cancelar
             </x-secondary-button>
-            <x-primary-button wire:click="save()" wire:loading.attr='disabled' wire:target="save,file"
-                class="bg-blue-500 disabled:opacity-25">
-                Crear
-            </x-primary-button>
+            @if ($project)
+                <x-primary-button wire:click="update()" wire:loading.attr='disabled' wire:target="update,file"
+                    class="bg-blue-500 disabled:opacity-25">
+                    Actualizar
+                </x-primary-button>
+            @else
+                <x-primary-button wire:click="save()" wire:loading.attr='disabled' wire:target="save,file"
+                    class="bg-blue-500 disabled:opacity-25">
+                    Crear
+                </x-primary-button>
+            @endif
         </x-slot>
     </x-dialog-modal>
 

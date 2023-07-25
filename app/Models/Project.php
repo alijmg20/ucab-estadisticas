@@ -10,18 +10,23 @@ class Project extends Model
     use HasFactory;
     protected $guarded = ['id','created_at','updated_at'];
 
-
+    //Relacion uno a muchos con attachment(inversa)
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }    
+    
     //Relacion uno a muchos con variable(inversa)
     public function variables()
     {
         return $this->hasMany(Variable::class);
     }    
 
-        //Relacion uno a muchos con registros(inversa)
-        public function registers()
-        {
-            return $this->hasMany(Register::class);
-        }    
+    //Relacion uno a muchos con registros(inversa)
+    public function registers()
+    {
+        return $this->hasMany(Register::class);
+    }    
 
     //Relacion muchos a muchos con users
     public function users()
@@ -52,7 +57,7 @@ class Project extends Model
 
     public function getRouteKeyName()   
     {
-        return 'slug';
+        return 'id';
     }
 
 }

@@ -1,164 +1,53 @@
 <div wire:init='loadProjectFiles'>
     <div class="container mx-auto px-8 sm:px-8">
         <h1 class="mt-4 text-3xl text-left dark:text-gray-400">
-            Archivos del proyecto #{{ $project->id }} {{ $project->name }}
+            Proyecto #{{ $project->id }} {{ $project->name }}
         </h1>
     </div>
-    <div class="container mx-auto px-4 sm:px-8">
-        <div class="py-8">
-            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="inline-block w-full shadow rounded-lg overflow-hidden">
-                    <div class="px-6 py-4 flex flex-items-center">
-                        <div class="flex items-center">
-                            <span class="mr-2 text-gray-700 dark:text-gray-400">Mostrar</span>
-                            <x-select-dropdown class="mx-2" wire:model.def='cant'>
-                                @foreach ($entrys as $entry)
-                                    <option value="{{ $entry }}">{{ $entry }}</option>
-                                @endforeach
-                            </x-select-dropdown>
-                            <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
-                        </div>
-                        <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='search'></x-input>
-                        @livewire('file.file-modal', ['project' => $project])
-                    </div>
+    <div x-data="{ activeTab: 1 }" class="container mx-auto px-4 sm:px-8">
+        <ul
+            class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+            <li wire:click="$set('content',1)" class="w-full">
+                <a x-on:click.prevent="activeTab = 1"
+                    :class="{
+                        'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
+                            1,
+                        'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
+                            1
+                    }"
+                    href="#">Información</a>
+            </li>
+            <li wire:click="$set('content',2)" class="w-full">
+                <a x-on:click.prevent="activeTab = 2"
+                    :class="{
+                        'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
+                            2,
+                        'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
+                            2
+                    }"
+                    href="#">Bases de datos</a>
+            </li>
+            <li wire:click="$set('content',3)" class="w-full">
+                <a x-on:click.prevent="activeTab = 3"
+                    :class="{
+                        'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
+                            3,
+                        'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
+                            3
+                    }"
+                    href="#">Adjuntos</a>
+            </li>
+        </ul>
 
-                    <x-table>
-                        <x-slot name="headers">
-                            <th class="cursor-pointer px-4 py-3" wire:click='order("id")'>
-                                ID
-                                {{-- SORT --}}
-                                @if ($sort == 'id')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                                    @else
-                                        <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                                    @endif
-                                @else
-                                    <i class="fas fa-sort float-right"></i>
-                                @endif
-                            </th>
-                            <th class="cursor-pointer px-4 py-3" wire:click='order("name")'>
-                                Nombre
-                                {{-- SORT --}}
-                                @if ($sort == 'name')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                                    @else
-                                        <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                                    @endif
-                                @else
-                                    <i class="fas fa-sort float-right"></i>
-                                @endif
-                            </th>
-                            <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>
-                                estado
-                                {{-- SORT --}}
-                                @if ($sort == 'status')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                                    @else
-                                        <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                                    @endif
-                                @else
-                                    <i class="fas fa-sort float-right"></i>
-                                @endif
-                            </th>
-                            <th class="cursor-pointer px-4 py-3" wire:click='order("created_at")'>
-                                Fecha de creación
-                                {{-- SORT --}}
-                                @if ($sort == 'created_at')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt float-right"></i>
-                                    @else
-                                        <i class="fas fa-sort-alpha-down-alt float-right"></i>
-                                    @endif
-                                @else
-                                    <i class="fas fa-sort float-right"></i>
-                                @endif
-                            </th>
-                            <th class="px-4 py-3">
-                                Acciones
-                            </th>
-                        </x-slot>
-                        <x-slot name="body">
-                            @if ($files && count($files) == 0)
-                                <tr>
-                                    <td colspan="5" class="px-6 py-4 text-center">
-                                        <div class="container mt-4 mb-4">
-                                            <x-alert-loading-danger>
-                                                <x-slot name="title">¡No existen archivos del proyecto!</x-slot>
-                                                <x-slot name="subtitle">Agregue nuevos archivos en el botón <b>NUEVA</b>
-                                                </x-slot>
-                                            </x-alert-loading-danger>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @elseif ($files && count($files))
-                                @foreach ($files as $fil)
-                                    <tr
-                                        class="cursor-pointer text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
-
-                                        <td class="px-6 py-3 text-sm">
-                                            <a href="{{ route('admin.files.showfile', $fil) }}">
-                                                {{ $fil->id }}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <a href="{{ route('admin.files.showfile', $fil) }}">
-                                                {{ $fil->name }}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <a href="{{ route('admin.files.showfile', $fil) }}">
-                                                {{ $fil->status == 1 ? 'No Publicado' : 'Publicado' }}
-                                        </td>
-                                        </a>
-                                        <td class="px-6 py-3 text-sm">
-                                            <a href="{{ route('admin.files.showfile', $fil) }}">
-                                                {{ $fil->created_at }}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center space-x-4 text-sm">
-                                                <a href="{{ route('admin.files.showfile', $fil) }}"
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="View">
-                                                    <i class="far fa-eye"></i>
-                                                </a>
-                                                <button
-                                                    wire:click='$emitTo("file.file-modal","edit",{{ $fil->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Edit">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                                <button wire:click='$emit("fileDelete",{{ $fil->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="5" class="px-6 py-4 text-center">
-                                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                            role="status">
-                                            <span
-                                                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endif
-                        </x-slot>
-                    </x-table>
-                    @if ($files && count($files) && $files->hasPages())
-                        <div class="px-6 py-3">
-                            {{ $files->links() }}
-                        </div>
-                    @endif
-                </div>
+        <div>
+            <div x-show="activeTab === 1">
+                @livewire('project.project-edit', ['project' => $project->id])
+            </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 2">
+                @include('livewire.file._partials.fileControllerTable')
+            </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 3">
+                @livewire('attachment.attachment-controller', ['project' => $project->id])
             </div>
         </div>
     </div>
