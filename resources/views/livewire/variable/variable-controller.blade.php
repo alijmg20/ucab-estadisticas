@@ -15,6 +15,9 @@
         </div>
         <x-table>
             <x-slot name="headers">
+                <th class="px-4 py-3">
+                    Selección
+                </th>
                 <th class="cursor-pointer px-4 py-3" wire:click='order("id")'>
                     ID
                     {{-- SORT --}}
@@ -73,6 +76,11 @@
                 @elseif ($variables && count($variables))
                     @foreach ($variables as $var)
                         <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <td>
+                                <div class="flex justify-center items-center">
+                                 <input id="default-checkbox-{{ $var->id }}" type="checkbox" value="" @if ($var->status == 2) checked @endif wire:click="status({{ $var->id }})" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                </div>
+                            </td>
                             <td class="px-6 py-3 text-sm">{{ $var->id }}</td>
                             <td class="prose truncate px-4 py-3">{{ $var->name }}</td>
                             <td class="cursor-pointer px-4 py-3 text-sm">

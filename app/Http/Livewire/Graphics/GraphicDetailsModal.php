@@ -11,7 +11,7 @@ class GraphicDetailsModal extends Component
 {
     public $open = false;
     public $variable; //variable recibida
-    protected $listeners = ['openModal'];
+    protected $listeners = ['openModal','render'];
     public $max = [], $min = [];
     public function render()
     {

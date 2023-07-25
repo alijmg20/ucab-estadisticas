@@ -25,7 +25,7 @@
                 <x-slot name="body">
                     @if ($registers && count($registers))
                         @foreach ($registers as $regis)
-                            <tr  class="cursor-pointer text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <tr  class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 @foreach ($regis->datos as $item)
                                     <td class="px-6 py-3 text-sm">
                                         {{ $item }}

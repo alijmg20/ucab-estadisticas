@@ -82,6 +82,14 @@ class VariableController extends Component
         }
     }
 
+    public function status($id){
+        $variable = Variable::find($id);
+        $variable->status = $variable->status == 2 ? 1 : 2;
+        $variable->save();
+        $this->emitTo('graphics.graphic-controller','render');
+        $this->emitTo('graphics.graphic-details','render');
+    }
+
     public function delete($id){
         $variable = Variable::find($id);
         $data = Register::where('file_id',$variable->file_id)->get();
@@ -100,6 +108,7 @@ class VariableController extends Component
         
         $this->emitTo('graphics.graphic-controller','render');
         $this->emitTo('graphics.graphic-variables','render');
+        $this->emitTo('graphics.graphic-details','render');
     }
 
 }
