@@ -1,6 +1,6 @@
 <div wire:init='loadProjectFiles'>
     <div class="container mx-auto px-8 sm:px-8">
-        <h1 class="mt-4 text-3xl text-left dark:text-gray-400">
+        <h1 class="mt-4 mb-4 text-3xl text-left dark:text-gray-400">
             Proyecto #{{ $project->id }} {{ $project->name }}
         </h1>
     </div>

@@ -80,7 +80,7 @@
                     </div>
                   </div>
                 </div> --}}
-                <a href="{{route('lines.index')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Sobre Nosotros')}}</a>    
+                <a href="{{route('lines.index')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Lineas de Investigación')}}</a>    
                 <a href="{{route('about')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Sobre Nosotros')}}</a>    
                 <a href="{{route('contact')}}" class="text-black hover:bg-gray-100 hover:text-black px-3 py-2 rounded-md text-sm font-medium">{{__('Contacto')}}</a>    
             </div>
