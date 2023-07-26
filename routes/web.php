@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CarruselController;
 use App\Http\Controllers\Admin\EmailsController;
 use App\Http\Controllers\Admin\FilesController;
 use App\Http\Controllers\Admin\LineController;
+use App\Http\Controllers\Admin\OpenaiController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\TestimonialsController;
@@ -15,7 +16,6 @@ use App\Http\Controllers\Front\FileController as FrontFileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\LineController as FrontLineController;
 use App\Http\Controllers\Front\ProjectController as FrontProjectController;
-use App\Http\Livewire\File\FileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,5 +51,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/admin/files/{project}', [FilesController::class,'show'])->name('admin.files.show');
     Route::get('/admin/showfile/{file}', [FilesController::class,'showfile'])->name('admin.files.showfile');
     Route::get('/admin/projects', [ProjectController::class,'index'])->name('admin.projects.index');
+
+    Route::get('/admin/openai', [OpenaiController::class,'index'])->name('admin.openai.index');
     
 });
