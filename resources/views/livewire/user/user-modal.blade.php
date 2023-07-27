@@ -84,10 +84,17 @@
             <x-secondary-button class="mr-2" wire:click="closeModal()">
                 Cancelar
             </x-secondary-button>
-            <x-primary-button wire:click="save()" wire:loading.attr='disabled' wire:target="save"
+            @if ($user)
+            <x-primary-button wire:click='update()' wire:loading.attr='disabled' wire:target="update"
                 class="bg-blue-500 disabled:opacity-25">
-                {{$user ?  'actualizar' : 'Crear'}}
+                actualizar
             </x-primary-button>
+            '@else
+            <x-primary-button wire:click='save()' wire:loading.attr='disabled' wire:target="save"
+                class="bg-blue-500 disabled:opacity-25">
+                Crear
+            </x-primary-button>
+            @endif
         </x-slot>
     </x-dialog-modal>
 
