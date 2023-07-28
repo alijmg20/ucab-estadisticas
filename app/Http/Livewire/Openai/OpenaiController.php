@@ -18,6 +18,11 @@ class OpenaiController extends Component
         return view('livewire.openai.openai-controller');
     }
 
+    public function spinner()
+    {
+        $this->emit('spinnerOn');
+    }
+
     public function sendMessage()
     {
         $this->validate();

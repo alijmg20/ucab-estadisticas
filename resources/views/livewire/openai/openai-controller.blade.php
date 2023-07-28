@@ -1,4 +1,5 @@
 <div>
+    <x-loading/>
     <div class="flex h-screen antialiased text-gray-800">
         <div class="flex flex-row h-full w-full overflow-x-hidden">
             <div class="flex flex-col flex-auto h-full p-6">
@@ -43,12 +44,12 @@
                     <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
                         <div class="flex-grow ml-4">
                             <div class="relative w-full">
-                                <input wire:model="message" wire:keydown.enter="sendMessage" type="text"
+                                <input wire:model="message" wire:keydown.enter="spinner()" type="text"
                                     class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10" />
                             </div>
                         </div>
                         <div class="ml-4">
-                            <button wire:loading.attr='disabled' wire:target="sendMessage" wire:click="sendMessage"
+                            <button wire:loading.attr='disabled' wire:target="sendMessage" wire:click="spinner()"
                                 class="disabled:opacity-25 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0 ">
                                 <span>Send</span>
                                 <span class="ml-2">
@@ -65,4 +66,18 @@
             </div>
         </div>
     </div>
+    <script>
+        function spinner() {
+            $('.spinner').addClass('loading-spinner');
+            $('.loading-overlay').removeClass('hidden');
+            $('.spinner').addClass('flex');
+            $('.loading-overlay').addClass('flex');
+        }
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('spinnerOn', () => {
+                spinner();
+                @this.sendMessage();
+            });
+        });
+    </script>
 </div>
