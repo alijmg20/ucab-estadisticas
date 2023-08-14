@@ -5,7 +5,7 @@ namespace App\Http\Livewire\File;
 use App\Helpers\Tools;
 use App\Models\Data;
 use App\Models\File;
-use App\Models\Group;
+use App\Models\Frequency;
 use App\Models\Register;
 use App\Models\Variable;
 use Illuminate\Support\Facades\DB;
@@ -81,7 +81,7 @@ class FileModal extends Component
             $variables = $this->addVariables($filaVariable, $file);
             $registers = $this->addRegisters($sheet, $file, $variables);
             $this->addData($sheet, $variables, $registers);
-            $this->addGroups($variables);
+            $this->addFrequencies($variables);
         }
         $this->emit('fileAlert', 'terminado!', $this->file ? 'Archivo editado exitosamente' : 'Archivo creado exitosamente');
         $this->resetInputDefaults();
@@ -138,7 +138,7 @@ class FileModal extends Component
         }
     }
 
-    private function addGroups($variables)
+    private function addFrequencies($variables)
     {
         foreach ($variables as $variable) {
             $variable_get = Data::select('value', DB::raw('count(*) as y'))
@@ -150,10 +150,10 @@ class FileModal extends Component
             if (count($variable_get) < 15 /*15 corresponde a un numero maximo para mostrar en el grafico*/) {
                 $i = 0;
                 foreach ($variable_get as $group) {
-                    Group::create([
+                    Frequency::create([
                         'name'  => $group->value,
                         'value' => $group->y,
-                        'position' => $i,
+                        'position' => $i+1,
                         'variable_id' => $variable->id,
                     ]);
                     $i++;

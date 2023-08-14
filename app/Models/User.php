@@ -62,16 +62,6 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function adminlte_image()
-    {
-        return auth()->user()->profile_photo_url;
-    }
-
-    public function adminlte_profile_url()
-    {
-        return route('profile.show');
-    }
-
     //Relacion muchos a muchos con projects (proyectos) 
 
     public function projects()
@@ -88,5 +78,10 @@ class User extends Authenticatable
     public function testimonial()
     {
         return $this->hasMany(Testimonial::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

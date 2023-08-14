@@ -16,6 +16,22 @@
     @apply bg-green-100 border border-green-400 text-green-700 !important;
 }
 
+.input-quiz{
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.border-t-3 {
+    border-top-width: 3px;
+  }
+  
+  .border-blue-500 {
+    border-color: #3b82f6;
+  }
+
 .prose {
     white-space: pre-wrap !important;
 }

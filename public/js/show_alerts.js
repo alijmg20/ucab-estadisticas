@@ -21,6 +21,20 @@ const toastRight = (tipo, mensaje) => {
     });
 }
 
+const toastLeftBottom = (tipo, mensaje) => {
+    toastr.options.timeOut = "false";
+    toastr.options.closeButton = true;
+    toastr.options = {
+        "timeOut": "5000",
+        "tapToDismiss": false,
+    };
+
+    toastr.remove();
+    toastr[tipo](mensaje, '', {
+        positionClass: 'toast-bottom-left'
+    });
+}
+
 const toastRightBottom = (tipo, mensaje) => {
     toastr.options.timeOut = "false";
     toastr.options.closeButton = true;

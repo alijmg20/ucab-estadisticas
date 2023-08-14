@@ -29,7 +29,7 @@ class GraphicDetailsModal extends Component
 
     public function calcMaxOrMin($variable, $direction)
     {
-        $calc = $this->variable->groups()
+        $calc = $this->variable->frequencies()
             ->orderBy('value', $direction)
             ->pluck('value','name')
             ->toArray();

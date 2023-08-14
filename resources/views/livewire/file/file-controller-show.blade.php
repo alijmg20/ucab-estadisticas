@@ -58,13 +58,11 @@
         <div>
             <div x-show="activeTab === 1">@include('livewire.file._partials.fileTable')</div>
             <div class="mt-4 mb-4" x-show="activeTab === 2"> 
-                {{-- @livewire('graphics.graphic-variables', ['file' => $file])  --}}
                 @livewire('variable.variable-controller', ['file' => $file])
             </div>
             <div class="mt-4 mb-4" x-show="activeTab === 3"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
             <div class="mt-4 mb-4" x-show="activeTab === 4">@livewire('graphics.graphic-details', ['file' => $file]) </div>
         </div>
-        {{-- <div style="display: none">@livewire('variable.variable-controller', ['file' => $file])</div> --}}
     </div>
 
     <script>

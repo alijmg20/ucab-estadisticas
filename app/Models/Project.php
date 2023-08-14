@@ -15,6 +15,12 @@ class Project extends Model
     {
         return $this->hasMany(Attachment::class);
     }    
+
+    //Relacion uno a muchos con quizzes(inversa)
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }    
     
     //Relacion uno a muchos con variable(inversa)
     public function variables()
@@ -57,7 +63,7 @@ class Project extends Model
 
     public function getRouteKeyName()   
     {
-        return 'id';
+        return 'slug';
     }
 
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FilesController;
 use App\Http\Controllers\Admin\LineController;
 use App\Http\Controllers\Admin\OpenaiController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\TestimonialsController;
 use App\Http\Controllers\Admin\UserController;
@@ -51,6 +52,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/admin/files/{project}', [FilesController::class,'show'])->name('admin.files.show');
     Route::get('/admin/showfile/{file}', [FilesController::class,'showfile'])->name('admin.files.showfile');
     Route::get('/admin/projects', [ProjectController::class,'index'])->name('admin.projects.index');
+
+    Route::get('/admin/quiz/{quiz}', [QuizController::class,'edit'])->name('admin.quiz.edit');
 
     Route::get('/admin/openai', [OpenaiController::class,'index'])->name('admin.openai.index');
     

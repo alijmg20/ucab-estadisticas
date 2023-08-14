@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('slug');
             $table->enum('status',[1,2])->default(1); //1 No publicado //2 publicado
             $table->timestamps();
+            $table->timestamp('date_end')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('line_id')->nullable();
             

@@ -36,16 +36,12 @@
                 <x-input-error for="status" />
             </div>
             @if ($file)
-                <div class="container mt-4 mb-4">
+                {{-- <div class="container mt-4 mb-4">
                     <x-alert-loading-danger>
                         <x-slot name="title">Los datos del archivo no son editables</x-slot>
                         <x-slot name="subtitle">Puede eliminarlo y volverlo a cargar</x-slot>
                     </x-alert-loading-danger>
-                </div>
-                <div class="container mt-4 mb-4">
-                    <x-label class="mb-4" value="Editar nombre de variables" />
-                    @livewire('variable.variable-controller', ['file' => $file])
-                </div>
+                </div> --}}
             @else
                 <div class="container mt-4">
                     <x-label class="mb-4" value="Archivo del proyecto" />
@@ -71,7 +67,6 @@
                     @endif
                 </div>
             @endif
-
         </x-slot>
 
         <x-slot name="footer">
@@ -97,30 +92,6 @@
             Livewire.on('spinnerOn', () => {
                 spinner();
                 @this.save();
-            });
-            Livewire.on('groupAlert', (title, message) => {
-                alert(title, message)
-            });
-            Livewire.on('groupDelete', (group) => {
-                Swal.fire({
-                    title: '¿Estas seguro?',
-                    text: "¡Esta acción es irreversible!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, estoy seguro!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emitTo("groups.group-controller", "delete", group);
-                        Swal.fire(
-                            'Eliminado!',
-                            "Se ha sido eliminado.",
-                            'success'
-                        )
-                    }
-                })
             });
         });
     </script>

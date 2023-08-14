@@ -25,7 +25,7 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             2
                     }"
-                    href="#">Bases de datos</a>
+                    href="#">Encuestas</a>
             </li>
             <li wire:click="$set('content',3)" class="w-full">
                 <a x-on:click.prevent="activeTab = 3"
@@ -35,6 +35,16 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             3
                     }"
+                    href="#">Bases de datos</a>
+            </li>
+            <li wire:click="$set('content',4)" class="w-full">
+                <a x-on:click.prevent="activeTab = 4"
+                    :class="{
+                        'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
+                            4,
+                        'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
+                            4
+                    }"
                     href="#">Adjuntos</a>
             </li>
         </ul>
@@ -43,10 +53,13 @@
             <div x-show="activeTab === 1">
                 @livewire('project.project-edit', ['project' => $project->id])
             </div>
-            <div class="mt-4 mb-4" x-show="activeTab === 2">
-                @include('livewire.file._partials.fileControllerTable')
+            <div x-show="activeTab === 2">
+                @livewire('quiz.quiz-controller', ['project' => $project->id])
             </div>
             <div class="mt-4 mb-4" x-show="activeTab === 3">
+                @include('livewire.file._partials.fileControllerTable')
+            </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 4">
                 @livewire('attachment.attachment-controller', ['project' => $project->id])
             </div>
         </div>

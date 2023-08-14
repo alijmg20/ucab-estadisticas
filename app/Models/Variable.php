@@ -24,9 +24,9 @@ class Variable extends Model
     }
 
     //Relacion uno a muchos 
-    public function groups()
+    public function frequencies()
     {
-        return $this->hasMany(Group::class);
+        return $this->hasMany(frequency::class);
     }
 
 }

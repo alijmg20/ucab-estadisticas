@@ -35,7 +35,7 @@ class FrontGraphics extends Component
         $variables = $this->variables;
         $variablesActive = [];
         foreach($variables as $variable){
-            if($variable->groups){
+            if($variable->frequencies){
                 $variablesActive[] = $variable;
             }
         }

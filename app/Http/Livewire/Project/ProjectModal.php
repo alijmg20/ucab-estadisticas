@@ -98,7 +98,7 @@ class ProjectModal extends Component
         }
         $project->name = $this->name;
         $project->description = $this->description;
-        $project->slug = $this->slug;
+        $project->slug = Str::slug($project->id.' '.$this->name);
         $project->status = $this->status;
         $project->line_id = $this->line_id;
         
@@ -139,6 +139,8 @@ class ProjectModal extends Component
             'user_id' => $this->user_id,
             'line_id' => $this->line_id,
         ]);
+        $project->slug = Str::slug($project->id.' '.$this->name);
+        $project->save();
         if ($this->file) {
             $project->image()->create([
                 'url' => $file

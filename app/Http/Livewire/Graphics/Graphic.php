@@ -29,7 +29,7 @@ class Graphic extends Component
     public function loadGraphic()
     {
         if ($this->variable) {
-            $variableData = $this->variable->groups()
+            $variableData = $this->variable->frequencies()
             ->orderBy('position', 'asc')
             ->pluck('value','name')
             ->toArray();

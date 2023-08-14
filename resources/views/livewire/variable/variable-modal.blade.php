@@ -42,7 +42,7 @@
             <div class="container mt-4">
                 <x-label class="mb-4" value="Valores de la variable" />
                 @if($variable_id)
-                    @livewire('groups.group-controller',['variable' => $variable_id])
+                    @livewire('frequency.frequency-controller', ['variable' => $variable_id])
                 @endif
             </div>
         </x-slot>
@@ -58,5 +58,32 @@
             </x-primary-button>
         </x-slot>
     </x-dialog-modal>
-
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('frequencyAlert', (title, message) => {
+                alert(title, message)
+            });
+            Livewire.on('frequencyDelete', (frequency) => {
+                Swal.fire({
+                    title: '¿Estas seguro?',
+                    text: "¡Esta acción es irreversible!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, estoy seguro!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo("frequency.frequency-controller", "delete", frequency);
+                        Swal.fire(
+                            'Eliminado!',
+                            "Se ha sido eliminado.",
+                            'success'
+                        )
+                    }
+                })
+            });
+        });
+    </script>
 </div>

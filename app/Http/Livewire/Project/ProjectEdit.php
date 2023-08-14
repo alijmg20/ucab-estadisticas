@@ -89,18 +89,22 @@ class ProjectEdit extends Component
         if (is_array($this->users_id) && count($this->users_id)) {
             $project->users()->sync($this->users_id);
         }
+        $this->name != $project->name ? $redirect = 1 : $redirect = 0;
         $project->name = $this->name;
         $project->description = $this->description;
-        $project->slug = $this->slug;
+        $project->slug = Str::slug($project->id.' '.$this->name);
         $project->status = $this->status;
         $project->line_id = $this->line_id;
-
         $project->save();
-
+        if($redirect){
+            $this->emit('projectAlert', 'terminado!', 'Proyecto actualizado exitosamente');
+            return redirect()->route('admin.files.show',$project);
+        }
         $this->mount($project->id);
         $this->render();
         $this->emitTo('file.file-controller', 'render');
         $this->emit('projectAlert', 'terminado!', 'Proyecto actualizado exitosamente');
+        
     }
 
     public function generateSlug()

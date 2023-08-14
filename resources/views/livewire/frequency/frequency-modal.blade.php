@@ -1,8 +1,8 @@
 <div>
-    <x-dialog-modal id="GroupModal" wire:model='open'>
+    <x-dialog-modal id="FrequencyModal" wire:model='open'>
         <x-slot name="title">
             <div class="container">
-                {{'Editar Grupo'}}
+                {{'Editar Frecuencia'}}
                 <span wire:click='closeModal()' class="float-right text-gray-500 text-2xl cursor-pointer">&times;</span>
                 <!-- Botón de cierre -->
             </div>
@@ -10,12 +10,12 @@
 
         <x-slot name="content">
             <div class="container mt-4">
-                <x-label class="mb-4" value="Nombre del grupo" />
+                <x-label class="mb-4" value="Nombre del frecuencia" />
                 <x-input id="name" wire:model='name' type="text" class="w-full" />
                 <x-input-error for="name" />
             </div>
             <div class="container mt-4">
-                <x-label class="mb-4" value="Valor del grupo" />
+                <x-label class="mb-4" value="Valor del frecuencia" />
                 <x-input id="value" wire:model='value' type="text" class="w-full" />
                 <x-input-error for="value" />
             </div>
