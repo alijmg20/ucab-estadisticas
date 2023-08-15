@@ -16,7 +16,7 @@ class Question extends Component
         ['id' => 2,'type' => 'Opción multiple']
     ];
     protected $choices = [];
-
+    protected $listeners = ['render'];
     
     protected $rules = [
         'name' => 'required',
@@ -33,7 +33,29 @@ class Question extends Component
 
     public function updatedName()
     {
-        $this->dispatchBrowserEvent('updateTextareaHeight');
+        $this->validate(['name' => 'required']);
+        $this->question->name = $this->name;
+        $this->question->save();
+        // $this->emit('updateTextareaContent', $this->name);
+    }
+
+    public function updatedTypequestion()
+    {
+        $this->validate(['typequestion' => 'required']);
+        $this->question->typequestion = $this->typequestion;
+        if($this->question->typequestion == 1){
+            $this->question->choices()->delete();
+            $newChoice = new Choice(['value' => 'Nueva opción']);
+            $this->question->choices()->save($newChoice);
+        }
+        $this->question->save();
+    }
+
+    public function updatedRequired()
+    {
+        $this->validate(['required' => 'required']);
+        $this->question->required = $this->required == true ? 2 : 1;
+        $this->question->save();
     }
 
     public function render()
@@ -42,19 +64,18 @@ class Question extends Component
         return view('livewire.questions.question',compact('choices'));
     }
 
-    public function save($id){
-        $this->validate();
-        $question = ModelsQuestion::find($id);
-        $question->name = $this->name;
-        $question->required = $this->required == true ? 2 : 1;
-        $question->typequestion = $this->typequestion;
-        $question->save();
-        $this->emit('questionAlert', 'success', 'pregunta actualizada ');
-    }
-
     public function delete($id){
-        $question = ModelsQuestion::find($id);
-        $question->delete();
+        $questiond = ModelsQuestion::find($id);
+        if($questiond != null){
+            $questions = ModelsQuestion::where('quiz_id',$this->question->quiz_id)->get();
+            foreach ($questions as $question) {
+                if($questiond->position < $question->position ){
+                    $question->position = (int) $question->position - 1;
+                    $question->save();
+                }else if($questiond->position == $question->position);
+            }
+        }
+        $questiond->delete();
         $this->emit('questionDelete', 'success', 'pregunta eliminada ');
         $this->emitTo('questions.questions-quiz','render');
         $this->render();

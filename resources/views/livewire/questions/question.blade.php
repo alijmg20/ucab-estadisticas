@@ -1,10 +1,11 @@
 <div>
-    <div class="sm:w-full mt-4 mx-6 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transform">
+    <div class="sm:w-full mt-4 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transform">
         <div class="px-6 py-4">
             <div class="text-sm text-gray-600 dark:text-gray-400">
                 <div class="container mt-4 grid md:grid-cols-2 gap-4 md:gap-8">
                     <div>
-                        <textarea placeholder="Pregunta" wire:model.defer='name' x-data x-ref="textarea" x-init="$refs.textarea.addEventListener('input', function() {
+                        <textarea placeholder="Pregunta" wire:model='name' x-data x-ref="textarea" 
+                        x-init="$refs.textarea.addEventListener('input', function() {
                             this.style.height = 'auto';
                             this.style.height = (this.scrollHeight) + 'px';
                         });
@@ -12,17 +13,19 @@
                             $refs.textarea.style.height = 'auto';
                             $refs.textarea.style.height = ($refs.textarea.scrollHeight) + 'px';
                         });"
-                            x-on:input.debounce.300ms="text = $event.target.value"
-                            class="w-full form-control input-quiz min-h-[3rem] max-h-[10rem] resize-none
+                            x-on:input.debounce.100ms="text = $event.target.value"
+                            class="w-full form-control input-quiz min-h-[3rem] max-h-[10rem]
                             border rounded-md p-2 overflow-hidden text-xl"
-                            cols="30" rows="1"></textarea>
+                            cols="30" rows="2"></textarea>
+                        <x-input-error for="name" />
                     </div>
                     <div>
-                        <x-select-dropdown class="w-full" wire:model.def='typequestion'>
+                        <x-select-dropdown class="w-full" wire:model='typequestion'>
                             @foreach ($entrysTypeQuestions as $entry)
                                 <option value="{{ $entry['id'] }}">{{ $entry['type'] }}</option>
                             @endforeach
                         </x-select-dropdown>
+                        <x-input-error for="typequestion" />
                     </div>
                 </div>
                 <div class="container mt-4">
@@ -41,16 +44,6 @@
                 </div>
                 <div class="container text-right mt-4 justify-end inline-flex">
                     <div class="flex items-center space-x-4 text-sm">
-                        <button wire:click='save({{ $question->id }})'
-                            wire:loading.attr='disabled' 
-                            wire:target="save"
-                            class="flex items-center justify-between px-2 py-2 text-sm 
-                            font-medium leading-5 text-green-500 rounded-lg dark:text-gray-400 
-                            focus:outline-none
-                            disabled:opacity-25"
-                            aria-label="Save">
-                            <i class="fas fa-save text-2xl"></i>
-                        </button>
                         <button wire:click='delete({{ $question->id }})'
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-500 rounded-lg dark:text-gray-400 focus:outline-none"
                             aria-label="Delete">
@@ -69,4 +62,5 @@
             </div>
         </div>
     </div>
+
 </div>

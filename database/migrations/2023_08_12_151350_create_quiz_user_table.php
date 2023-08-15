@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('quiz_user', function (Blueprint $table) {
             $table->id();
-            $table->enum('respond',[0,1]); //respondida
+            $table->enum('respond',[1,2]); //respondida
             $table->unsignedBigInteger('quiz_id');
             $table->unsignedBigInteger('user_id')->nullable()->default(0); //-1 eliminado 0 usuario anonimo
             $table->timestamps();

@@ -9,7 +9,6 @@ class Question extends Model
 {
     use HasFactory;
     protected $guarded = ['id','created_at','updated_at'];
-    public $timestamps = false;
     use SoftDeletes; // Agrega esta línea
     //Relacion uno a muchos con projects(proyectos)
     public function quiz()

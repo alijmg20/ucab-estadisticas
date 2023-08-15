@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('value')->nullable();
             $table->unsignedBigInteger('question_id')->nullable()->default(0);
-            $table->integer('position');
             $table->foreign('question_id')
                 ->references('id')
                 ->on('questions')
                 ->onDelete('set null')
-                ->onUpdate('cascade');          
-            $table->softDeletes();  
+                ->onUpdate('cascade');  
+            $table->timestamps();        
         });
     }
 

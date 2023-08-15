@@ -19,7 +19,7 @@ class Quiz extends Model
     //Relacion uno a muchos con preguntas(inversa)
     public function questions()
     {
-        return $this->hasMany(Questions::class);
+        return $this->hasMany(Question::class);
     }    
 
     public function getRouteKeyName()   

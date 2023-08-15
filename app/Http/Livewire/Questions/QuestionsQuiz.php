@@ -28,7 +28,8 @@ class QuestionsQuiz extends Component
     public function render()
     {
         if ($this->readyToLoad) {
-            $questions = Question::where('quizzes_id', $this->quiz->id)
+            $questions = Question::where('quiz_id', $this->quiz->id)
+            ->orderBy('position', 'asc')
             ->get();
         } else {
             $questions = [];
@@ -37,17 +38,21 @@ class QuestionsQuiz extends Component
         return view('livewire.questions.questions-quiz',compact('questions'));
     }
 
-    public function add(){
+    public function add(){ 
+        $this->quiz->questions->count() ? 
+        $position = Question::where('quiz_id', $this->quiz->id)
+        ->orderBy('position', 'desc')->first()->position + 1
+        :$position = 1;
         $question = Question::create([
             'name' => 'Pregunta sin titulo',
-            'quizzes_id' => $this->quiz->id,
-            'position' => 1,
+            'quiz_id' => $this->quiz->id,
+            'position' => $position,
         ]);
         Choice::create([
             'value' => 'Nueva opción',
             'question_id' => $question->id,
-            'position' => 1,
         ]);
         $this->emit('questionAlert', 'success', 'pregunta añadida');
     }
+    
 }

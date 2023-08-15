@@ -91,7 +91,6 @@ class FrequencyController extends Component
             foreach($frequencies as $frequency){
                 if($frequencyd->position < $frequency->position){
                     $frequency->position = (int) $frequency->position - 1;
-                    $frequencies_aux[] = $frequency->position;
                     $frequency->save();
                 }else if($frequencyd->position == $frequency->position);
             }

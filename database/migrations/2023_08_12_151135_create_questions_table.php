@@ -16,13 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->enum('typequestion', [1, 2])->default(1); //1 abierta // 2 cerrada
             $table->enum('required',[1,2])->default(1); //1 no requerido 2 requerido
-            $table->unsignedBigInteger('quizzes_id');
+            $table->unsignedBigInteger('quiz_id');
             $table->integer('position');
-            $table->foreign('quizzes_id')
+            $table->foreign('quiz_id')
                 ->references('id')
                 ->on('quizzes')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

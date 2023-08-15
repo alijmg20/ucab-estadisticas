@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->string('answer_text')->nullable();
             $table->unsignedBigInteger('question_id');
-            $table->unsignedBigInteger('choice_id');
-            $table->unsignedBigInteger('user_id')->nullable()->default(0); //-1 eliminado 0 usuario anonimo
+            $table->unsignedBigInteger('choice_id')->nullable();
+            $table->unsignedBigInteger('quiz_user_id')->nullable()->default(0); //-1 eliminado 0 usuario anonimo
             $table->foreign('question_id')
             ->references('id')
             ->on('questions')
@@ -26,9 +27,9 @@ return new class extends Migration
             ->on('choices')
             ->onDelete('cascade')
             ->onUpdate('cascade');   
-            $table->foreign('user_id')
+            $table->foreign('quiz_user_id')
             ->references('id')
-            ->on('users')
+            ->on('quiz_user')
             ->onDelete('set null')
             ->onUpdate('cascade');
             $table->timestamps();

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\TestimonialsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Front\AboutController;
+use App\Http\Controllers\Front\AnswerController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\FileController as FrontFileController;
 use App\Http\Controllers\Front\HomeController;
@@ -39,6 +40,7 @@ Route::get('/about',[AboutController::class,'index'] )->name('about');
 Route::get('/contact',[ContactController::class,'index'] )->name('contact');
 Route::get('/file/{file}',[FrontFileController::class,'show'] )->name('files.show');
 
+Route::get('/quiz/answer/{quiz}',[AnswerController::class,'answer'] )->name('answer.index');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/admin', [AdminController::class,'index'])->name('admin.home');

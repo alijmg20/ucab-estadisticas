@@ -11,7 +11,7 @@ class QuizEdit extends Component
 
     public $quiz;
     public $name,$description,$status = 0;
-    
+    public $content = 1;
     protected $rules = [
         'name' => 'required',
         'description' => 'required',
@@ -48,6 +48,10 @@ class QuizEdit extends Component
             return redirect()->route('admin.quiz.edit',$this->quiz);
         }
         
+    }
+
+    public function viewquiz(){
+        $this->emitTo('quiz.quiz-share-modal','viewquiz');
     }
 
     public function back(){
