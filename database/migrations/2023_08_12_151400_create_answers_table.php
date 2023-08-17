@@ -13,18 +13,12 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->string('answer_text')->nullable();
+            $table->string('answer')->nullable();
             $table->unsignedBigInteger('question_id');
-            $table->unsignedBigInteger('choice_id')->nullable();
             $table->unsignedBigInteger('quiz_user_id')->nullable()->default(0); //-1 eliminado 0 usuario anonimo
             $table->foreign('question_id')
             ->references('id')
             ->on('questions')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');   
-            $table->foreign('choice_id')
-            ->references('id')
-            ->on('choices')
             ->onDelete('cascade')
             ->onUpdate('cascade');   
             $table->foreign('quiz_user_id')

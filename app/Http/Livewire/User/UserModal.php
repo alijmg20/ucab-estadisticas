@@ -15,7 +15,7 @@ class UserModal extends Component
     public $open = false;
     public $searchRole = '';
 
-    public $name, $email, $password, $password_confirmation, $user;
+    public $name, $email, $password='', $password_confirmation='', $user;
     protected $roles = [];
 
     public $roles_id = [];
@@ -95,13 +95,13 @@ class UserModal extends Component
         if ($this->roles_id && count($this->roles_id)) {
             $this->user->roles()->sync($this->roles_id);
         }
-        if (!empty($this->password) && !empty($this->password_confirmation)) {
+        if (!empty($this->password) || !empty($this->password_confirmation)) {
             if ($this->password === $this->password_confirmation) {
                 $this->user->password = bcrypt($this->password);
-            } else {
+            }else{
                 $this->addError('password', 'Las contraseñas no coinciden');
                 $this->addError('password_confirmation', 'Las contraseñas no coinciden');
-                $validate = false;
+                $validate = false;    
             }
         }
         if ($validate) {

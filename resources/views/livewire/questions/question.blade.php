@@ -1,5 +1,5 @@
 <div>
-    <div class="sm:w-full mt-4 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transform">
+    <div class="border border-gray-300 sm:w-full mt-4 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform">
         <div class="px-6 py-4">
             <div class="text-sm text-gray-600 dark:text-gray-400">
                 <div class="container mt-4 grid md:grid-cols-2 gap-4 md:gap-8">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="container text-right mt-4 justify-end inline-flex">
                     <div class="flex items-center space-x-4 text-sm">
-                        <button wire:click='delete({{ $question->id }})'
+                        <button wire:click.debounce.100ms='delete({{ $question->id }})'
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-500 rounded-lg dark:text-gray-400 focus:outline-none"
                             aria-label="Delete">
                             <i class="fas fa-trash-alt text-xl"></i>

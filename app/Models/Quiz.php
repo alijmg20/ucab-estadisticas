@@ -22,9 +22,19 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }    
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'quiz_user', 'quiz_user_id');
+    }
+
     public function getRouteKeyName()   
     {
         return 'slug';
+    }
+
+    public function quizUser()
+    {
+        return $this->hasMany(QuizUser::class);
     }
 
 }

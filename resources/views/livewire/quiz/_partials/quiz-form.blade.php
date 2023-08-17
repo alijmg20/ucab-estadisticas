@@ -44,10 +44,10 @@
                     <x-input-error for="status" />
                 </div>
                 <div class="flex flex-row justify-end px-6 py-4 text-right">
-                    <x-secondary-button wire:click='back()' class="mr-2">
+                    <x-secondary-button wire:click.debounce.100ms='back()' class="mr-2">
                         volver
                     </x-secondary-button>
-                    <x-button class="bg-green-600 mr-2" wire:click='viewquiz'>Compartir</x-button>
+                    <x-button class="bg-green-600 mr-2" wire:click.debounce.100ms='viewquiz'>Compartir</x-button>
                     <x-primary-button wire:click="save()" wire:loading.attr='disabled' wire:target="save"
                         class="bg-blue-500 disabled:opacity-25">
                         Actualizar

@@ -19,7 +19,7 @@
         border rounded-md p-2 overflow-hidden text-md"
             cols="30" rows="1"></textarea>
         @if ($countChoices > 1)
-            <button wire:click="deleteChoice()"
+            <button wire:click.debounce.100ms="deleteChoice()"
                 wire:loading.attr='disabled' 
                 wire:target="deleteChoice"
                 class="disabled:opacity-25 hover:opacity-80 flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-500 rounded-lg dark:text-gray-400 focus:outline-none"
@@ -28,7 +28,7 @@
             </button>
         @endif
         @if ($lastChoice && $lastChoice->id == $choice->id)
-            <button wire:click='addChoice()'
+            <button wire:click.debounce.100ms='addChoice()'
                 wire:loading.attr='disabled' wire:target="addChoice"
                 class="disabled:opacity-25 hover:opacity-80 flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-500 rounded-lg dark:text-gray-400 focus:outline-none"
                 aria-label="Add">

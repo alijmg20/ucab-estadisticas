@@ -48,7 +48,6 @@ class Graphic extends Component
         if ($this->typeGraphic) {
             $this->variable->graphic_type = $this->typeGraphic;
             $this->variable->save();
-            $this->render();
             $this->loadGraphic();
         }
     }

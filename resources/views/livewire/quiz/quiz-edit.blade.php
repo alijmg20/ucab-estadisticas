@@ -28,7 +28,7 @@
                 @include('livewire.quiz._partials.quiz-form')
             </div>
             <div x-show="activeTab === 2">
-                Respuestas
+                @livewire('answer.answer-controller', ['quiz' => $quiz->id])
             </div>
         </div>
     </div>
