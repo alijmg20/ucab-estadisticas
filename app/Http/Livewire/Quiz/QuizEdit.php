@@ -6,6 +6,9 @@ use App\Models\Project;
 use App\Models\Quiz;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use App\Exports\ExportQuestionsToExcel;
+use App\Models\Question;
+
 class QuizEdit extends Component
 {
 

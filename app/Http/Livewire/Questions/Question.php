@@ -16,7 +16,7 @@ class Question extends Component
         ['id' => 2,'type' => 'Opción multiple']
     ];
     protected $choices = [];
-    protected $listeners = ['render'];
+    protected $listeners = ['render','updateTextarea'];
     
     protected $rules = [
         'name' => 'required',
@@ -36,7 +36,6 @@ class Question extends Component
         $this->validate(['name' => 'required']);
         $this->question->name = $this->name;
         $this->question->save();
-        // $this->emit('updateTextareaContent', $this->name);
     }
 
     public function updatedTypequestion()

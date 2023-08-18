@@ -11,4 +11,7 @@ class AnswerController extends Controller
     public function answer(Quiz $quiz){
         return view('answer.index',compact('quiz'));
     }
+    public function answered(Quiz $quiz){
+        return view('answer.answered',compact('quiz'));
+    }
 }

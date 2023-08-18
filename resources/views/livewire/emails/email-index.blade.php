@@ -136,7 +136,6 @@
     <script>
         document.addEventListener('livewire:load', function() {
             livewire.on('success', data => {
-                console.log('Exito');
                 toastRight('success', 'El mensaje ha sido enviado');
             })
             livewire.on('error', data => {

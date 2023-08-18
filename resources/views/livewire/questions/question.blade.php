@@ -1,11 +1,11 @@
 <div>
-    <div class="border border-gray-300 sm:w-full mt-4 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform">
+    <div
+        class="border border-gray-300 sm:w-full mt-4 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform">
         <div class="px-6 py-4">
             <div class="text-sm text-gray-600 dark:text-gray-400">
                 <div class="container mt-4 grid md:grid-cols-2 gap-4 md:gap-8">
                     <div>
-                        <textarea placeholder="Pregunta" wire:model='name' x-data x-ref="textarea" 
-                        x-init="$refs.textarea.addEventListener('input', function() {
+                        <textarea id="nameQuestion-{{$question->id}}" placeholder="Pregunta" wire:model='name' {{-- x-data x-ref="textarea"  --}} {{-- x-init="$refs.textarea.addEventListener('input', function() {
                             this.style.height = 'auto';
                             this.style.height = (this.scrollHeight) + 'px';
                         });
@@ -13,7 +13,7 @@
                             $refs.textarea.style.height = 'auto';
                             $refs.textarea.style.height = ($refs.textarea.scrollHeight) + 'px';
                         });"
-                            x-on:input.debounce.100ms="text = $event.target.value"
+                            x-on:input.debounce.100ms="text = $event.target.value" --}}
                             class="w-full form-control input-quiz min-h-[3rem] max-h-[10rem]
                             border rounded-md p-2 overflow-hidden text-xl"
                             cols="30" rows="2"></textarea>
@@ -36,7 +36,7 @@
                             cols="30" rows="1"></textarea>
                     @elseif($typequestion == 2)
                         @foreach ($choices as $choice)
-                            @if($choice)
+                            @if ($choice)
                                 @livewire('choice.choice-radio', ['choice' => $choice->id], key($choice->id))
                             @endif
                         @endforeach
@@ -62,5 +62,4 @@
             </div>
         </div>
     </div>
-
 </div>

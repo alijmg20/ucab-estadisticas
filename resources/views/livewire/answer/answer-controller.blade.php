@@ -12,7 +12,7 @@
     <div x-data="{ activeTabAnswers: 1 }">
         <div class=" mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="border-tab-pane-answer-bottom border border-gray-300 bg-white rounded-lg overflow-hidden flex flex-wrap -mb-px text-sm font-medium text-center justify-around">
-                <li wire:click="$set('content',1)" class="mr-2" role="presentation">
+                <li wire:click="updateTab(1)" class="mr-2" role="presentation">
                     <a x-on:click.prevent="activeTabAnswers = 1"
                         :class="{
                             'inline-block p-4 border-b-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500': activeTabAnswers ===
@@ -22,7 +22,7 @@
                         }"
                         href="#">Resumen</a>
                 </li>
-                <li wire:click="$set('content',2)" class="mr-2" role="presentation">
+                <li wire:click="updateTab(2)" class="mr-2" role="presentation">
                     <a x-on:click.prevent="activeTabAnswers = 2"
                         :class="{
                             'inline-block p-4 border-b-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500': activeTabAnswers ===
@@ -32,7 +32,7 @@
                         }"
                         href="#">Preguntas</a>
                 </li>
-                <li wire:click="$set('content',3)" class="mr-2" role="presentation">
+                <li wire:click="updateTab(3)" class="mr-2" role="presentation">
                     <a x-on:click.prevent="activeTabAnswers = 3"
                         :class="{
                             'inline-block p-4 border-b-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500': activeTabAnswers ===

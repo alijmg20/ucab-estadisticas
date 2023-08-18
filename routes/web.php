@@ -18,6 +18,7 @@ use App\Http\Controllers\Front\FileController as FrontFileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\LineController as FrontLineController;
 use App\Http\Controllers\Front\ProjectController as FrontProjectController;
+use App\Http\Livewire\Quiz\ExportQuestions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,7 @@ Route::get('/contact',[ContactController::class,'index'] )->name('contact');
 Route::get('/file/{file}',[FrontFileController::class,'show'] )->name('files.show');
 
 Route::get('/quiz/answer/{quiz}',[AnswerController::class,'answer'] )->name('answer.index');
+Route::get('/quiz/answer/{quiz}/answered',[AnswerController::class,'answered'] )->name('answer.answered');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/admin', [AdminController::class,'index'])->name('admin.home');
@@ -58,5 +60,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/admin/quiz/{quiz}', [QuizController::class,'edit'])->name('admin.quiz.edit');
 
     Route::get('/admin/openai', [OpenaiController::class,'index'])->name('admin.openai.index');
+
+    Route::get('/export/excel/{quiz}', [ExportQuestions::class, 'downloadQuestions'])->name('export.excel');
     
 });

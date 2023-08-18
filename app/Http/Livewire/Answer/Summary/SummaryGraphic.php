@@ -12,8 +12,9 @@ class SummaryGraphic extends Component
 {
     public $question;
     public $answers = [];
-    protected $listeners = ['render','loadSummary'];
-    public function mount($question){
+    protected $listeners = ['render', 'loadSummary'];
+    public function mount($question)
+    {
         $this->question = Question::find($question);
     }
 
@@ -22,28 +23,33 @@ class SummaryGraphic extends Component
         return view('livewire.answer.summary.summary-graphic');
     }
 
-    public function loadSummary(){
-        switch ($this->question->typequestion) {
-            case 1:
-                $this->answers = Answer::where('question_id',$this->question->id)
-                ->get();
-                break;
-            case 2:
-                $frequencies = Answer::select('answer', DB::raw('count(*) as y'))
-                ->where('question_id',$this->question->id)
-                ->groupBy('answer')
-                ->havingRaw('COUNT(*) IS NOT NULL AND answer IS NOT NULL')
-                ->orderBy('answer', 'asc')
-                ->pluck('y','answer')
-                ->toArray();
-                $frequencies_aux = [];
-            foreach ($frequencies as $key => $value) {
-                $frequencies_aux[] = ['name' => $key, 'y' => floatval($value)];
+    public function loadSummary()
+    {   
+        $question = '';
+        $data = [];
+        if ($this->question) {
+            switch ($this->question->typequestion) {
+                case 1:
+                    $this->answers = Answer::where('question_id', $this->question->id)
+                        ->get();
+                    break;
+                case 2:
+                    $frequencies = Answer::select('answer', DB::raw('count(*) as y'))
+                        ->where('question_id', $this->question->id)
+                        ->groupBy('answer')
+                        ->havingRaw('COUNT(*) IS NOT NULL AND answer IS NOT NULL')
+                        ->orderBy('answer', 'asc')
+                        ->pluck('y', 'answer')
+                        ->toArray();
+                    $frequencies_aux = [];
+                    foreach ($frequencies as $key => $value) {
+                        $frequencies_aux[] = ['name' => $key, 'y' => floatval($value)];
+                    }
+                    $data = json_encode($frequencies_aux);
+                    $question = $this->question;
+                    break;
             }
-            $data = json_encode($frequencies_aux);
-            $question = $this->question;
-            $this->emit('summaryGraphicShow', $question, $data);
-                break;
         }
+        $this->emit('summaryGraphicShow', $question, $data);
     }
 }

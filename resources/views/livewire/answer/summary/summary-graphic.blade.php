@@ -26,7 +26,7 @@
         <script>
             document.addEventListener('livewire:load', function() {
                 Livewire.on('summaryGraphicShow', (question, data) => {
-                    console.log(question);
+                    if(question && data){
                     if (question.typequestion == 2) {
                         circle(question, data);
                     } else if (question.typequestion == 2) {
@@ -34,6 +34,7 @@
                     } else if (question.typequestion == 2) {
                         bar(question, data);
                     }
+                }
                 });
             });
         </script>

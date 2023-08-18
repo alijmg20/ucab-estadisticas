@@ -39,7 +39,8 @@ class AnswerQuiz extends Component
                 ]);
             }
             $this->resetInputsDefault();
-            $this->emit('answerQuizAlert', 'terminado!', 'Encuesta enviada exitosamente');
+            return redirect()->route('answer.answered',$this->quiz);
+            // $this->emit('answerQuizAlert', 'terminado!', 'Encuesta enviada exitosamente');
         }
     }
 
