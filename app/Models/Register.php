@@ -10,8 +10,8 @@ class Register extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $casts = [
-        'datos' => 'array',
-    ];
+    public function file(){
+        return $this->belongsTo(File::class);
+    }
 
 }

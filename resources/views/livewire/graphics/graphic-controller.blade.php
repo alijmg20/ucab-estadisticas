@@ -1,9 +1,17 @@
 <div wire:init='loadgraphic'>
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <div class="inline-block w-full shadow rounded-lg overflow-hidden">
+        <div class="inline-block w-full overflow-hidden">
             @if (count($variablesActive))
                 @foreach ($variablesActive as $variableActive)
-                    @livewire('graphics.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
+                    @switch($variableActive['variabletype_id'])
+                        @case(1)
+                            @livewire('graphics.qualitatives.variable-qualitative', ['variable' => $variableActive['id']], key($variableActive['id']))
+                        @break
+
+                        @case(2)
+                            @livewire('graphics.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
+                        @break
+                    @endswitch
                 @endforeach
             @else
                 <div style="display: none">@livewire('graphics.graphic', ['variable' => 0])</div>

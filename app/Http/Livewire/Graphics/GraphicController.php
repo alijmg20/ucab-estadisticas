@@ -52,9 +52,9 @@ class GraphicController extends Component
         $variables = $this->variables;
         $variablesActive = [];
         foreach($variables as $variable){
-            if($variable->frequencies){
+            // if($variable->frequencies){
                 $variablesActive[] = $variable;
-            }
+            // }
         }
         $this->variablesActive = $variablesActive;
     }

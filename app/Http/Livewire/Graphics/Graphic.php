@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Graphics;
 
 use App\Models\Data;
+use App\Models\Graphictype;
 use App\Models\Variable;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -10,19 +11,19 @@ use Livewire\Component;
 class Graphic extends Component
 {
 
-    public $entrysGraphic = ['circulo', 'columna','barra'];
+    public $entrysGraphic;
     public $typeGraphic;
     public $variable;
     protected $listeners = ['render', 'loadGraphic'];
     public function mount($variable)
     {
-
         $this->variable = Variable::find($variable);
+        $this->entrysGraphic = Graphictype::all();
     }
 
     public function render()
     {
-        $this->typeGraphic = $this->variable ? $this->variable->graphic_type : '';
+        $this->typeGraphic = $this->variable ? $this->variable->graphictype_id : '';
         return view('livewire.graphics.graphic');
     }
 
@@ -46,7 +47,7 @@ class Graphic extends Component
     public function selectGraphic()
     {
         if ($this->typeGraphic) {
-            $this->variable->graphic_type = $this->typeGraphic;
+            $this->variable->graphictype_id = $this->typeGraphic;
             $this->variable->save();
             $this->loadGraphic();
         }

@@ -54,13 +54,15 @@ class VariableController extends Component
     {
         if ($this->readyToLoad) {
             $variables = Variable::where('file_id', $this->file->id)
-                ->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->searchVariable . '%')
-                        ->orWhere('id', 'like', '%' . $this->searchVariable . '%')
-                        ;
-                })
-                ->orderBy($this->sortVariable, $this->directionVariable)
-                ->paginate($this->cantVariable, ['*'], 'variablesPage');
+            ->select('variables.*', 'variabletypes.name as type_name')
+            ->leftJoin('variabletypes', 'variables.variabletype_id', '=', 'variabletypes.id')
+            ->where(function ($query) {
+                $query->where('variables.name', 'like', '%' . $this->searchVariable . '%')
+                    ->orWhere('variables.id', 'like', '%' . $this->searchVariable . '%')
+                    ->orWhere('variabletypes.name', 'like', '%' . $this->searchVariable . '%');
+            })
+            ->orderBy($this->sortVariable, $this->directionVariable)
+            ->paginate($this->cantVariable, ['*'], 'variablesPage');
         } else {
             $variables = [];
         }

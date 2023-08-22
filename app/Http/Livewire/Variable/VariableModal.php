@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Variable;
 
+use App\Models\Graphictype;
 use App\Models\Variable;
 use Livewire\Component;
 
@@ -9,9 +10,10 @@ class VariableModal extends Component
 {
     public $open = false;
     public $name,$project_id,$variable_id,$file_id,$status = 0,$graphic_type;
-    protected $graphicList = ['circulo', 'columna','barra'];
+    public $graphicList;
     public $variable; //Variable para editar
     protected $listeners = ['edit'];
+
 
     protected $rules = [
         'name' => 'required',
@@ -20,10 +22,14 @@ class VariableModal extends Component
         'graphic_type' => 'required',
     ];
 
+    public function mount(){
+        $this->graphicList = Graphictype::all();
+    }
+
     public function render()
     {
         $graphicList = $this->graphicList;
-        return view('livewire.variable.variable-modal',compact('graphicList'));
+        return view('livewire.variable.variable-modal');
     }
 
         public function save()
@@ -31,7 +37,7 @@ class VariableModal extends Component
         $this->validate();
         $this->variable->name = $this->name;
         $this->variable->status = $this->status ? '2' : '1';
-        $this->variable->graphic_type = $this->graphic_type;
+        $this->variable->graphictype_id = $this->graphic_type;
         $this->variable->save();
         $this->resetInputDefaults();
 
@@ -55,7 +61,7 @@ class VariableModal extends Component
         $this->status =  $this->variable->status == 2 ? 1 : 0;
         $this->file_id = $this->variable->file_id;
         $this->project_id = $this->variable->project_id;
-        $this->graphic_type = $this->variable->graphic_type;
+        $this->graphic_type = $this->variable->graphictype_id;
         $this->open = true;
     }
 

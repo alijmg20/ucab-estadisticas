@@ -81,11 +81,13 @@ class FileModal extends Component
             $variables = $this->addVariables($filaVariable, $file);
             $registers = $this->addRegisters($sheet, $file, $variables);
             $this->addData($sheet, $variables, $registers);
-            $this->addFrequencies($variables);
+            $this->emitTo('variable-type.variable-type-modal','edit',$file->id);
+            $this->resetInputDefaults();
+        }else{
+            $this->emit('fileAlert', 'terminado!','Archivo editado exitosamente');
+            $this->resetInputDefaults();
+            $this->emitTo('file.file-controller', 'render');
         }
-        $this->emit('fileAlert', 'terminado!', $this->file ? 'Archivo editado exitosamente' : 'Archivo creado exitosamente');
-        $this->resetInputDefaults();
-        $this->emitTo('file.file-controller', 'render');
     }
 
     private function addVariables($filaVariable, $file)
@@ -94,7 +96,6 @@ class FileModal extends Component
         foreach ($filaVariable->getCellIterator() as $celdaCabecera) {
             $variables[] = Variable::create([
                 'name' => $celdaCabecera->getValue(),
-                'project_id' => $this->project->id,
                 'file_id' => $file->id,
             ]);
         }
@@ -112,8 +113,6 @@ class FileModal extends Component
                 $i++;
             }
             $registro = new Register();
-            $registro->datos = $datos;
-            $registro->project_id = $this->project->id;
             $registro->file_id = $file->id;
             $registro->save();
             $registers[] = $registro;
@@ -135,30 +134,6 @@ class FileModal extends Component
                 $countColumn++;
             }
             $registersTotal++;
-        }
-    }
-
-    private function addFrequencies($variables)
-    {
-        foreach ($variables as $variable) {
-            $variable_get = Data::select('value', DB::raw('count(*) as y'))
-                ->where('variable_id', $variable->id)
-                ->groupBy('value')
-                ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-                ->orderBy('value', 'asc')
-                ->get();
-            if (count($variable_get) < 15 /*15 corresponde a un numero maximo para mostrar en el grafico*/) {
-                $i = 0;
-                foreach ($variable_get as $group) {
-                    Frequency::create([
-                        'name'  => $group->value,
-                        'value' => $group->y,
-                        'position' => $i+1,
-                        'variable_id' => $variable->id,
-                    ]);
-                    $i++;
-                }
-            }
         }
     }
 

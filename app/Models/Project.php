@@ -58,7 +58,7 @@ class Project extends Model
 
     public function files()
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->hasMany(File::class);
     }
 
     public function getRouteKeyName()   

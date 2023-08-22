@@ -44,10 +44,10 @@
                         <i class="fas fa-sort float-right"></i>
                     @endif
                 </th>
-                <th class="cursor-pointer px-4 py-3" wire:click='order("status")'>
-                    estado
+                <th class="cursor-pointer px-4 py-3" wire:click='order("type_name")'>
+                    tipo
                     {{-- SORT --}}
-                    @if ($sortVariable == 'status')
+                    @if ($sortVariable == 'type_name')
                         @if ($directionVariable == 'asc')
                             <i class="fas fa-sort-alpha-up-alt float-right"></i>
                         @else
@@ -84,7 +84,7 @@
                             <td class="px-6 py-3 text-sm">{{ $var->id }}</td>
                             <td class="prose truncate px-4 py-3">{{ $var->name }}</td>
                             <td class="cursor-pointer px-4 py-3 text-sm">
-                                {{ $var->status == 1 ? 'No Publicado' : 'Publicado' }}
+                                {{ $var->type_name }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">

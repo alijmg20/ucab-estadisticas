@@ -11,10 +11,19 @@ class File extends Model
 
     protected $guarded = ['id','created_at','updated_at'];
 
-    //Relacion polimorfica file
-    public function fileable()
+    public function project()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Project::class);
+    }
+
+    public function variables()
+    {
+        return $this->hasMany(Variable::class);
+    }
+
+    public function registers()
+    {
+        return $this->hasMany(Register::class);
     }
     
 }

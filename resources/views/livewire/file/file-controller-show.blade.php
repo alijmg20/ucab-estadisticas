@@ -21,7 +21,7 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             1
                     }"
-                    href="#">Tabla</a>
+                    href="#">Variables</a>
             </li>
             <li wire:click="$set('content',2)" class="w-full">
                 <a x-on:click.prevent="activeTab = 2"
@@ -31,7 +31,7 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             2
                     }"
-                    href="#">Variables</a>
+                    href="#">General</a>
             </li>
             <li wire:click="$set('content',3)" class="w-full">
                 <a x-on:click.prevent="activeTab = 3"
@@ -41,27 +41,16 @@
                         'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
                             3
                     }"
-                    href="#">General</a>
-            </li>
-            <li wire:click="$set('content',4)" class="w-full">
-                <a x-on:click.prevent="activeTab = 4"
-                    :class="{
-                        'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
-                            4,
-                        'inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700': activeTab !==
-                            4
-                    }"
                     href="#">Detalles</a>
             </li>
         </ul>
 
         <div>
-            <div x-show="activeTab === 1">@include('livewire.file._partials.fileTable')</div>
-            <div class="mt-4 mb-4" x-show="activeTab === 2"> 
+            <div class="mt-4 mb-4" x-show="activeTab === 1"> 
                 @livewire('variable.variable-controller', ['file' => $file])
             </div>
-            <div class="mt-4 mb-4" x-show="activeTab === 3"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
-            <div class="mt-4 mb-4" x-show="activeTab === 4">@livewire('graphics.graphic-details', ['file' => $file]) </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 2"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
+            <div class="mt-4 mb-4" x-show="activeTab === 3">@livewire('graphics.graphic-details', ['file' => $file]) </div>
         </div>
     </div>
 

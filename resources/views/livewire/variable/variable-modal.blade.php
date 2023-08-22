@@ -34,7 +34,7 @@
                 <x-select-dropdown class="w-full" wire:model.def='graphic_type'>
                     <option value="">selecciona una opción</option>
                     @foreach ($graphicList as $graphic)
-                        <option value="{{ $graphic}}">{{ $graphic }}</option>
+                        <option value="{{ $graphic->id}}">{{ $graphic->name }}</option>
                     @endforeach
                 </x-select-dropdown>
                 <x-input-error for="graphic_type" class="mt-2" />

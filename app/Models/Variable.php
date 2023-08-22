@@ -10,23 +10,29 @@ class Variable extends Model
     use HasFactory;
     protected $guarded = [];
     public $timestamps = false;
-    
-    //Relacion uno a muchos con projects(proyectos)
-    public function project()
+
+    public function file()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Variable::class);
     }
 
-    //relacion uno a muchos con Data(datos)
+    public function graphicType()
+    {
+        return $this->belongsTo(Graphictype::class);
+    }
+
+    public function variableType()
+    {
+        return $this->belongsTo(Variabletype::class);
+    }
+
     public function data()
     {
         return $this->hasMany(Data::class);
     }
 
-    //Relacion uno a muchos 
     public function frequencies()
     {
         return $this->hasMany(frequency::class);
     }
-
 }

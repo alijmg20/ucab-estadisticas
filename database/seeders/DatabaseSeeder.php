@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(LineSeeder::class);
+        $this->call(GraphictypeSeeder::class);
+        $this->call(VariabletypeSeeder::class);
         // Line::factory(3)->create();
         $this->call(ProjectSeeder::class);
         // Variable::factory(500)->create();

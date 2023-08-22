@@ -144,4 +144,5 @@
         </div>
         @endif
     </div>
+    @livewire('variable-type.variable-type-modal')
 </div>

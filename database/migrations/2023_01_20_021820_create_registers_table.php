@@ -15,16 +15,7 @@ return new class extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('file_id');
-            $table->json('datos');
-
-            $table->foreign('project_id')
-            ->references('id')
-            ->on('projects')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-
             $table->foreign('file_id')
             ->references('id')
             ->on('files')

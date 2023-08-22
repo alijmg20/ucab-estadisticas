@@ -15,14 +15,19 @@ return new class extends Migration
     {
         Schema::create('variables', function (Blueprint $table) {
             $table->id();
-            $table->longText('name');
+            $table->longText('name')->nullable();
             $table->enum('status',[1,2])->default(1); //1 No publicado //2 publicado
-            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('file_id');
-            $table->enum('graphic_type',['columna','circulo','barra'])->default('columna');
-            $table->foreign('project_id')
+            $table->unsignedBigInteger('graphictype_id')->nullable()->default(1);
+            $table->unsignedBigInteger('variabletype_id')->nullable();
+            $table->foreign('graphictype_id')
                 ->references('id')
-                ->on('projects')
+                ->on('graphictypes')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                $table->foreign('variabletype_id')
+                ->references('id')
+                ->on('variabletypes')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->foreign('file_id')

@@ -26,11 +26,11 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('graphicShow', (variable, data) => {
-                if (variable.graphic_type == 'columna')
+                if (variable.graphictype_id == 1)
                     column(variable, data);
-                else if (variable.graphic_type == 'circulo') {
+                else if (variable.graphictype_id == 2) {
                     circle(variable, data);
-                } else if (variable.graphic_type == 'barra') {
+                } else if (variable.graphictype_id == 3) {
                     bar(variable, data);
                 }
             });

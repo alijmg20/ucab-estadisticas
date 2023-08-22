@@ -23,7 +23,6 @@ class FileControllerShow extends Component
     public $project;
     public $content = 1;
     protected $variables = [];
-    protected $registers = [];
 
     protected $queryString = [
         'cantFileShow' => ['except' => '10'], 
@@ -35,7 +34,7 @@ class FileControllerShow extends Component
     public function mount($file)
     {
         $this->file = $file;
-        $this->project = Project::find($file->fileable_id);
+        $this->project = Project::find($file->project_id);
     }
 
     public function loadfileshow()
@@ -58,17 +57,9 @@ class FileControllerShow extends Component
         $file = $this->file;
         $variables = Variable::where('file_id', $this->file->id)
         ->get();
-        if($this->readyToLoad){
-        $registers = Register::where('file_id', $this->file->id)
-            ->where('datos', 'like', '%' . $this->searchFileShow . '%')
-            ->paginate($this->cantFileShow, ['*'], 'FilesShowPage');
-        }else{
-            $registers = [];
-        }
 
         $this->variables  = $variables;
-        $this->registers = $registers;
-        return view('livewire.file.file-controller-show', compact('file', 'variables', 'registers'));
+        return view('livewire.file.file-controller-show', compact('file', 'variables'));
     }
 
     public function order($sort)
