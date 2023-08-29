@@ -5,11 +5,15 @@ namespace App\Http\Livewire\VariableType;
 use App\Models\Data;
 use App\Models\File;
 use App\Models\Frequency;
+use App\Models\Sensibility;
 use App\Models\Variable;
 use App\Models\Variabletype;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use voku\helper\StopWords;
+use Illuminate\Support\Str;
+use Sentiment\Analyzer;
 
 class VariableTypeModal extends Component
 {
@@ -96,23 +100,27 @@ class VariableTypeModal extends Component
     public function save()
     {
         $this->validate();
-        $vars = Variable::where('file_id',$this->file->id)->get(); 
+        $vars = Variable::where('file_id', $this->file->id)->get();
         if (empty($this->variablesTypeCollect) || count($this->variablesTypeCollect) < $vars->count()) {
             $this->addError('VariablesEmpty', 'Faltan variables por seleccionar su tipo, verifica todas las páginas');
-        }else{
+        } else {
             foreach ($this->variablesTypeCollect as $key => $value) {
                 $variableTemp = Variable::find($key);
                 $variableTemp->variabletype_id = $value;
                 $variableTemp->save();
-                switch($variableTemp->variabletype_id){
-                    case 2: 
+                switch ($variableTemp->variabletype_id) {
+                    case 1:
+                        $this->addWords($variableTemp);
+                        $this->getAnalizeComplete($variableTemp);
+                        break;
+                    case 2:
                         $this->addFrequencies($variableTemp);
                         break;
                 }
             }
-            $this->reset(['variablesTypeCollect','openVariableTypeModal']);
-            $this->emitTo('file.file-controller', 'render','file');
-            $this->emit('fileAlert', 'terminado!','Archivo creado exitosamente');
+            $this->reset(['variablesTypeCollect', 'openVariableTypeModal']);
+            $this->emitTo('file.file-controller', 'render', 'file');
+            $this->emit('fileAlert', 'terminado!', 'Archivo creado exitosamente');
         }
     }
 
@@ -125,24 +133,120 @@ class VariableTypeModal extends Component
 
     private function addFrequencies($variable)
     {
-            $variable_get = Data::select('value', DB::raw('count(*) as y'))
-                ->where('variable_id', $variable->id)
-                ->groupBy('value')
-                ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
-                ->orderBy('value', 'asc')
-                ->get();
-            // if (count($variable_get) < 15 /*15 corresponde a un numero maximo para mostrar en el grafico*/) {
-                $i = 0;
-                foreach ($variable_get as $group) {
-                    Frequency::create([
-                        'name'  => $group->value,
-                        'value' => $group->y,
-                        'position' => $i+1,
-                        'variable_id' => $variable->id,
-                    ]);
-                    $i++;
-                }
-            // }
+        $variable_get = Data::select('value', DB::raw('count(*) as y'))
+            ->where('variable_id', $variable->id)
+            ->groupBy('value')
+            ->havingRaw('COUNT(*) IS NOT NULL AND value IS NOT NULL')
+            ->orderBy('value', 'asc')
+            ->get();
+        // if (count($variable_get) < 15 /*15 corresponde a un numero maximo para mostrar en el grafico*/) {
+        $i = 0;
+        foreach ($variable_get as $group) {
+            Frequency::create([
+                'name'  => $group->value,
+                'value' => $group->y,
+                'position' => $i + 1,
+                'variable_id' => $variable->id,
+            ]);
+            $i++;
+        }
+        // }
     }
 
+    private function addWords($variable)
+    {
+        $data = $variable->data;
+        $this->clearData($data, $variable);
+    }
+
+    private function clearData($data, $variable)
+    {
+        $frequencies = [];
+
+        foreach ($data as $datum) {
+            // Quitar signos de puntuación y convertir a minúsculas
+            $cleanedText = Str::lower(preg_replace('/[^\p{L}\p{N}\s]/u', '', $datum->value));
+
+            // Dividir en palabras
+            $words = str_word_count($cleanedText, 1);
+
+            // Filtrar palabras de relleno
+            $stopWords = new StopWords();
+            $filteredWords = array_diff($words, $stopWords->getStopWordsFromLanguage('es'));
+
+            // Realizar el conteo de palabras
+            $wordCounts = array_count_values($filteredWords);
+
+            // Acumular conteos en $frequencies
+            foreach ($wordCounts as $word => $count) {
+                if (isset($frequencies[$word])) {
+                    $frequencies[$word]['count'] += $count;
+                } else {
+                    $frequencies[$word] = ['count' => $count, 'name' => $word];
+                }
+            }
+        }
+
+        // Ordenar por conteo descendente
+        usort($frequencies, function ($a, $b) {
+            return $b['count'] - $a['count'];
+        });
+        $i = 0;
+        $frequent = [];
+        foreach ($frequencies as $frequency) {
+            $frequent[] = Frequency::create([
+                'name'  => $frequency['name'],
+                'value' => $frequency['count'],
+                'position' => $i + 1,
+                'variable_id' => $variable->id,
+            ]);
+            $i++;
+        }
+    }
+
+    private function getAnalizeComplete($variable)
+    {
+        $data = $variable->data;
+        $sensibility = [];
+        $sensibility['positive'] = 0;
+        $sensibility['negative'] = 0;
+        $sensibility['neutral'] = 0;
+        foreach ($data as $dat) {
+            $sensibilityScore = $this->getAnalizeOne($dat->value);
+            switch ($sensibilityScore['label']) {
+                case "neg":
+                    $sensibility['negative'] = $sensibility['negative'] + 1;
+                    break;
+                case "pos":
+                    $sensibility['positive'] = $sensibility['positive'] + 1;
+                    break;
+                case "neu":
+                    $sensibility['neutral'] = $sensibility['neutral'] + 1;
+                    break;
+            }
+        }
+        $sensibilityObject = Sensibility::create([
+            'positive' => $sensibility['positive'],
+            'negative' => $sensibility['negative'],
+            'neutral' => $sensibility['neutral'],
+            'count' => $variable->data->count(),
+            'variable_id' => $variable->id,
+        ]);
+        return $sensibilityObject;
+    }
+
+    private function getAnalizeOne($data)
+    {
+        $analyzer = new Analyzer();
+        $output_text = $analyzer->getSentiment($data);
+        $state        = '';
+        if ($output_text['neg'] > $output_text['pos'] && $output_text['neg'] > $output_text['neu']) {
+            $state = ['label' => 'neg', $output_text];
+        } elseif ($output_text['pos'] > $output_text['neg'] && $output_text['pos'] > $output_text['neu']) {
+            $state = ['label' => 'pos', $output_text];
+        } else {
+            $state = ['label' => 'neu', $output_text];
+        }
+        return $state;
+    }
 }

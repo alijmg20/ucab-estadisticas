@@ -24,7 +24,13 @@ class Graphic extends Component
     public function render()
     {
         $this->typeGraphic = $this->variable ? $this->variable->graphictype_id : '';
+        $this->emitTo('graphics.multiple.multiple-table','render');
         return view('livewire.graphics.graphic');
+    }
+
+    public function emitScore($variable){
+        $this->emit('openModalScore',$variable);
+        $this->loadGraphic();
     }
 
     public function loadGraphic()

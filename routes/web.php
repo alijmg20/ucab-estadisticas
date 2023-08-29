@@ -18,6 +18,7 @@ use App\Http\Controllers\Front\FileController as FrontFileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\LineController as FrontLineController;
 use App\Http\Controllers\Front\ProjectController as FrontProjectController;
+use App\Http\Livewire\Graphics\GraphicController;
 use App\Http\Livewire\Quiz\ExportQuestions;
 use Illuminate\Support\Facades\Route;
 
@@ -62,5 +63,5 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/admin/openai', [OpenaiController::class,'index'])->name('admin.openai.index');
 
     Route::get('/export/excel/{quiz}', [ExportQuestions::class, 'downloadQuestions'])->name('export.excel');
-    
+    Route::get('/export/pdf/{file}', [GraphicController::class, 'generatePDF'])->name('export.pdf.graphics');
 });

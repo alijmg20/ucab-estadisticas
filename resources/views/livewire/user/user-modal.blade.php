@@ -89,7 +89,7 @@
                 class="bg-blue-500 disabled:opacity-25">
                 actualizar
             </x-primary-button>
-            '@else
+            @else
             <x-primary-button wire:click='save()' wire:loading.attr='disabled' wire:target="save"
                 class="bg-blue-500 disabled:opacity-25">
                 Crear

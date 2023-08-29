@@ -33,7 +33,7 @@
                     }"
                     href="#">General</a>
             </li>
-            <li wire:click="$set('content',3)" class="w-full">
+            {{-- <li wire:click="$set('content',3)" class="w-full">
                 <a x-on:click.prevent="activeTab = 3"
                     :class="{
                         'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
@@ -42,7 +42,7 @@
                             3
                     }"
                     href="#">Detalles</a>
-            </li>
+            </li> --}}
         </ul>
 
         <div>
@@ -50,7 +50,7 @@
                 @livewire('variable.variable-controller', ['file' => $file])
             </div>
             <div class="mt-4 mb-4" x-show="activeTab === 2"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
-            <div class="mt-4 mb-4" x-show="activeTab === 3">@livewire('graphics.graphic-details', ['file' => $file]) </div>
+            {{-- <div class="mt-4 mb-4" x-show="activeTab === 3">@livewire('graphics.graphic-details', ['file' => $file]) </div> --}}
         </div>
     </div>
 

@@ -49,9 +49,12 @@
         <script src="{{ asset('js/show_alerts.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
         <script src="{{ asset('js/graphics.js') }}"></script>
+        <script src="{{ asset('js/wordcloud2.js') }}"></script>
+        {{-- <script src="{{ asset('vendor/d3/d3.min.js') }}"></script> --}}
         <script src="{{ asset('vendor/highcharts/highcharts.js') }}"></script>
         <script src="{{ asset('vendor/highcharts/exporting.js') }}"></script>
         <script src="{{ asset('vendor/highcharts/export-data.js') }}"></script>
+        <script src="{{ asset('vendor/wordcloud2/wordcloud2.js') }}"></script>
         <script src="{{ asset('vendor/highcharts/accessibility.js') }}"></script>
         @stack('modals')
         @livewireScripts

@@ -35,4 +35,8 @@ class Variable extends Model
     {
         return $this->hasMany(frequency::class);
     }
+
+    public function sensibilities(){
+        return $this->hasMany(Sensibility::class);
+    }
 }

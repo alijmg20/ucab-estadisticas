@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('value');
             $table->unsignedBigInteger('position');
             $table->enum('status',[1,2])->default(2); //1 No publicado //2 publicado
+            $table->integer('score')->default(0);
             $table->unsignedBigInteger('variable_id');
             
             $table->foreign('variable_id')
