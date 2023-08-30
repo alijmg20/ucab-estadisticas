@@ -191,16 +191,17 @@ class VariableTypeModal extends Component
         usort($frequencies, function ($a, $b) {
             return $b['count'] - $a['count'];
         });
-        $i = 0;
         $frequent = [];
         foreach ($frequencies as $frequency) {
-            $frequent[] = Frequency::create([
-                'name'  => $frequency['name'],
-                'value' => $frequency['count'],
-                'position' => $i + 1,
-                'variable_id' => $variable->id,
-            ]);
-            $i++;
+            // Verificar si el conteo es mayor a 6 antes de agregarlo a $frequent
+            if ($frequency['count'] > 6) {
+                $frequent[] = Frequency::create([
+                    'name'  => $frequency['name'],
+                    'value' => $frequency['count'],
+                    'position' => count($frequent) + 1,
+                    'variable_id' => $variable->id,
+                ]);
+            }
         }
     }
 

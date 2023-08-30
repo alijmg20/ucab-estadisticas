@@ -18,7 +18,7 @@ class ProjectModal extends Component
     public $lines,$searchUser = '';
 
     public $name, $description, 
-    $slug, $status = 1,
+    $slug, $status = 1,$date_end = null,$ended = false,
     $line_id, $file,$users_id = [];
     public $user_id;
 
@@ -36,6 +36,8 @@ class ProjectModal extends Component
         'user_id' => 'required',
         'line_id' => 'required',
         'file' => 'required',
+        'date_end' => '',
+        'ended' => '',
     ]; 
 
     public function mount(){
@@ -57,7 +59,7 @@ class ProjectModal extends Component
 
     public function edit($id)
     {
-        $this->reset(['name','slug','description','status','line_id','file','users_id','project']);
+        $this->reset(['name','slug','description','status','line_id','file','users_id','project','date_end','ended']);
         
         $this->project = $project = Project::find($id);
         $this->name = $project->name;
@@ -65,6 +67,8 @@ class ProjectModal extends Component
         $this->slug = $project->slug;
         $this->status = $project->status;
         $this->line_id = $project->line_id;
+        $this->date_end = date("m/d/Y", strtotime($project->date_end));
+        $this->ended = $project->ended == 2 ? true : false;
         $this->users_id = $this->project->users()
         ->pluck('user_id')
         ->all();
@@ -78,11 +82,13 @@ class ProjectModal extends Component
             [
                 'name' => 'required',
                 'description' => 'required',
-                'slug' => 'required|unique:projects,slug,'. $this->project->id,
+                'slug' => 'required',
                 'status' => 'required',
                 'user_id' => 'required',
                 'line_id' => 'required',
                 'file' => '',
+                'date_end' => '',
+                'ended' => '',
             ]
         );
 
@@ -101,7 +107,8 @@ class ProjectModal extends Component
         $project->slug = Str::slug($project->id.' '.$this->name);
         $project->status = $this->status;
         $project->line_id = $this->line_id;
-        
+        $project->date_end = date("Y-m-d 00:00:00", strtotime( $this->date_end));
+        $project->ended = $this->ended == true ? '2' : '1';
         $project->save();
 
         $this->resetInputDefaults();
@@ -116,7 +123,7 @@ class ProjectModal extends Component
     }
 
     public function openModal(){
-        $this->reset(['name','slug','description','status','line_id','file','users_id']);
+        $this->reset(['name','slug','description','status','line_id','file','users_id','date_end','ended']);
         $this->open = true;
     }
 
@@ -138,6 +145,8 @@ class ProjectModal extends Component
             'status' => $this->status,
             'user_id' => $this->user_id,
             'line_id' => $this->line_id,
+            'date_end' => date("Y-m-d 00:00:00", strtotime( $this->date_end)),
+            'ended' => $this->ended == 2 ? '2' : '1',
         ]);
         $project->slug = Str::slug($project->id.' '.$this->name);
         $project->save();
@@ -157,7 +166,7 @@ class ProjectModal extends Component
     }
 
     public function resetInputDefaults(){
-        $this->reset(['open','name','slug','description','status','line_id','file','users_id','project']);
+        $this->reset(['open','name','slug','description','status','line_id','file','users_id','project','date_end','ended']);
     }
 
 }

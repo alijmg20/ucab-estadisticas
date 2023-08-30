@@ -5,11 +5,11 @@
     <x-dialog-modal id="ProjectModal" wire:model='open'>
         <x-slot name="title">
             <div class="container">
-            @if ($project)
-                Editar Proyecto
-            @else
-                Nuevo Proyecto
-            @endif
+                @if ($project)
+                    Editar Proyecto
+                @else
+                    Nuevo Proyecto
+                @endif
                 <span wire:click='closeModal' class="float-right text-gray-500 text-2xl cursor-pointer">&times;</span>
                 <!-- Botón de cierre -->
             </div>
@@ -42,6 +42,40 @@
                 <x-label class="mb-4" value="Descripción del proyecto" />
                 <textarea wire:model.defer='description' class="w-full form-control" cols="30" rows="6"></textarea>
                 <x-input-error for="description" />
+            </div>
+
+            <div class="container mt-4">
+                <x-label class="mb-4" value="Fecha de finalización (opcional)" />
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                    </div>
+                    <input wire:model='date_end' datepicker datepicker-autohide type="text"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Select date">
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <x-label class="mb-4" value="Proyecto finalizado (opcional)" />
+                <div>
+                    <input
+                        class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                        type="checkbox" name="ended" wire:model="ended"
+                        @if ($ended == true) checked @endif />
+                    <span class="ml-2">
+                        @if ($ended == true)
+                            Finalizado
+                        @else
+                            No Finalizado
+                        @endif
+                    </span>
+                </div>
+                <x-input-error for="status" />
             </div>
 
             <div class="container mt-4">
@@ -78,7 +112,8 @@
             <div class="container mt-4">
                 <x-label class="mb-4" value="Equipo de proyecto" />
                 <div class="px-6 py-4 flex flex-items-center">
-                    <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='searchUser'></x-input>
+                    <x-input placeholder="Buscar" class="flex-1 mr-4" type="text"
+                        wire:model='searchUser'></x-input>
                 </div>
                 <x-table>
                     <x-slot name="headers">

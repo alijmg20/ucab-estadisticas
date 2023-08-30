@@ -21,7 +21,7 @@ class ProjectEdit extends Component
     public $lines, $searchUser = '';
 
     public $name, $description,
-        $slug, $status = 1,
+        $slug, $status = 1,$date_end = null,$ended = false,
         $line_id, $file, $users_id = [];
     public $user_id;
     protected $users;
@@ -34,6 +34,8 @@ class ProjectEdit extends Component
         'user_id' => 'required',
         'line_id' => 'required',
         'file' => 'required',
+        'date_end' => '',
+        'ended' => '',
     ];
 
     public function mount($project)
@@ -45,6 +47,8 @@ class ProjectEdit extends Component
         $this->slug = $this->project->slug;
         $this->status = $this->project->status;
         $this->line_id = $this->project->line_id;
+        $this->date_end = date("m/d/Y", strtotime($this->project->date_end));
+        $this->ended = $this->project->ended == 2 ? true : false;
         $this->users_id = $this->project->users()
             ->pluck('user_id')
             ->all();
@@ -76,6 +80,8 @@ class ProjectEdit extends Component
                 'user_id' => 'required',
                 'line_id' => 'required',
                 'file' => '',
+                'date_end' => '',
+                'ended' => '',
             ]
         );
 
@@ -95,6 +101,8 @@ class ProjectEdit extends Component
         $project->slug = Str::slug($project->id.' '.$this->name);
         $project->status = $this->status;
         $project->line_id = $this->line_id;
+        $project->date_end = date("Y-m-d 00:00:00", strtotime( $this->date_end));
+        $project->ended = $this->ended == true ? '2' : '1';
         $project->save();
         if($redirect){
             $this->emit('projectAlert', 'terminado!', 'Proyecto actualizado exitosamente');

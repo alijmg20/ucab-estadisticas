@@ -134,28 +134,17 @@
                                     Carrusel
                                 </a>
                             </li>
-                            <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="./create-account.html">
-                                    Create account
-                                </a>
-                            </li>
-                            <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="./forgot-password.html">
-                                    Forgot password
-                                </a>
-                            </li>
                         </ul>
                     </template>
                 </li>
             </ul>
             <div class="px-6 my-6">
-                <button
-                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                    Create account
+                <a
+                    href="{{ route('admin.stadistics') }}"
+                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-indigo-600 border border-transparent rounded-lg active:bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:shadow-outline-indigo">
+                    Mis estadisticas
                     <span class="ml-2" aria-hidden="true">+</span>
-                </button>
+                </a>
             </div>
         </div>
     </aside>
@@ -180,7 +169,7 @@
                 <li class="relative px-6 py-3">
                     <!-- Active items have the snippet below -->
                     <!-- <span
-            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+            class="absolute inset-y-0 left-0 w-1 bg-indigo-600 rounded-tr-lg rounded-br-lg"
             aria-hidden="true"
           ></span> -->
 
@@ -324,7 +313,7 @@
             </ul>
             <div class="px-6 my-6">
                 <button
-                    class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-indigo-600 border border-transparent rounded-lg active:bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:shadow-outline-indigo">
                     Create account
                     <span class="ml-2" aria-hidden="true">+</span>
                 </button>
@@ -334,9 +323,9 @@
     <div class="flex flex-col flex-1">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
             <div
-                class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+                class="container flex items-center justify-between h-full px-6 mx-auto text-indigo-600 dark:text-indigo-300">
                 <!-- Mobile hamburger -->
-                <button class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                <button class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-indigo"
                     @click="toggleSideMenu" aria-label="Menu">
                     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -346,7 +335,7 @@
                 </button>
                 <!-- Search input -->
                 <div class="flex justify-center flex-1 lg:mr-32">
-                    <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+                    <div class="relative w-full max-w-xl mr-6 focus-within:text-indigo-500">
                         <div class="absolute inset-y-0 flex items-center pl-2">
                         </div>
                     </div>
@@ -354,7 +343,7 @@
                 <ul class="flex items-center flex-shrink-0 space-x-6">
                     <!-- Theme toggler -->
                     <li class="flex">
-                        <button class="rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleTheme"
+                        <button class="rounded-md focus:outline-none focus:shadow-outline-indigo" @click="toggleTheme"
                             aria-label="Toggle color mode">
                             <template x-if="!dark">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

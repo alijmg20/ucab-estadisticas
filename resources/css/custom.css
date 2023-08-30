@@ -16,16 +16,25 @@
     @apply bg-green-100 border border-green-400 text-green-700 !important;
 }
 
-.shadow-none{
+.shadow-none {
     box-shadow: none !important;
 }
 
-.border-tab-pane-answer-top{
+.grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+
+.border-tab-pane-answer-top {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
     border-bottom: none !important;
 }
-.border-tab-pane-answer-bottom{
+.border-tab-pane-answer-bottom {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border-top: none !important;
@@ -127,7 +136,7 @@
     overflow: hidden;
 }
 
-.container-quiz{
+.container-quiz {
     @apply mx-auto max-w-7xl px-2;
     max-width: 360px;
 }

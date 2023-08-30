@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -21,15 +21,18 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="font-sans antialiased">
+    <x-banner />
 
-    @include('_partials.sidebar')
+    <div class="min-h-screen dark:bg-gray-900">
+        <!-- Page Content -->
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
 
-    @stack('modals')
-    @stack('js')
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
     <script src="{{ asset('js/init-alpine.js') }}"></script>
     <script src="{{ asset('js/focus-trap.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

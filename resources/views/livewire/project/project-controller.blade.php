@@ -7,6 +7,72 @@
     <div class="container mx-auto px-4 sm:px-8">
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="grid gap-6 mb-8 md:grid-cols-4 xl:grid-cols-4">
+                    <!-- Card -->
+                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="p-3 mr-4 rounded-full">
+                            <i class="rounded-full text-center text-orange-500 fas fa-exclamation"></i>
+                        </div>
+                        <div>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                Total de Proyectos asociados
+                            </p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                @if ($totalProjects)
+                                    {{ $totalProjects['totalProjects'] }} Proyectos
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="p-3 mr-4 rounded-full">
+                            <i class="rounded-full text-center text-indigo-500 fas fa-star"></i>
+                        </div>
+                        <div>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                Proyectos finalizados
+                            </p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                @if ($totalProjects)
+                                    {{ $totalProjects['totalProjectsEnd'] }} Proyectos
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="p-3 mr-4 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                            <i class="rounded-full text-center text-green-500 fas fa-project-diagram"></i>
+                        </div>
+                        <div>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                Proyectos Publicados
+                            </p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                @if ($totalProjects)
+                                    {{ $totalProjects['totalProjectsPublished'] }} Proyectos
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="p-3 mr-4 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                            <i class="rounded-full text-center text-indigo-500 fas fa-tasks"></i>
+                        </div>
+                        <div>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                Proyectos en progreso
+                            </p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                @if ($totalProjects)
+                                    {{ $totalProjects['totalProjectsProgress'] }} Proyectos
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="inline-block w-full shadow rounded-lg overflow-hidden">
                     <div class="px-6 py-4 flex flex-items-center">
                         <div class="flex items-center">
@@ -86,8 +152,10 @@
                                     <td colspan="5" class="px-6 py-4 text-center">
                                         <div class="container mt-4 mb-4">
                                             <x-alert-loading-danger>
-                                                <x-slot name="title">¡No existen proyectos a los que esté asociado!</x-slot>
-                                                <x-slot name="subtitle">Puede crear nuevos proyectos en el botón <b>NUEVA</b>
+                                                <x-slot name="title">¡No existen proyectos a los que esté
+                                                    asociado!</x-slot>
+                                                <x-slot name="subtitle">Puede crear nuevos proyectos en el botón
+                                                    <b>NUEVA</b>
                                                 </x-slot>
                                             </x-alert-loading-danger>
                                         </div>
@@ -95,35 +163,32 @@
                                 </tr>
                             @elseif ($projects && count($projects))
                                 @foreach ($projects as $proj)
-                                    <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <tr
+                                        class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="cursor-pointer px-6 py-3 text-sm">
-                                            <a  href="{{route('admin.files.show',$proj)}}">
-                                            {{ $proj->id }}
+                                            <a href="{{ route('admin.files.show', $proj) }}">
+                                                {{ $proj->id }}
                                             </a>
                                         </td>
-                                        <td class="cursor-pointer px-4 py-3" >
-                                            <a  href="{{route('admin.files.show',$proj)}}">
-                                            {{ $proj->name }}
+                                        <td class="cursor-pointer px-4 py-3">
+                                            <a href="{{ route('admin.files.show', $proj) }}">
+                                                {{ $proj->name }}
                                             </a>
                                         </td>
-                                        <td class="cursor-pointer px-4 py-3 text-sm" >
-                                            <a  href="{{route('admin.files.show',$proj)}}">
-                                            {{ $proj->status == 1 ? 'No Publicado' : 'Publicado' }}
+                                        <td class="cursor-pointer px-4 py-3 text-sm">
+                                            <a href="{{ route('admin.files.show', $proj) }}">
+                                                {{ $proj->status == 1 ? 'No Publicado' : 'Publicado' }}
                                             </a>
                                         </td>
-                                        <td class=" cursor-pointer px-6 py-3 text-sm" >
-                                            <a  href="{{route('admin.files.show',$proj)}}">
-                                            {{ $proj->created_at }}
+                                        <td class=" cursor-pointer px-6 py-3 text-sm">
+                                            <a href="{{ route('admin.files.show', $proj) }}">
+                                                {{ $proj->created_at }}
                                             </a>
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <a href="{{route('admin.files.show',$proj)}}"
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="View">
-                                                    <i class="far fa-eye"></i>
-                                                </a>
-                                                <button wire:click='$emitTo("project.project-modal","edit",{{ $proj->id }})'
+                                                <button
+                                                    wire:click='$emitTo("project.project-modal","edit",{{ $proj->id }})'
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit">
                                                     <i class="fas fa-pencil-alt"></i>

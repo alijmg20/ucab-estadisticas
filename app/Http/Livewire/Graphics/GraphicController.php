@@ -8,7 +8,11 @@ use App\Models\Variable;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 use PDF;
+use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Facades\Response;
+
 class GraphicController extends Component
 {
     use WithPagination;
@@ -53,12 +57,6 @@ class GraphicController extends Component
         $this->emitTo('graphics.qualitatives.qualitative-controller','render');
         $this->emitTo('graphics.multiple.multiple-controller','render');
         return view('livewire.graphics.graphic-controller');
-    }
-
-    public function generatePDF($file)
-    {
-        // $pdf = PDF::loadView('livewire.graphics.graphic-controller',$file); // Carga la vista del PDF
-        // return $pdf->download('archivo.pdf'); // Descarga el PDF
     }
 
     public function showGraphics()

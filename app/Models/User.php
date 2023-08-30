@@ -64,15 +64,15 @@ class User extends Authenticatable
 
     //Relacion muchos a muchos con projects (proyectos) 
 
-    public function projects()
+    public function projectsMany()
     {
         return $this->belongsToMany(Project::class);
     }
 
     //Relacion uno a muchos con project
-    public function projectsOneToMuch()
+    public function projects()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Project::class);
     }
     
     public function testimonial()
