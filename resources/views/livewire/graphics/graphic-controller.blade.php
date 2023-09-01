@@ -57,8 +57,7 @@
                         @livewire('graphics.multiple.multiple-controller', ['file' => $file->id])
                     </div>
                     <div x-show="activeTabVariable === 3">
-                        {{-- @livewire('answer.individual.answer-individual', ['quiz' => $quiz->id]) --}}
-                        3
+                        @livewire('graphics.checkbox.checkbox-controller', ['file' => $file->id])
                     </div>
                 </div>
             </div>

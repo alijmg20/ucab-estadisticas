@@ -7,6 +7,8 @@ use App\Models\File;
 use App\Models\Frequency;
 use App\Models\Sensibility;
 use App\Models\Variable;
+use App\Models\VariableOption;
+use App\Models\VariableResponse;
 use App\Models\Variabletype;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -116,6 +118,9 @@ class VariableTypeModal extends Component
                     case 2:
                         $this->addFrequencies($variableTemp);
                         break;
+                    case 3:
+                        $this->addCheckbox($variableTemp);
+                        break;
                 }
             }
             $this->reset(['variablesTypeCollect', 'openVariableTypeModal']);
@@ -128,7 +133,6 @@ class VariableTypeModal extends Component
      * Añade las frecuencias individuales a la variable a analizar
      * En este caso aplica para las preguntas de los tipos
      * Tipo: Opción multiple
-     * Tipo: Casilla de verificación
      */
 
     private function addFrequencies($variable)
@@ -152,6 +156,12 @@ class VariableTypeModal extends Component
         }
         // }
     }
+
+    /**
+     * Añade las palabras individuales a las variables del tipo texto
+     * Tipo: Texto
+     */
+
 
     private function addWords($variable)
     {
@@ -205,6 +215,12 @@ class VariableTypeModal extends Component
         }
     }
 
+    /**
+     * Obtiene el analisis de sentimientos desde el use Sentiment\Analyzer;
+     * importacion de internet
+     * Tipo: Texto
+     */
+
     private function getAnalizeComplete($variable)
     {
         $data = $variable->data;
@@ -249,5 +265,67 @@ class VariableTypeModal extends Component
             $state = ['label' => 'neu', $output_text];
         }
         return $state;
+    }
+
+    /**
+     * Añade las variables del tipo texto
+     * 
+     */
+    public function addCheckbox($variable)
+    {
+        $data = $variable->data;
+        $options = [];
+
+        foreach ($data as $datum) {
+            $values = explode(',', $datum->value);
+
+            foreach ($values as $value) {
+                $cleanedValue = trim($value);  // Elimina espacios en blanco al principio y al final
+
+                if ($cleanedValue !== '') {
+                    if (array_key_exists($cleanedValue, $options)) {
+                        $options[$cleanedValue]++;
+                    } else {
+                        $options[$cleanedValue] = 1;
+                    }
+                }
+            }
+        }
+
+        $variableOptions = [];
+        foreach ($options as $key => $value) {
+            $variableOptions[] = [
+                'name' => $key,
+                'variable_id' => $variable->id,
+                // Otros campos que desees establecer aquí
+            ];
+        }
+        VariableOption::insert($variableOptions);
+
+
+        $data = $variable->data;
+        $options = $variable->options;
+        $checkboxResponses = [];
+        foreach ($data as $datum) {
+            $values = explode(',', $datum->value);
+            foreach ($values as $value) {
+                foreach ($options as $option) {
+                    if($option->name == $value){
+                        $checkboxResponses[] = [
+                            'variable_id' => $variable->id,
+                            'register_id' => $datum->register_id,
+                            'variable_option_id' => $option->id,
+                            // Otros campos que desees establecer aquí
+                        ];
+                    }
+                }
+            }
+
+        }
+        VariableResponse::insert($checkboxResponses);
+
+
+
+        // dd($options);
     }
 }

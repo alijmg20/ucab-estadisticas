@@ -96,11 +96,11 @@ class FrequencyController extends Component
             }
             $frequencyd->delete();
         }
-        $this->emitTo('graphics.graphic-controller', 'render');
+        $this->emitTo('graphics.multiple.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
         $this->emitTo('graphics.graphic-details', 'render');
-        $this->emitTo('graphics.graphic', 'render');
-        $this->emitTo('graphics.graphic', 'loadGraphic');
+        $this->emitTo('graphics.multiple.graphic', 'render');
+        $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
     }
 
     public function upPosition($id){
@@ -117,8 +117,8 @@ class FrequencyController extends Component
         $this->emitTo('graphics.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
         $this->emitTo('graphics.graphic-details', 'render');
-        $this->emitTo('graphics.graphic', 'render');
-        $this->emitTo('graphics.graphic', 'loadGraphic');
+        $this->emitTo('graphics.multiple.graphic', 'render');
+        $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
     }
 
     public function downPosition($id){
@@ -135,8 +135,8 @@ class FrequencyController extends Component
         $this->emitTo('graphics.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
         $this->emitTo('graphics.graphic-details', 'render');
-        $this->emitTo('graphics.graphic', 'render');
-        $this->emitTo('graphics.graphic', 'loadGraphic');
+        $this->emitTo('graphics.multiple.graphic', 'render');
+        $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
     }
 
 }

@@ -171,7 +171,7 @@
                                             </a>
                                         </td>
                                         <td class="cursor-pointer px-4 py-3">
-                                            <a href="{{ route('admin.files.show', $proj) }}">
+                                            <a class="title-project" href="{{ route('admin.files.show', $proj) }}">
                                                 {{ $proj->name }}
                                             </a>
                                         </td>

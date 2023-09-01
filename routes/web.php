@@ -21,6 +21,7 @@ use App\Http\Controllers\Front\ProjectController as FrontProjectController;
 use App\Http\Livewire\Graphics\GraphicController;
 use App\Http\Livewire\Graphics\Pdf\Pdf;
 use App\Http\Livewire\Quiz\ExportQuestions;
+use App\Http\Livewire\Stadistic\Pdf\StadisticsPdf;
 use App\Http\Livewire\Stadistic\StadisticController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,5 +69,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pdf/{file}', Pdf::class)->name('admin.pdf.graphics');
 
     Route::get('/admin/stadistics', StadisticController::class)->name('admin.stadistics');
+    Route::get('/admin/stadistics/pdf/{date_ini}/{date_end}/{line_id}', StadisticsPdf::class)->name('admin.stadistics.pdf');
 
 });

@@ -19,5 +19,8 @@ class VariabletypeSeeder extends Seeder
         Variabletype::create([
             'name' => 'opción multiple'
         ]);
+        Variabletype::create([
+            'name' => 'casilla de verificación'
+        ]);
     }
 }

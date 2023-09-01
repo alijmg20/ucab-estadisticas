@@ -35,6 +35,7 @@ class MultipleController extends Component
     }
         return view('livewire.graphics.multiple.multiple-controller');
     }
+    
     public function showGraphics()
     {
         $variables = $this->variables;

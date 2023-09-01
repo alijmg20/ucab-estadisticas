@@ -54,7 +54,7 @@
                                 d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                         </svg>
                     </div>
-                    <input wire:model='date_end' datepicker datepicker-autohide type="text"
+                    <input type="date" id="date_end" name="date_end" wire:model="date_end"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Select date">
                 </div>
@@ -167,7 +167,7 @@
                 Cancelar
             </x-secondary-button>
             @if ($project)
-                <x-primary-button wire:click="update()" wire:loading.attr='disabled' wire:target="update,file"
+                <x-primary-button wire:click="update()"  wire:loading.attr='disabled' wire:target="update,file"
                     class="bg-blue-500 disabled:opacity-25">
                     Actualizar
                 </x-primary-button>
@@ -179,5 +179,4 @@
             @endif
         </x-slot>
     </x-dialog-modal>
-
 </div>

@@ -5,7 +5,7 @@
         font-medium text-left text-gray-800  focus:outline-none">
             Cuadro de variable
         </div>
-        <div class="grid gap-6 mb-8 md:grid-cols-1 xl:grid-cols-1">
+        <div class="inline-flex w-full justify-center gap-6 mb-8">
             <!-- Card -->
             <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="container mt-4">
@@ -44,7 +44,7 @@
                     <p class="mb-2 text-md font-medium text-gray-600 dark:text-gray-400">
                         Analisis de sentimiento de la variable
                     </p>
-                    <div class="grid gap-6 mb-8 md:grid-cols-3 xl:grid-cols-3">
+                    <div class="inline-flex gap-6 mb-8">
                         <!-- Card -->
                         <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                             <div class="p-3 mr-4 rounded-full">

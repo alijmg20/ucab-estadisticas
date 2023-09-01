@@ -67,7 +67,7 @@ class ProjectModal extends Component
         $this->slug = $project->slug;
         $this->status = $project->status;
         $this->line_id = $project->line_id;
-        $this->date_end = date("m/d/Y", strtotime($project->date_end));
+        $this->date_end = date("Y-m-d", strtotime($project->date_end));
         $this->ended = $project->ended == 2 ? true : false;
         $this->users_id = $this->project->users()
         ->pluck('user_id')

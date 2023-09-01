@@ -47,7 +47,7 @@ class ProjectEdit extends Component
         $this->slug = $this->project->slug;
         $this->status = $this->project->status;
         $this->line_id = $this->project->line_id;
-        $this->date_end = date("m/d/Y", strtotime($this->project->date_end));
+        $this->date_end = date("Y-m-d", strtotime($this->project->date_end));
         $this->ended = $this->project->ended == 2 ? true : false;
         $this->users_id = $this->project->users()
             ->pluck('user_id')

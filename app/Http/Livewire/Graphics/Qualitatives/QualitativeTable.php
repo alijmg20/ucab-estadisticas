@@ -31,7 +31,7 @@ class QualitativeTable extends Component
     public function getWords()
     {
         $pagename = 'qualitativePage-'.$this->variable->id;
-        return $this->words = $this->variable->frequencies()->paginate(10,['*'],$pagename);
+        return $this->words = $this->variable->frequencies()->paginate(5,['*'],$pagename);
     }
 
     public function getPorcentageTotal($sensibility)

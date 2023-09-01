@@ -2,10 +2,10 @@
 
     @if (count($variablesActive))
         @foreach ($variablesActive as $variableActive)
-            @livewire('graphics.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
+            @livewire('graphics.multiple.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
         @endforeach
     @else
-        <div style="display: none">@livewire('graphics.graphic', ['variable' => 0])</div>
+        <div style="display: none">@livewire('graphics.multiple.graphic', ['variable' => 0])</div>
         <div class="container mt-4 mb-4">
             <x-alert-loading-danger>
                 <x-slot name="title">Variables NO seleccionadas</x-slot>

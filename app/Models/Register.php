@@ -14,4 +14,9 @@ class Register extends Model
         return $this->belongsTo(File::class);
     }
 
+    public function variableResponses()
+    {
+        return $this->hasMany(VariableResponse::class);
+    }
+
 }

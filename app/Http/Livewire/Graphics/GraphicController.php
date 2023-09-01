@@ -56,6 +56,7 @@ class GraphicController extends Component
         $this->showGraphics();
         $this->emitTo('graphics.qualitatives.qualitative-controller','render');
         $this->emitTo('graphics.multiple.multiple-controller','render');
+        $this->emitTo('graphics.checkbox.checkbox-controller','render');
         return view('livewire.graphics.graphic-controller');
     }
 

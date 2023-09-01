@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Graphics;
+namespace App\Http\Livewire\Graphics\Multiple;
 
 use App\Models\Data;
 use App\Models\Graphictype;
@@ -25,7 +25,7 @@ class Graphic extends Component
     {
         $this->typeGraphic = $this->variable ? $this->variable->graphictype_id : '';
         $this->emitTo('graphics.multiple.multiple-table','render');
-        return view('livewire.graphics.graphic');
+        return view('livewire.graphics.multiple.graphic');
     }
 
     public function emitScore($variable){

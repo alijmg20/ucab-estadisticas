@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Stadistic;
+namespace App\Http\Livewire\Stadistic\Pdf;
 
 use App\Models\Line;
 use App\Models\User;
-use Livewire\Component;
 use Carbon\Carbon;
+use Livewire\Component;
 
-class StadisticController extends Component
+class StadisticsPdf extends Component
 {
     public $user, $projects;
     public $totalsProject = [];
@@ -20,30 +20,26 @@ class StadisticController extends Component
         'date_ini' => '',
     ];
 
-    protected $queryString = [
-        'date_ini' => ['except' => ''],
-        'date_end' => ['except' => ''],
-    ];
-
-    public function mount()
+    public function mount($date_ini = null, $date_end = null,$line_id = 0)
     {
-        $this->user = User::find(Auth()->user()->id);
-        $date_ini = date('Y-m-d');
-        $fechaActual = Carbon::now();
+        $this->user = User::find(auth()->user()->id);
         $this->date_ini = $date_ini;
-        $this->date_end = $fechaActual->format('Y-m-d');
+        $this->date_end = $date_end;
+        $this->line_id = $line_id;
     }
+     
 
     public function render()
     {
         $this->lines = Line::all();
         $this->stadisticsTotals();
-        return view('livewire.stadistic.stadistic-controller')
-            ->layout('layouts.admin');
+        return view('livewire.stadistic.pdf.stadistics-pdf')
+            ->layout('layouts.pdf');
     }
 
-    public function goBack(){
-        return redirect()->route('admin.home');
+    public function goBack()
+    {
+        return redirect()->route('admin.stadistics');
     }
 
     public function stadisticsTotals()

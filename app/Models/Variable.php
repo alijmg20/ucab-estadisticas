@@ -39,4 +39,15 @@ class Variable extends Model
     public function sensibilities(){
         return $this->hasMany(Sensibility::class);
     }
+
+    public function options()
+    {
+        return $this->hasMany(VariableOption::class);
+    }
+
+    public function variableResponses()
+    {
+        return $this->hasMany(VariableResponse::class);
+    }
+
 }

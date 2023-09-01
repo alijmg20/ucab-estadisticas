@@ -2,7 +2,7 @@
     <div
         class="border border-gray-300 mb-6 mt-4 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform sm:w-full">
         <div class="inline-block w-full">
-            <div class="px-6 py-4 flex flex-items-center">
+            <div class="gaphicOptions px-6 py-4 flex flex-items-center">
                 <div class="flex items-center w-full">
                     <span class="mr-2 text-gray-700 dark:text-gray-400">Selecciona el grafico:
                     </span>
