@@ -309,23 +309,25 @@ class VariableTypeModal extends Component
         foreach ($data as $datum) {
             $values = explode(',', $datum->value);
             foreach ($values as $value) {
-                foreach ($options as $option) {
-                    if($option->name == $value){
-                        $checkboxResponses[] = [
-                            'variable_id' => $variable->id,
-                            'register_id' => $datum->register_id,
-                            'variable_option_id' => $option->id,
-                            // Otros campos que desees establecer aquí
-                        ];
+                $cleanedValue = trim($value);  // Elimina espacios en blanco al principio y al final
+                if ($cleanedValue !== '') {
+                    foreach ($options as $option) {
+                        if ($option->name == $cleanedValue) {
+                            $checkboxResponses[] = [
+                                'variable_id' => $variable->id,
+                                'register_id' => $datum->register_id,
+                                'variable_option_id' => $option->id,
+                                // Otros campos que desees establecer aquí
+                            ];
+                        }
                     }
                 }
             }
-
         }
         VariableResponse::insert($checkboxResponses);
 
 
 
-        // dd($options);
+        // dd($variable->variableResponses);
     }
 }

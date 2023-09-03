@@ -14,4 +14,9 @@ class VariableOption extends Model
     {
         return $this->belongsTo(Variable::class);
     }
+    
+    public function variableResponses()
+    {
+        return $this->hasMany(VariableResponse::class);
+    }
 }

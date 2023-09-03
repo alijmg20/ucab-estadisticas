@@ -13,18 +13,27 @@
     <div class="mt-4 container" id="content">
         @if (count($variablesActive))
             @foreach ($variablesActive as $key => $variableActive)
-                @if ($variableActive['variabletype_id'] == 1)
-                    @livewire('graphics.qualitatives.variable-qualitative', ['variable' => $variableActive['id']], key($variableActive['id']))
-                @elseif ($variableActive['variabletype_id'] == 2)
-                    @livewire('graphics.multiple.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
-                @endif
-                @if($key < count($variablesActive)-1 )
+                @switch($variableActive['variabletype_id'])
+                    @case(1)
+                        @livewire('graphics.qualitatives.variable-qualitative', ['variable' => $variableActive['id']], key($variableActive['id']))
+                    @break
+
+                    @case(2)
+                        @livewire('graphics.multiple.graphic', ['variable' => $variableActive['id']], key($variableActive['id']))
+                    @break
+
+                    @case(3)
+                        @livewire('graphics.checkbox.variable-checkbox', ['variable' => $variableActive['id']], key($variableActive['id']))
+                    @break
+                @endswitch
+                @if ($key < count($variablesActive) - 1)
                     <div style="page-break-before: always;"></div>
                 @endif
             @endforeach
         @else
             <div style="display: none">@livewire('graphics.qualitatives.variable-qualitative', ['variable' => 0])</div>
             <div style="display: none">@livewire('graphics.multiple.graphic', ['variable' => 0])</div>
+            <div style="display: none">@livewire('graphics.checkbox.variable-checkbox', ['variable' => 0])</div>
             <div class="container mt-4 mb-4">
                 <x-alert-loading-danger>
                     <x-slot name="title">Variables NO seleccionadas</x-slot>
