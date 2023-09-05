@@ -14,6 +14,9 @@ class QualitativeTable extends Component
     public $variable;
     protected $words;
     public $sensibility;
+
+    protected $listeners = ['render'];
+
     public function mount($variable)
     {
         $this->variable = Variable::find($variable);

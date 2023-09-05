@@ -19,7 +19,7 @@
                 <x-input id="value" wire:model='value' type="text" class="w-full" />
                 <x-input-error for="value" />
             </div>
-            <div class="container mt-4">
+            {{-- <div class="container mt-4">
                 <x-label class="mb-4" value="Estatus de publicación" />
                 <div>
                 <input 
@@ -31,9 +31,8 @@
                />
                <span class="ml-2">@if($status == true ) Publicado @else No Publicado @endif</span>
                 </div>
-                {{-- {{$status}} --}}
                 <x-input-error for="status" />
-            </div>
+            </div> --}}
         </x-slot>
 
         <x-slot name="footer">

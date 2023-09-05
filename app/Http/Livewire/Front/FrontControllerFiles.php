@@ -46,7 +46,7 @@ class FrontControllerFiles extends Component
     public function render()
     {
         if($this->readyToLoad){
-            $files = File::where('fileable_id', $this->project->id)
+            $files = File::where('project_id', $this->project->id)
             ->where('status',2)
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')

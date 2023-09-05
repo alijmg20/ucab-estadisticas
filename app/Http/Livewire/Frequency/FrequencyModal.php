@@ -16,7 +16,7 @@ class FrequencyModal extends Component
     protected $rules = [
         'name' => 'required',
         'value' => 'required',
-        'status' => 'required',
+        // 'status' => 'required',
         'variable_id' =>'',
         'frequency_id' => '',
         'position' => '',
@@ -32,7 +32,7 @@ class FrequencyModal extends Component
         $this->validate();
         $this->frequency->name = $this->name;
         $this->frequency->value = $this->value;
-        $this->frequency->status = $this->status ? '2' : '1';
+        // $this->frequency->status = $this->status ? '2' : '1';
         $this->frequency->save();
         $this->resetInputDefaults();
 
@@ -40,9 +40,14 @@ class FrequencyModal extends Component
         $this->emitTo('frequency.frequency-controller', 'render');
         $this->emitTo('graphics.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
-        $this->emitTo('graphics.graphic-details', 'render');
+        
         $this->emitTo('graphics.multiple.graphic', 'render');
         $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
+        $this->emitTo('graphics.multiple.multiple-table', 'render');
+
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'render');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'loadWordCloud');
+        $this->emitTo('graphics.qualitatives.qualitative-table', 'render');
     }
 
     public function edit($id)
@@ -54,7 +59,7 @@ class FrequencyModal extends Component
         $this->name = $this->frequency->name;
         $this->value = $this->frequency->value;
         $this->position = $this->frequency->position;
-        $this->status =  $this->frequency->status == 2 ? 1 : 0;
+        // $this->status =  $this->frequency->status == 2 ? 1 : 0;
         $this->open = true;
     }
 

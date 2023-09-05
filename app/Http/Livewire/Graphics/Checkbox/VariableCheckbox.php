@@ -28,6 +28,7 @@ class VariableCheckbox extends Component
     {
         if ($this->variable) {
             $data = [];
+            $dataTotals = [];
             $options = $this->variable->options;
             $responseTotal = $this->variable->data()
                 ->where(function ($query) {
@@ -41,8 +42,12 @@ class VariableCheckbox extends Component
                 $responseAvg = count($responses) * 100 / $responseTotal;
                 $data[] = ['name' => $optionName, 'y' => floatVal($responseAvg)];
             }
-            $this->emit('checkboxShow', $this->variable, $data);
-            $this->getCheckboxCombinations();
+
+            foreach($this->getCheckboxCombinations() as $key => $combination){
+                $combinationAvg = $combination * 100 /  $responseTotal;
+                $dataTotals[] = ['name' => $key,'y' => floatVal($combinationAvg)];
+            }
+        $this->emit('checkboxShow', $this->variable, $data,$dataTotals);
         }
     }
 
@@ -82,6 +87,6 @@ class VariableCheckbox extends Component
         }
 
         // El array $combinations ahora contendrá las combinaciones y sus recuentos
-        dd($combinations);
+        return ($combinations);
     }
 }

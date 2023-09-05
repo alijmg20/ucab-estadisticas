@@ -77,7 +77,18 @@
                     {{ __('Más proyectos de la Línea de Investigación ') }} {{ $project->line->name }}
                 </h1>
                 <div class="mt-8 similar-project-list">
-                    @if ($similars && count($similars))
+                    @if ($similars && count($similars) == 0)
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center">
+                                    <div class="container mt-4 mb-4">
+                                        <x-alert-loading-danger>
+                                            <x-slot name="title">¡No existen mas proyectos</x-slot>
+                                            <x-slot name="subtitle"></x-slot>
+                                        </x-alert-loading-danger>
+                                    </div>
+                                </td>
+                            </tr>
+                        @elseif ($similars && count($similars))
                         <ul class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                             @foreach ($similars as $similar)
                                 <li class="mb-4 w-70 md:w-80">

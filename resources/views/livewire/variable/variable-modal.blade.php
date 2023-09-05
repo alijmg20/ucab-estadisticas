@@ -29,7 +29,7 @@
                 {{-- {{$status}} --}}
                 <x-input-error for="status" />
             </div>
-            <div class="container mt-4">
+            <div class="container mt-4" @if ($variable_id && $variable->variabletype_id == 3) style="display: none" @else style="display: block" @endif>
                 <x-label class="mb-4" for="graphic_type" value="Selecciona un gráfico" />
                 <x-select-dropdown class="w-full" wire:model.def='graphic_type'>
                     <option value="">selecciona una opción</option>
@@ -42,7 +42,12 @@
             <div class="container mt-4">
                 <x-label class="mb-4" value="Valores de la variable" />
                 @if($variable_id)
-                    @livewire('frequency.frequency-controller', ['variable' => $variable_id])
+                    <div @if ($variable->variabletype_id == 3) style="display: none" @else style="display: block" @endif>
+                        @livewire('frequency.frequency-controller', ['variable' => $variable_id])
+                    </div>
+                    <div @if ($variable->variabletype_id == 3) style="display: block" @else style="display: none" @endif>
+                        @livewire('options.option-controller', ['variable' => $variable_id])
+                    </div>
                 @endif
             </div>
         </x-slot>
@@ -76,6 +81,30 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Livewire.emitTo("frequency.frequency-controller", "delete", frequency);
+                        Swal.fire(
+                            'Eliminado!',
+                            "Se ha sido eliminado.",
+                            'success'
+                        )
+                    }
+                })
+            });
+            Livewire.on('optionAlert', (title, message) => {
+                alert(title, message)
+            });
+            Livewire.on('optionDelete', (option) => {
+                Swal.fire({
+                    title: '¿Estas seguro?',
+                    text: "¡Esta acción es irreversible!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, estoy seguro!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo("options.option-controller", "delete", option);
                         Swal.fire(
                             'Eliminado!',
                             "Se ha sido eliminado.",

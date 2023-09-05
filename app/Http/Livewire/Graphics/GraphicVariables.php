@@ -34,7 +34,6 @@ class GraphicVariables extends Component
         $variable->status = $variable->status == 2 ? 1 : 2;
         $variable->save();
         $this->emitTo('graphics.graphic-controller','render');
-        $this->emitTo('graphics.graphic-details','render');
     }
 
 }

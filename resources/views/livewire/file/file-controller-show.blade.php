@@ -50,7 +50,6 @@
                 @livewire('variable.variable-controller', ['file' => $file])
             </div>
             <div class="mt-4 mb-4" x-show="activeTab === 2"> @livewire('graphics.graphic-controller', ['file' => $file])  </div>
-            {{-- <div class="mt-4 mb-4" x-show="activeTab === 3">@livewire('graphics.graphic-details', ['file' => $file]) </div> --}}
         </div>
     </div>
 

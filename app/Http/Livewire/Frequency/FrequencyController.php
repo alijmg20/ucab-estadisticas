@@ -98,9 +98,16 @@ class FrequencyController extends Component
         }
         $this->emitTo('graphics.multiple.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
-        $this->emitTo('graphics.graphic-details', 'render');
+
         $this->emitTo('graphics.multiple.graphic', 'render');
         $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
+        $this->emitTo('graphics.multiple.multiple-table', 'render');
+
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'render');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'loadWordCloud');
+        $this->emitTo('graphics.qualitatives.qualitative-table', 'render');
+
+
     }
 
     public function upPosition($id){
@@ -116,9 +123,10 @@ class FrequencyController extends Component
         $frequencyDown->save();
         $this->emitTo('graphics.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
-        $this->emitTo('graphics.graphic-details', 'render');
         $this->emitTo('graphics.multiple.graphic', 'render');
         $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'render');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'loadWordCloud');
     }
 
     public function downPosition($id){
@@ -134,9 +142,10 @@ class FrequencyController extends Component
         $frequencyDown->save();
         $this->emitTo('graphics.graphic-controller', 'render');
         $this->emitTo('graphics.graphic-variables','render');
-        $this->emitTo('graphics.graphic-details', 'render');
         $this->emitTo('graphics.multiple.graphic', 'render');
         $this->emitTo('graphics.multiple.graphic', 'loadGraphic');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'render');
+        $this->emitTo('graphics.qualitatives.variable-qualitative', 'loadWordCloud');
     }
 
 }

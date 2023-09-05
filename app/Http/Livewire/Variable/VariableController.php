@@ -89,28 +89,14 @@ class VariableController extends Component
         $variable->status = $variable->status == 2 ? 1 : 2;
         $variable->save();
         $this->emitTo('graphics.graphic-controller','render');
-        $this->emitTo('graphics.graphic-details','render');
     }
 
     public function delete($id){
         $variable = Variable::find($id);
-        $data = Register::where('file_id',$variable->file_id)->get();
-        foreach ($data as $dat) {
-            $data_aux = [];
-            foreach ($dat->datos as $key => $da) {
-                if($key !== $variable->id){
-                    $data_aux[$key] = $da;
-                }
-            }
-            $dat->datos = $data_aux;
-            $dat->save();
-        }
-        
         $variable->delete();
         
         $this->emitTo('graphics.graphic-controller','render');
         $this->emitTo('graphics.graphic-variables','render');
-        $this->emitTo('graphics.graphic-details','render');
     }
 
 }
