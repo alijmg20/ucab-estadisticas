@@ -13,7 +13,7 @@ class Variable extends Model
 
     public function file()
     {
-        return $this->belongsTo(Variable::class);
+        return $this->belongsTo(File::class);
     }
 
     public function graphicType()
@@ -48,6 +48,11 @@ class Variable extends Model
     public function variableResponses()
     {
         return $this->hasMany(VariableResponse::class);
+    }
+
+    public function correlations()
+    {
+        return $this->belongsToMany(Correlation::class, 'correlation_variable');
     }
 
 }

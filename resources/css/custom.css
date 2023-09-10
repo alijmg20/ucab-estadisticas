@@ -9,6 +9,12 @@
     @apply mx-auto max-w-7xl px-2;
 }
 
+.rotate-90 {
+    transform: rotate(90deg);
+    transform-origin: left top;
+    white-space: nowrap;
+}
+
 .form-control {
     @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm;
 }
@@ -49,6 +55,16 @@
 
 .border-t-3 {
     border-top-width: 3px;
+}
+
+/* Fondo Amarillo */
+.bg-yellow-500 {
+    background-color: #FFA500 !important;
+}
+
+/* Color de Texto Amarillo */
+.text-yellow-500 {
+    color: #FFA500 !important;
 }
 
 .border-blue-500 {

@@ -62,35 +62,5 @@ class Graphic extends Component
         }
     }
 
-    public function unionVariables()
-    {
 
-        $variable1 = Variable::find(49);
-        $variable2 = Variable::find(55);
-
-        $registers = Register::where('file_id',$this->variable->file_id)->get();
-
-        $contingencyTable = [];
-
-        foreach ($registers as $register) {
-            $data1 = $variable1->data()->where('register_id', $register->id)->first();
-            $data2 = $variable2->data()->where('register_id', $register->id)->first();
-
-            if ($data1 && $data2) {
-                $value1 = $data1->value;
-                $value2 = $data2->value;
-                $key = "$value2, $value1"; // Combinación de valores como clave
-
-                // Incrementa el contador para la combinación de valores en el arreglo
-                if (!isset($contingencyTable[$key])) {
-                    $contingencyTable[$key] = 1;
-                } else {
-                    $contingencyTable[$key]++;
-                }
-            }
-        }
-
-        // Puedes usar dd para mostrar el arreglo resultante
-        dd($contingencyTable);
-    }
 }

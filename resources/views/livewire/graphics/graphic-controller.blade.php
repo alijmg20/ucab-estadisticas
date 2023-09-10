@@ -6,11 +6,10 @@
                     <td class="px-4 py-3">
                         <div class="flex items-center space-x-4 mb-4 text-sm">
                             <div>
-                                Opciones: 
+                                Opciones:
                             </div>
-                            <a 
-                            class="mr-2 disabled:opacity-25 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
-                            target="_blank"   href="{{ route('admin.pdf.graphics', $file->id) }}">Reporte PDF</a>
+                            <a class="mr-2 disabled:opacity-25 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+                                target="_blank" href="{{ route('admin.pdf.graphics', $file->id) }}">Reporte PDF</a>
                         </div>
                     </td>
                     <ul
@@ -47,6 +46,16 @@
                                 }"
                                 href="#">Casilla de verificación</a>
                         </li>
+                        <li wire:click="updateTab(4)" class="mr-2" role="presentation">
+                            <a x-on:click.prevent="activeTabVariable = 4"
+                                :class="{
+                                    'inline-block p-4 border-b-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500': activeTabVariable ===
+                                        4,
+                                    'inline-block p-4 border-b-2 border-transparent rounded-t-lg dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300': activeTabVariable !==
+                                        4
+                                }"
+                                href="#">Correlacionar variables</a>
+                        </li>
                     </ul>
                 </div>
                 <div>
@@ -58,6 +67,9 @@
                     </div>
                     <div x-show="activeTabVariable === 3">
                         @livewire('graphics.checkbox.checkbox-controller', ['file' => $file->id])
+                    </div>
+                    <div x-show="activeTabVariable === 4">
+                        @livewire('graphics.correlation.correlation-controller', ['file' => $file->id])
                     </div>
                 </div>
             </div>

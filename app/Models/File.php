@@ -21,6 +21,11 @@ class File extends Model
         return $this->hasMany(Variable::class);
     }
 
+    public function correlations()
+    {
+        return $this->hasMany(Correlation::class);
+    }
+
     public function registers()
     {
         return $this->hasMany(Register::class);
