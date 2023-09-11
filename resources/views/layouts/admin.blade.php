@@ -74,7 +74,6 @@
     <script src="https://code.highcharts.com/modules/dependency-wheel.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="https://code.highcharts.com/modules/sonification.js"></script>
     <script src="https://code.highcharts.com/modules/stock-tools.js"></script>
     <script src="https://code.highcharts.com/modules/streamgraph.js"></script>
     <script src="https://code.highcharts.com/modules/sunburst.js"></script>

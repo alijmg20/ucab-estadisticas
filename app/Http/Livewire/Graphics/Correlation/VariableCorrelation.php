@@ -12,7 +12,8 @@ class VariableCorrelation extends Component
 
     public $correlation;
     public $variable1, $variable2;
-    protected $listeners = ['delete', 'render','edit'];
+    public $responsed;
+    protected $listeners = ['delete', 'render', 'edit', 'getChartData'];
     public function mount($correlation)
     {
         $this->correlation = Correlation::find($correlation);
@@ -20,7 +21,15 @@ class VariableCorrelation extends Component
 
     public function render()
     {
-        $tableData = $this->unionVariables();
+        if($this->correlation){
+            $tableData = $this->unionVariables();
+            $this->responsed['chiSquare'] = $this->calculateChiSquare();
+            $this->responsed['degreesOfFreedomChiSquare'] = $this->calculateDegreesOfFreedom()['degreesOfFreedomChiSquare'];
+            $this->responsed['cramerv'] = $this->calculateCramersV();
+            $this->responsed['degreesOfFreedomCramersV'] = $this->calculateDegreesOfFreedom()['degreesOfFreedomCramersV'];
+        }else{
+            $tableData = [];
+        }
         return view('livewire.graphics.correlation.variable-correlation', compact('tableData'));
     }
 
@@ -31,7 +40,7 @@ class VariableCorrelation extends Component
 
     public function edit()
     {
-        $this->emitTo('graphics.correlation.correlation-modal','correlationEdit', $this->correlation->id);
+        $this->emitTo('graphics.correlation.correlation-modal', 'correlationEdit', $this->correlation->id);
     }
 
     public function unionVariables()
@@ -148,4 +157,25 @@ class VariableCorrelation extends Component
 
         return $cramersV;
     }
+
+    public function calculateDegreesOfFreedom()
+    {
+        // Obtén los datos y totales como lo hiciste en unionVariables()
+        $tableData = $this->unionVariables();
+        $rowTotals = $tableData['rowTotals'];
+        $columnTotals = $tableData['columnTotals'];
+
+        // Calcula los grados de libertad para el estadístico chi-cuadrado
+        $degreesOfFreedomChiSquare = (count($rowTotals) - 1) * (count($columnTotals) - 1);
+
+        // Calcula los grados de libertad para el coeficiente de contingencia (Cramér's V)
+        $minRowsColumns = min(count($rowTotals), count($columnTotals));
+        $degreesOfFreedomCramersV = $minRowsColumns - 1;
+
+        return [
+            'degreesOfFreedomChiSquare' => $degreesOfFreedomChiSquare,
+            'degreesOfFreedomCramersV' => $degreesOfFreedomCramersV,
+        ];
+    }
+    
 }

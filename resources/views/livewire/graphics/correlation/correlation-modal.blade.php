@@ -20,61 +20,26 @@
             </div>
 
             <div class="container mt-4">
-                <x-table>
-                    <x-slot name="headers">
-                        <th class="px-4 py-3">
-                            Selección
-                        </th>
-                        <th class="cursor-pointer px-4 py-3">
-                            Nombre
-                        </th>
-                    </x-slot>
-                    <x-slot name="body">
-                        @if ($variablesList && count($variablesList) == 0)
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 text-center">
-                                    <div class="container mt-4 mb-4">
-                                        <x-alert-loading-danger>
-                                            <x-slot name="title">¡No hay variables disponibles!</x-slot>
-                                            <x-slot name="subtitle">Vuelva a cargar el proyecto en el sistema</x-slot>
-                                        </x-alert-loading-danger>
-                                    </div>
-                                </td>
-                            </tr>
-                        @elseif ($variablesList && count($variablesList))
-                            @foreach ($variablesList as $var)
-                                <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    <td>
-                                        <div class="flex justify-center items-center">
-                                            <input id="default-checkbox-{{ $var->id }}" type="checkbox"
-                                                value="{{ $var->id }}" @if (in_array($var->id, $variables)) checked @endif
-                                                wire:model="variables"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        </div>
-                                    </td>
-                                    <td class="prose truncate px-4 py-3">{{ $var->name }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 text-center">
-                                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                        role="status">
-                                        <span
-                                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endif
-                    </x-slot>
-                </x-table>
+                <x-label class="mb-4" for="variables" value="Selecciona la variable para las filas" />
+                <x-select-dropdown class="w-full" wire:model.def='variables.0'>
+                    <option value="">selecciona una opción</option>
+                    @foreach ($variablesList as $variable)
+                        <option value="{{ $variable->id }}">{{ $variable->name }}</option>
+                    @endforeach
+                </x-select-dropdown>
+                <x-input-error for="variables.0" class="mt-2" />
                 {{-- <div>variables {{var_Export($variables)}}</div> --}}
-                @if ($variablesList && count($variablesList) && $variablesList->hasPages())
-                    <div class="px-6 py-3">
-                        {{ $variablesList->links() }}
-                    </div>
-                @endif
-                <x-input-error for="variables" />
+            </div>
+            <div class="container mt-4">
+                <x-label class="mb-4" for="variables" value="Selecciona la variable para las columnas" />
+                <x-select-dropdown class="w-full" wire:model.def='variables.1'>
+                    <option value="">selecciona una opción</option>
+                    @foreach ($variablesList as $variable)
+                        <option value="{{ $variable->id }}">{{ $variable->name }}</option>
+                    @endforeach
+                </x-select-dropdown>
+                <x-input-error for="variables.1" class="mt-2" />
+                {{-- <div>variables {{var_Export($variables)}}</div> --}}
             </div>
         </x-slot>
         <x-slot name="footer">

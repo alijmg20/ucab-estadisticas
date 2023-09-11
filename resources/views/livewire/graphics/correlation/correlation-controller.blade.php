@@ -3,17 +3,22 @@
         <div class="px-6 py-4 flex flex-items-center">
             <div class="flex items-center">
                 <span class="mr-2 text-gray-700 dark:text-gray-400">Mostrar</span>
-                <x-select-dropdown class="mx-2" wire:model.def='cantVariable'>
-                    {{-- @foreach ($entrysVariable as $entry)
+                <x-select-dropdown class="mx-2" wire:model.def='cantCorrelation'>
+                    @foreach ($entrysCorrelation as $entry)
                         <option value="{{ $entry }}">{{ $entry }}</option>
-                    @endforeach --}}
+                    @endforeach
                     <option value="">selecciona una opcion</option>
                 </x-select-dropdown>
                 <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
             </div>
-            <x-input placeholder="Buscar" class="flex-1 mr-4" type="text"></x-input>
+            <x-input placeholder="Buscar" class="flex-1 mr-4" wire:model='searchCorrelation' type="text"></x-input>
             @livewire('graphics.correlation.correlation-modal',['file' => $file->id])
         </div>
+        @if ($correlations && count($correlations) && $correlations->hasPages())
+            <div class="px-6 py-3">
+                {{ $correlations->links() }}
+            </div>
+        @endif
     </div>
     @if (count($correlations))
         @foreach ($correlations as $correlation)

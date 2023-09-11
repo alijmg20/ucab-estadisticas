@@ -26,10 +26,16 @@
                         @livewire('graphics.checkbox.variable-checkbox', ['variable' => $variableActive['id']], key($variableActive['id']))
                     @break
                 @endswitch
-                @if ($key < count($variablesActive) - 1)
                     <div style="page-break-before: always;"></div>
-                @endif
             @endforeach
+            @if (count($correlations))
+                @foreach ($correlations as $correlation)
+                    @livewire('graphics.correlation.variable-correlation', ['correlation' => $correlation['id']], key($correlation['id']))
+                    @if ($key < count($correlations) - 1)
+                        <div style="page-break-before: always;"></div>
+                    @endif
+                @endforeach
+            @endif
         @else
             <div style="display: none">@livewire('graphics.qualitatives.variable-qualitative', ['variable' => 0])</div>
             <div style="display: none">@livewire('graphics.multiple.graphic', ['variable' => 0])</div>

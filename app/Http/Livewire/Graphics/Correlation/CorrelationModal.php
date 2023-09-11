@@ -20,6 +20,8 @@ class CorrelationModal extends Component
     protected $rules = [
         'name' => 'required',
         'variables' => 'required|array|size:2',
+        'variables.0' => 'required',
+        'variables.1' => 'required',
     ];
 
     public function mount($file){
@@ -30,7 +32,7 @@ class CorrelationModal extends Component
     {
         $variablesList = Variable::where('file_id', $this->file->id)
         ->whereIn('variabletype_id', [2, 3])
-        ->paginate(5);
+        ->get();
     
         return view('livewire.graphics.correlation.correlation-modal',compact('variablesList'));
     }
@@ -50,6 +52,7 @@ class CorrelationModal extends Component
         $this->emitTo('graphics.correlation.correlation-controller', 'render');
         $this->emit('correlationAlert', 'terminado!','Correlación creada exitosamente');
         $this->resetInputDefaults();
+    
     }
 
     public function correlationEdit($correlation_id){

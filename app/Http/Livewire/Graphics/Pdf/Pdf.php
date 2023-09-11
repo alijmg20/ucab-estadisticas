@@ -19,8 +19,10 @@ class Pdf extends Component
     public function render()
     {
         $this->displayVariables();
+        $correlations = $this->displayCorrelations();
+
         $this->title = Str::Slug($this->file->id.' '.$this->file->name);
-        return view('livewire.graphics.pdf.pdf')
+        return view('livewire.graphics.pdf.pdf',compact('correlations'))
         ->layout('layouts.pdf');
     }
 
@@ -33,6 +35,11 @@ class Pdf extends Component
                 $variablesActive[] = $variable;
         }
         $this->variablesActive = $variablesActive;
+    }
+
+    public function displayCorrelations(){
+        return $this->file->correlations;
+
     }
 
 }

@@ -33,7 +33,7 @@ class Variable extends Model
 
     public function frequencies()
     {
-        return $this->hasMany(frequency::class);
+        return $this->hasMany(Frequency::class);
     }
 
     public function sensibilities(){
