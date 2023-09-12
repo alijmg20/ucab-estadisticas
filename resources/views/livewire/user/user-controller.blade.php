@@ -21,7 +21,9 @@
                             <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
                         </div>
                         <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='search'></x-input>
-                        @livewire('user.user-modal')
+                        @if (Gate::allows('admin.users.create') && Gate::allows('admin.users.edit'))
+                            @livewire('user.user-modal')
+                        @endif
                     </div>
 
                     <x-table>
@@ -89,14 +91,16 @@
                                         <div class="container mt-4 mb-4">
                                             <x-alert-loading-danger>
                                                 <x-slot name="title">¡No hay usuarios disponibles!</x-slot>
-                                                <x-slot name="subtitle">Puede crear usuarios en el botón <b>NUEVA</b></x-slot>
+                                                <x-slot name="subtitle">Puede crear usuarios en el botón
+                                                    <b>NUEVA</b></x-slot>
                                             </x-alert-loading-danger>
                                         </div>
                                     </td>
                                 </tr>
                             @elseif ($users && count($users))
                                 @foreach ($users as $item)
-                                    <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <tr
+                                        class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="px-6 py-3 text-sm">
                                             {{ $item->id }}
                                         </td>
@@ -111,16 +115,21 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <button wire:click='$emitTo("user.user-modal","edit",{{ $item->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Edit">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                                <button wire:click='$emit("userDelete",{{ $item->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
+                                                @can('admin.users.edit')
+                                                    <button
+                                                        wire:click='$emitTo("user.user-modal","edit",{{ $item->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Edit">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                @endcan
+                                                @can('admin.users.destroy')
+                                                    <button wire:click='$emit("userDelete",{{ $item->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
@@ -174,6 +183,6 @@
                     }
                 })
             });
-        }); 
+        });
     </script>
 </div>

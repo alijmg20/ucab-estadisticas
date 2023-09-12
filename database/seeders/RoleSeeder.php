@@ -26,10 +26,17 @@ class RoleSeeder extends Seeder
         ])->syncRoles([$role_admin, $role_researcher]);
 
         // PERMISOS DE USUARIO
+
         Permission::create([
             'name' => 'admin.users.index',
             'description' => 'Ver lista de usuarios'
-        ])->syncRoles([$role_admin, $role_researcher]);
+        ])->syncRoles([$role_admin,$role_researcher]);
+
+        Permission::create([
+            'name' => 'admin.users.create',
+            'description' => 'Crear usuarios'
+        ])->syncRoles([$role_admin]);
+
         Permission::create([
             'name' => 'admin.users.edit',
             'description' => 'Editar usuarios'
@@ -80,7 +87,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'admin.roles.index',
             'description' => 'Ver lista de roles'
-        ])->syncRoles([$role_admin, $role_researcher]);
+        ])->syncRoles([$role_admin]);
         Permission::create([
             'name' => 'admin.roles.create',
             'description' => 'Crear roles'
@@ -92,6 +99,54 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'admin.roles.destroy',
             'description' => 'Eliminar roles'
+        ])->syncRoles([$role_admin]);
+
+        // PERMISOS DE EMAILS
+        Permission::create([
+            'name' => 'admin.emails.index',
+            'description' => 'Ver lista de emails'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.emails.create',
+            'description' => 'Crear emails'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.emails.edit',
+            'description' => 'Editar emails'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.emails.destroy',
+            'description' => 'Eliminar emails'
+        ])->syncRoles([$role_admin, $role_researcher]);
+
+        // PERMISOS DE IA
+        Permission::create([
+            'name' => 'admin.openai.index',
+            'description' => 'Utilizar IA'
+        ])->syncRoles([$role_admin, $role_researcher]);
+
+        // PERMISOS DE testimonials
+        Permission::create([
+            'name' => 'admin.testimonials.index',
+            'description' => 'Ver lista de Experiencias'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.testimonials.create',
+            'description' => 'Crear Experiencias'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.testimonials.edit',
+            'description' => 'Editar Experiencias'
+        ])->syncRoles([$role_admin, $role_researcher]);
+        Permission::create([
+            'name' => 'admin.testimonials.destroy',
+            'description' => 'Eliminar Experiencias'
+        ])->syncRoles([$role_admin, $role_researcher]);
+
+        // PERMISOS DE MODULES
+        Permission::create([
+            'name' => 'admin.modules.index',
+            'description' => 'GESTIONAR MODULOS'
         ])->syncRoles([$role_admin]);
     }
 }

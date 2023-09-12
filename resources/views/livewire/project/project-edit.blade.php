@@ -11,11 +11,11 @@
                         <x-slot name="subtitle">Espere que la imagen termine de cargar</x-slot>
                     </x-alert-loading-danger>
                     @if ($file)
-                        <div class="min-w-full">
+                        <div class="min-w-full flex justify-center">
                             <img id="picture" src="{{ $file->temporaryUrl() }}" alt="">
                         </div>
                     @elseif($project && optional($project->image)->url)
-                        <div class="min-w-full">
+                        <div class="min-w-full flex justify-center">
                             <img id="picture" src="{{ App\Helpers\Tools::StorageUrl($project->image->url) }}"
                                 alt="">
                         </div>

@@ -19,7 +19,9 @@
                             <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
                         </div>
                         <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='search'></x-input>
-                        @livewire('line.line-modal')
+                        @if (Gate::allows('admin.lines.create') && Gate::allows('admin.lines.edit'))
+                            @livewire('line.line-modal')
+                        @endif
                     </div>
 
                     <x-table>
@@ -103,17 +105,20 @@
                                             {{-- ACTIONS --}}
                                             <td class="px-4 py-3">
                                                 <div class="flex items-center space-x-4 text-sm">
-                                                    {{-- @livewire('line.line-modal-edit', ['line' => $line], key($line->id)) --}}
+                                                    @can('admin.lines.edit')
                                                     <button wire:click='edit({{ $lin->id }})'
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Edit">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
+                                                    @endcan
+                                                    @can('admin.lines.destroy')
                                                     <button wire:click='$emit("lineDelete",{{ $lin->id }})'
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Delete">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

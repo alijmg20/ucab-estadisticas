@@ -21,7 +21,9 @@
                             <span class="ml-2 mr-2 text-gray-700 dark:text-gray-400">Entradas</span>
                         </div>
                         <x-input placeholder="Buscar" class="flex-1 mr-4" type="text" wire:model='search'></x-input>
-                        @livewire('emails.email-modal')
+                        @if (Gate::allows('admin.emails.edit'))
+                            @livewire('emails.email-modal')
+                        @endif
                     </div>
 
                     <x-table>
@@ -111,16 +113,20 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
+                                                @can('admin.emails.edit')
                                                 <button wire:click='$emitTo("emails.email-modal","edit",{{ $item->id }})'
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="edit">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
+                                                @endcan
+                                                @can('admin.emails.destroy')
                                                 <button wire:click='$emit("emailDelete",{{ $item->id }})'
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Delete">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
+                                                @endcam
                                             </div>
                                         </td>
                                     </tr>
