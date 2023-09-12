@@ -49,26 +49,60 @@ Route::get('/quiz/answer/{quiz}',[AnswerController::class,'answer'] )->name('ans
 Route::get('/quiz/answer/{quiz}/answered',[AnswerController::class,'answered'] )->name('answer.answered');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
-    Route::get('/admin', [AdminController::class,'index'])->name('admin.home');
-    Route::get('/admin/lines', [LineController::class,'index'])->name('admin.lines.index');
-    Route::get('/admin/users', [UserController::class,'index'])->name('admin.users.index');
-    Route::get('/admin/roles', [AdminRoleController::class,'index'])->name('admin.roles.index');
-    Route::get('/admin/carrusel', [CarruselController::class,'index'])->name('admin.carrusel.index');
-    Route::get('/admin/testimonials', [TestimonialsController::class,'index'])->name('admin.testimonials.index');
-    Route::get('/admin/emails', [EmailsController::class,'index'])->name('admin.emails.index');
 
-    Route::get('/admin/files/{project}', [FilesController::class,'show'])->name('admin.files.show');
-    Route::get('/admin/showfile/{file}', [FilesController::class,'showfile'])->name('admin.files.showfile');
-    Route::get('/admin/projects', [ProjectController::class,'index'])->name('admin.projects.index');
+    Route::get('/admin', [AdminController::class,'index'])
+    ->middleware('can:admin.home')
+    ->name('admin.home');
 
-    Route::get('/admin/quiz/{quiz}', [QuizController::class,'edit'])->name('admin.quiz.edit');
+    Route::get('/admin/lines', [LineController::class,'index'])
+    ->middleware('can:admin.lines.index')
+    ->name('admin.lines.index');
 
-    Route::get('/admin/openai', [OpenaiController::class,'index'])->name('admin.openai.index');
+    Route::get('/admin/users', [UserController::class,'index'])
+    ->middleware('can:admin.users.index')
+    ->name('admin.users.index');
 
-    Route::get('/export/excel/{quiz}', [ExportQuestions::class, 'downloadQuestions'])->name('export.excel');
-    Route::get('/pdf/{file}', Pdf::class)->name('admin.pdf.graphics');
+    Route::get('/admin/roles', [AdminRoleController::class,'index'])
+    ->middleware('can:admin.roles.index')    
+    ->name('admin.roles.index');
 
-    Route::get('/admin/stadistics', StadisticController::class)->name('admin.stadistics');
-    Route::get('/admin/stadistics/pdf/{date_ini}/{date_end}/{line_id}', StadisticsPdf::class)->name('admin.stadistics.pdf');
+    Route::get('/admin/carrusel', [CarruselController::class,'index'])
+    ->middleware('can:admin.modules.index')        
+    ->name('admin.carrusel.index');
+
+    Route::get('/admin/testimonials', [TestimonialsController::class,'index'])
+    ->middleware('can:admin.testimonials.index')            
+    ->name('admin.testimonials.index');
+
+    Route::get('/admin/emails', [EmailsController::class,'index'])
+    ->middleware('can:admin.emails.index')            
+    ->name('admin.emails.index');
+
+    Route::get('/admin/files/{project}', [FilesController::class,'show'])
+    ->name('admin.files.show');
+
+    Route::get('/admin/showfile/{file}', [FilesController::class,'showfile'])
+    ->name('admin.files.showfile');
+
+    Route::get('/admin/projects', [ProjectController::class,'index'])
+    ->name('admin.projects.index');
+
+    Route::get('/admin/quiz/{quiz}', [QuizController::class,'edit'])
+    ->name('admin.quiz.edit');
+
+    Route::get('/admin/openai', [OpenaiController::class,'index'])
+    ->name('admin.openai.index');
+
+    Route::get('/export/excel/{quiz}', [ExportQuestions::class, 'downloadQuestions'])
+    ->name('export.excel');
+
+    Route::get('/pdf/{file}', Pdf::class)
+    ->name('admin.pdf.graphics');
+
+    Route::get('/admin/stadistics', StadisticController::class)
+    ->name('admin.stadistics');
+
+    Route::get('/admin/stadistics/pdf/{date_ini}/{date_end}/{line_id}', StadisticsPdf::class)
+    ->name('admin.stadistics.pdf');
 
 });

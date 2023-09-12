@@ -92,9 +92,9 @@ class UserModal extends Component
         $this->user->name = $this->name;
         $this->user->email = $this->email;
         $this->user->save();
-        if ($this->roles_id && count($this->roles_id)) {
+        // if ($this->roles_id && count($this->roles_id)) {
             $this->user->roles()->sync($this->roles_id);
-        }
+        // }
         if (!empty($this->password) || !empty($this->password_confirmation)) {
             if ($this->password === $this->password_confirmation) {
                 $this->user->password = bcrypt($this->password);
