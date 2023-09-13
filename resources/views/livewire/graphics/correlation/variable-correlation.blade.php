@@ -8,9 +8,9 @@
                 <span></div>
         <div class="inline-block w-full">
             @if ($correlation)
-            @livewire('graphics.correlation.correlation-buttons', ['correlation' => $correlation->id])
+                @livewire('graphics.correlation.correlation-buttons', ['correlation' => $correlation->id])
+                <div id="comparison-chart-{{ $correlation->id }}" class="mb-4"></div>
             @endif
-            <div id="comparison-chart-{{ $correlation->id }}" class="mb-4"></div>
         </div>
     </div>
     <div style="page-break-before: always;"></div>

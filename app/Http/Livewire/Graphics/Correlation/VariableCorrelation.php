@@ -13,7 +13,7 @@ class VariableCorrelation extends Component
     public $correlation;
     public $variable1, $variable2;
     public $responsed;
-    protected $listeners = [ 'render', 'generateComparisonChart'];
+    protected $listeners = ['render', 'generateComparisonChart'];
     public function mount($correlation)
     {
         $this->correlation = Correlation::find($correlation);
@@ -22,7 +22,6 @@ class VariableCorrelation extends Component
     public function render()
     {
         if ($this->correlation) {
-            // dd($this->getColumnSummaries() , $this->unionVariables());
             $tableData = $this->unionVariables();
             $this->responsed['chiSquare'] = $this->calculateChiSquare();
             $this->responsed['degreesOfFreedomChiSquare'] = $this->calculateDegreesOfFreedom()['degreesOfFreedomChiSquare'];
@@ -39,39 +38,39 @@ class VariableCorrelation extends Component
         $vars = $this->correlation->variables;
         $this->variable1 = $variable1 = $vars[0]; // filas
         $this->variable2 = $variable2 = $vars[1]; // columnas
-    
+
         $registers = Register::where('file_id', $this->correlation->file_id)->get();
-    
+
         $tableData = [];
         $rowTotals = [];
         $columnTotals = [];
-    
+
         foreach ($registers as $register) {
             $data1 = $variable1->data()->where('register_id', $register->id)->first();
             $data2 = $variable2->data()->where('register_id', $register->id)->first();
-    
+
             if ($data1 && $data2) {
                 $value1 = $data1->value;
                 $value2 = $data2->value;
-    
+
                 // Agrupa los valores de variable2 bajo las categorías de variable1
                 if (!isset($tableData[$value1])) {
                     $tableData[$value1] = [];
                 }
-    
+
                 if (!isset($tableData[$value1][$value2])) {
                     $tableData[$value1][$value2] = 1;
                 } else {
                     $tableData[$value1][$value2]++;
                 }
-    
+
                 // Calcula totales de filas
                 if (!isset($rowTotals[$value1])) {
                     $rowTotals[$value1] = 1;
                 } else {
                     $rowTotals[$value1]++;
                 }
-    
+
                 // Calcula totales de columnas
                 if (!isset($columnTotals[$value2])) {
                     $columnTotals[$value2] = 1;
@@ -80,32 +79,32 @@ class VariableCorrelation extends Component
                 }
             }
         }
-    
+
         // Reemplaza nombres de fila vacíos con "Sin respuesta"
         if (array_key_exists("", $tableData)) {
             $tableData["Sin respuesta"] = $tableData[""];
             unset($tableData[""]);
         }
-    
+
         // Ordena alfabéticamente las filas en tableData
         ksort($tableData);
-    
+
         // Ordena alfabéticamente las claves en rowTotals y columnTotals
         ksort($rowTotals);
         ksort($columnTotals);
-    
+
         // Añade "Sin respuesta" al final de rowTotals si está presente
         if (array_key_exists("", $rowTotals)) {
             $rowTotals["Sin respuesta"] = $rowTotals[""];
             unset($rowTotals[""]);
         }
-    
+
         // Añade "Sin respuesta" al final de columnTotals si está presente
         if (array_key_exists("", $columnTotals)) {
             $columnTotals["Sin respuesta"] = $columnTotals[""];
             unset($columnTotals[""]);
         }
-    
+
         // Reemplaza nombres de fila vacíos por "Sin respuesta" en subarreglos de tableData
         foreach ($tableData as &$rowData) {
             if (array_key_exists("", $rowData)) {
@@ -113,15 +112,15 @@ class VariableCorrelation extends Component
                 unset($rowData[""]);
             }
         }
-    
+
         return [
             'tableData' => $tableData,
             'rowTotals' => $rowTotals,
             'columnTotals' => $columnTotals,
         ];
         // Puedes usar estos datos para mostrar totales en la tabla en la vista.
-    }    
-    
+    }
+
 
     public function calculateChiSquare()
     {
@@ -205,48 +204,50 @@ class VariableCorrelation extends Component
 
     public function generateComparisonChart()
     {
-        $vars = $this->correlation->variables;
-        $variable1 = $vars[0]; // filas
-        $variable2 = $vars[1]; // columnas
-    
-        $registers = Register::where('file_id', $this->correlation->file_id)->get();
-    
-        $tableData = $this->generateTableData($variable1, $variable2, $registers);
-        $categories = $this->generateCategories($variable1, $variable2, $tableData);
-    
-        // Ordena el arreglo de categorías alfabéticamente
-        sort($categories);
-    
-        // Agrega "Sin respuesta" al final
-        $categories[] = "Sin respuesta";
-    
-        $chartData = [
-            'tableData' => $tableData,
-            'correlation' => $this->correlation,
-            'categories' => $categories,
-        ];
-    
-        // Emitir un evento con los datos del gráfico
-        $this->emit('updateChartData', $chartData);
+        if ($this->correlation) {
+            $vars = $this->correlation->variables;
+            $variable1 = $vars[0]; // filas
+            $variable2 = $vars[1]; // columnas
+
+            $registers = Register::where('file_id', $this->correlation->file_id)->get();
+
+            $tableData = $this->generateTableData($variable1, $variable2, $registers);
+            $categories = $this->generateCategories($variable1, $variable2, $tableData);
+
+            // Ordena el arreglo de categorías alfabéticamente
+            sort($categories);
+
+            // Agrega "Sin respuesta" al final
+            $categories[] = "Sin respuesta";
+
+            $chartData = [
+                'tableData' => $tableData,
+                'correlation' => $this->correlation,
+                'categories' => $categories,
+            ];
+
+            // Emitir un evento con los datos del gráfico
+            $this->emit('updateChartData', $chartData);
+        }
     }
-    
+
     private function generateTableData($variable1, $variable2, $registers)
     {
         $tableData = [];
-    
+
         foreach ($registers as $register) {
             $data1 = $variable1->data()->where('register_id', $register->id)->first();
             $data2 = $variable2->data()->where('register_id', $register->id)->first();
-    
+
             if ($data1 && $data2) {
                 $value1 = $data1->value;
                 $value2 = $data2->value;
-    
+
                 // Agrupa los valores de variable1 bajo las categorías de variable2
                 if (!isset($tableData[$value2])) {
                     $tableData[$value2] = [];
                 }
-    
+
                 if (!isset($tableData[$value2][$value1])) {
                     $tableData[$value2][$value1] = 1;
                 } else {
@@ -254,7 +255,7 @@ class VariableCorrelation extends Component
                 }
             }
         }
-    
+
         // Recorre todos los subíndices para asegurarse de que estén definidos
         foreach ($tableData as &$data) {
             foreach ($tableData as $key1 => $subArray) {
@@ -264,7 +265,7 @@ class VariableCorrelation extends Component
             }
             ksort($data); // Ordena los subarreglos dentro de tableData
         }
-    
+
         // Reemplaza valores vacíos con "Sin respuesta" en variable1
         foreach ($tableData as &$data) {
             foreach ($data as $key => $value) {
@@ -274,7 +275,7 @@ class VariableCorrelation extends Component
                 }
             }
         }
-    
+
         // Reemplaza nombres de columna vacíos o nulos con "Sin respuesta"
         foreach (array_keys($tableData) as $column) {
             if (empty($column) || is_null($column)) {
@@ -282,7 +283,7 @@ class VariableCorrelation extends Component
                 unset($tableData[$column]);
             }
         }
-    
+
         // Calcula los porcentajes después de ordenar y cambiar a "Sin respuesta"
         $rowTotals = $this->unionVariables()['rowTotals'];
         foreach ($tableData as &$data) {
@@ -290,17 +291,17 @@ class VariableCorrelation extends Component
                 $data[$key] = ($value / $rowTotals[$key]) * 100;
             }
         }
-    
+
         return $tableData;
     }
-    
-    
-    
+
+
+
     private function generateCategories($variable1, $variable2, $tableData)
     {
         $categories1 = $variable1->data()->distinct('value')->pluck('value')->toArray();
         $categories2 = $variable2->data()->distinct('value')->pluck('value')->toArray();
-    
+
         foreach ($categories2 as $category2) {
             if (!isset($tableData[$category2])) {
                 $tableData[$category2] = [];
@@ -311,7 +312,7 @@ class VariableCorrelation extends Component
                 }
             }
         }
-    
+
         // Crea el arreglo de categorías
         $categories = [];
         foreach ($categories1 as $category) {
@@ -322,8 +323,7 @@ class VariableCorrelation extends Component
                 $categories[] = $category;
             }
         }
-    
+
         return $categories;
     }
-    
 }
