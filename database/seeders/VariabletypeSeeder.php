@@ -17,10 +17,10 @@ class VariabletypeSeeder extends Seeder
             'name' => 'texto'
         ]);
         Variabletype::create([
-            'name' => 'opción multiple'
+            'name' => 'Selección simple'
         ]);
         Variabletype::create([
-            'name' => 'casilla de verificación'
+            'name' => 'opción multiple'
         ]);
     }
 }

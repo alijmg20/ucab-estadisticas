@@ -1,4 +1,4 @@
-<div>
+<div wire:init='generateComparisonChart'>
     <div
         class="border border-gray-300 mb-6 mt-4 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform sm:w-full">
         <div class="dark:text-gray-400 px-6 py-4 text-left text-xl w-full dark:bg-gray-800"><span>
@@ -25,6 +25,7 @@
             </div>
             @if ($correlation)
                 <div>
+                    <div id="comparison-chart-{{$correlation->id}}" class="mb-4"></div>
                     <div class="text-center mb-4 w-full dark:bg-gray-800 dark:text-gray-400">Filas:
                         {{ $variable1->name }}</div>
                     <div class="text-center mb-4 w-full dark:bg-gray-800 dark:text-gray-400">Columnas:
@@ -182,4 +183,40 @@
             @endif
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('updateChartData', function (chartData) {
+                console.log(Object.keys(chartData.tableData));
+                Highcharts.chart('comparison-chart-'+chartData.correlation.id.toString(), {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: chartData.correlation.name.toString(),
+                    },
+                    xAxis: {
+                        categories: chartData.categories, // Categorías
+                        crosshair: true
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Valores'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: Object.entries(chartData.tableData).map(([name, data]) => ({
+                        name,
+                        data: Object.values(data)
+                    }))
+                });
+            });
+        });
+    </script>
+    
 </div>

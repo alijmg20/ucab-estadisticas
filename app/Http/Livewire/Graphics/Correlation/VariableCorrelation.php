@@ -13,7 +13,7 @@ class VariableCorrelation extends Component
     public $correlation;
     public $variable1, $variable2;
     public $responsed;
-    protected $listeners = ['delete', 'render', 'edit', 'getChartData'];
+    protected $listeners = ['delete', 'render', 'edit', 'generateComparisonChart'];
     public function mount($correlation)
     {
         $this->correlation = Correlation::find($correlation);
@@ -21,13 +21,14 @@ class VariableCorrelation extends Component
 
     public function render()
     {
-        if($this->correlation){
+        if ($this->correlation) {
+            // dd($this->getColumnSummaries() , $this->unionVariables());
             $tableData = $this->unionVariables();
             $this->responsed['chiSquare'] = $this->calculateChiSquare();
             $this->responsed['degreesOfFreedomChiSquare'] = $this->calculateDegreesOfFreedom()['degreesOfFreedomChiSquare'];
             $this->responsed['cramerv'] = $this->calculateCramersV();
             $this->responsed['degreesOfFreedomCramersV'] = $this->calculateDegreesOfFreedom()['degreesOfFreedomCramersV'];
-        }else{
+        } else {
             $tableData = [];
         }
         return view('livewire.graphics.correlation.variable-correlation', compact('tableData'));
@@ -177,5 +178,99 @@ class VariableCorrelation extends Component
             'degreesOfFreedomCramersV' => $degreesOfFreedomCramersV,
         ];
     }
-    
+
+    public function generateComparisonChart()
+    {
+        $vars = $this->correlation->variables;
+        $variable1 = $vars[0]; // filas
+        $variable2 = $vars[1]; // columnas
+
+        $registers = Register::where('file_id', $this->correlation->file_id)->get();
+
+        $tableData = [];
+
+        foreach ($registers as $register) {
+            $data1 = $variable1->data()->where('register_id', $register->id)->first();
+            $data2 = $variable2->data()->where('register_id', $register->id)->first();
+
+            if ($data1 && $data2) {
+                $value1 = $data1->value;
+                $value2 = $data2->value;
+
+                // Agrupa los valores de variable1 bajo las categorías de variable2
+                if (!isset($tableData[$value2])) {
+                    $tableData[$value2] = [];
+                }
+
+                if (!isset($tableData[$value2][$value1])) {
+                    $tableData[$value2][$value1] = 1;
+                } else {
+                    $tableData[$value2][$value1]++;
+                }
+            }
+        }
+
+        // Llena categorías vacías y asigna 0 a opciones faltantes en variable1
+        $categories1 = $variable1->data()->distinct('value')->pluck('value')->toArray();
+        $categories2 = $variable2->data()->distinct('value')->pluck('value')->toArray();
+
+        foreach ($categories2 as $category2) {
+            if (!isset($tableData[$category2])) {
+                $tableData[$category2] = [];
+            }
+            foreach ($categories1 as $category1) {
+                if (!isset($tableData[$category2][$category1])) {
+                    $tableData[$category2][$category1] = 0;
+                }
+            }
+        }
+
+        // Reemplaza valores vacíos con "Sin respuesta" en variable1
+        foreach ($tableData as &$data) {
+            foreach ($data as $key => $value) {
+                if ($key === "") {
+                    $data["Sin respuesta"] = $data[$key];
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        // Reemplaza nombres de columna vacíos o nulos con "Sin respuesta"
+        foreach (array_keys($tableData) as $column) {
+            if (empty($column) || is_null($column)) {
+                $tableData["Sin respuesta"] = $tableData[$column];
+                unset($tableData[$column]);
+            }
+        }
+
+        // Ordena los subarreglos dentro de tableData
+        foreach ($tableData as &$data) {
+            ksort($data);
+        }
+
+        // Crea el arreglo de categorías
+        $categories = [];
+        foreach ($categories1 as $category) {
+            if (empty($category) || is_null($category)) {
+                // Ignora "Sin respuesta" temporalmente
+                continue;
+            } else {
+                $categories[] = $category;
+            }
+        }
+
+        // Ordena el arreglo de categorías alfabéticamente
+        sort($categories);
+
+        // Agrega "Sin respuesta" al final
+        $categories[] = "Sin respuesta";
+        $chartData = [
+            'tableData' => $tableData,
+            'correlation' => $this->correlation,
+            'categories' => $categories,
+        ];
+
+        // Emitir un evento con los datos del gráfico
+        $this->emit('updateChartData', $chartData);
+    }
 }
