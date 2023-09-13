@@ -50,18 +50,14 @@
                 </x-alert-loading-danger>
             </div>
         @endif
-        @livewire('graphics.multiple.score-modal')
     </div>
     <script>
         document.addEventListener('livewire:load', function() {
-
         });
         document.getElementById('btnPrint').addEventListener('click', function() {
-            $(".gaphicOptions").css('display', 'none');
             $("#btnPrint").css('display', 'none');
             window.print();
             $("#btnPrint").css('display', 'inline-flex');
-            $(".gaphicOptions").css('display', 'flex');
         });
     </script>
 </div>

@@ -71,6 +71,7 @@ class CorrelationModal extends Component
         $this->correlation->save();
         $this->emitTo('graphics.correlation.correlation-controller', 'render');
         $this->emitTo('graphics.correlation.variable-correlation', 'render');
+        $this->emit('generateComparisonChart');
         $this->emit('correlationAlert', 'terminado!','Correlación actualizada exitosamente');
         $this->resetInputDefaults();
     }

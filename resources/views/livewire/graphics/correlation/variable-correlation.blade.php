@@ -7,22 +7,9 @@
                 @endif
                 <span></div>
         <div class="inline-block w-full">
-            <div class="gaphicOptions px-6 py-4 flex flex-items-center">
-                <div class="flex items-center w-full">
-                    <span class="mr-2 text-gray-700 dark:text-gray-400">Opciones:
-                    </span>
-                    @if ($correlation)
-                        <x-button wire:click='edit()' wire:loading.attr='disabled' wire:target="edit"
-                            class="ml-2 bg-yellow-500 disabled:opacity-25">
-                            editar
-                        </x-button>
-                        <x-button wire:click='delete()' wire:loading.attr='disabled' wire:target="delete"
-                            class="ml-2 bg-red-600 disabled:opacity-25">
-                            eliminar
-                        </x-button>
-                    @endif
-                </div>
-            </div>
+            @if ($correlation)
+            @livewire('graphics.correlation.correlation-buttons', ['correlation' => $correlation->id])
+            @endif
             <div id="comparison-chart-{{ $correlation->id }}" class="mb-4"></div>
         </div>
     </div>
@@ -193,7 +180,6 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('updateChartData', function(chartData) {
-                console.log(Object.keys(chartData.tableData));
                 Highcharts.chart('comparison-chart-' + chartData.correlation.id.toString(), {
                     chart: {
                         type: 'column'
@@ -207,8 +193,19 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Valores'
+                            text: 'Valores (%)' // Actualiza el título del eje Y
+                        },
+                        labels: {
+                            format: '{value}%' // Agrega el símbolo de porcentaje a los valores del eje Y
                         }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>', // Formato para mostrar los valores en porcentaje
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
                     },
                     plotOptions: {
                         column: {
@@ -224,5 +221,6 @@
             });
         });
     </script>
+    
 
 </div>

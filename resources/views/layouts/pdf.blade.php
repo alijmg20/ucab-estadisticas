@@ -19,6 +19,11 @@
     @stack('css')
     <!-- Styles -->
     @livewireStyles
+    <style>
+        .gaphicOptions{
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">

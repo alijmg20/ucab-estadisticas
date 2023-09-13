@@ -51,7 +51,7 @@ class MultipleTable extends Component
     {
         $average = $this->variable->frequencies()
         ->sum(DB::raw('score * value')) / $this->variable->frequencies()->sum('value');
-        return $average;
+        return number_format($average,2);
     }
 
     public function calcMaxOrMin($direction)
