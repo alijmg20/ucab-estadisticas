@@ -30,9 +30,9 @@
                                     <th scope="col" class="w-auto px-6 py-3">
                                         filas \ columnas
                                     </th>
-                                    @foreach ($variable2->data()->distinct('value')->pluck('value') as $value)
+                                    @foreach ($tableData['columnTotals'] as $column => $total)
                                         <th scope="col" class="w-auto px-6 py-3">
-                                            {{ $value ?: 'Sin respuesta' }}
+                                            {{ $column ?: 'Sin respuesta' }}
                                         </th>
                                     @endforeach
                                     <th scope="col" class="w-auto px-6 py-3">
@@ -41,19 +41,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tableData['tableData'] as $key => $values)
+                                @foreach ($tableData['tableData'] as $row => $rowData)
                                     <tr class="border-b border-gray-200 dark:border-gray-700">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                            {{ $key ?: 'Sin respuesta' }}
+                                            {{ $row ?: 'Sin respuesta' }}
                                         </th>
-                                        @foreach ($variable2->data()->distinct('value')->pluck('value') as $value)
+                                        @foreach ($tableData['columnTotals'] as $column => $total)
                                             <td class="px-6 py-4">
-                                                {{ isset($values[$value]) ? $values[$value] : 0 }}
+                                                {{ isset($rowData[$column]) ? $rowData[$column] : 0 }}
                                             </td>
                                         @endforeach
                                         <td class="px-6 py-4">
-                                            {{ isset($tableData['rowTotals'][$key]) ? $tableData['rowTotals'][$key] : 0 }}
+                                            {{ isset($tableData['rowTotals'][$row]) ? $tableData['rowTotals'][$row] : 0 }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,9 +62,9 @@
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                         Total Columna
                                     </th>
-                                    @foreach ($variable2->data()->distinct('value')->pluck('value') as $value)
+                                    @foreach ($tableData['columnTotals'] as $column => $total)
                                         <td class="px-6 py-4">
-                                            {{ isset($tableData['columnTotals'][$value]) ? $tableData['columnTotals'][$value] : 0 }}
+                                            {{ $total }}
                                         </td>
                                     @endforeach
                                     <td class="px-6 py-4">
@@ -74,6 +74,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
                     <div class="px-6 py-4">
                         <div

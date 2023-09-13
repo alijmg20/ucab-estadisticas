@@ -112,7 +112,7 @@ class VariableCorrelation extends Component
                 unset($rowData[""]);
             }
         }
-
+        // dd($tableData,$rowTotals,$columnTotals);
         return [
             'tableData' => $tableData,
             'rowTotals' => $rowTotals,
