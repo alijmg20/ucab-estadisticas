@@ -11,7 +11,7 @@
         </h1>
     </div>
     <div class="mt-4 container" id="content">
-        @if (count($variablesActive))
+        @if (count($variablesActive) || count($correlations))
             @foreach ($variablesActive as $key => $variableActive)
                 @switch($variableActive['variabletype_id'])
                     @case(1)
@@ -26,10 +26,10 @@
                         @livewire('graphics.checkbox.variable-checkbox', ['variable' => $variableActive['id']], key($variableActive['id']))
                     @break
                 @endswitch
-                    <div style="page-break-before: always;"></div>
+                <div style="page-break-before: always;"></div>
             @endforeach
             @if (count($correlations))
-                @foreach ($correlations as $correlation)
+                @foreach ($correlations as $key => $correlation)
                     @livewire('graphics.correlation.variable-correlation', ['correlation' => $correlation['id']], key($correlation['id']))
                     @if ($key < count($correlations) - 1)
                         <div style="page-break-before: always;"></div>
@@ -40,6 +40,7 @@
             <div style="display: none">@livewire('graphics.qualitatives.variable-qualitative', ['variable' => 0])</div>
             <div style="display: none">@livewire('graphics.multiple.graphic', ['variable' => 0])</div>
             <div style="display: none">@livewire('graphics.checkbox.variable-checkbox', ['variable' => 0])</div>
+            <div style="display: none">@livewire('graphics.correlation.variable-correlation', ['correlation' => 0])</div>
             <div class="container mt-4 mb-4">
                 <x-alert-loading-danger>
                     <x-slot name="title">Variables NO seleccionadas</x-slot>

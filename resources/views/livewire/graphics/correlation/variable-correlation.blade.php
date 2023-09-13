@@ -3,7 +3,7 @@
         class="border border-gray-300 mb-6 mt-4 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform sm:w-full">
         <div class="dark:text-gray-400 px-6 py-4 text-left text-xl w-full dark:bg-gray-800"><span>
                 @if ($correlation)
-                    {{ $correlation->name }}
+                    Correlación: {{ $correlation->name }}
                 @endif
                 <span></div>
         <div class="inline-block w-full">
@@ -12,20 +12,26 @@
                     <span class="mr-2 text-gray-700 dark:text-gray-400">Opciones:
                     </span>
                     @if ($correlation)
-                        <x-button wire:click='edit()'  wire:loading.attr='disabled' wire:target="edit"
-                         class="ml-2 bg-yellow-500 disabled:opacity-25">
+                        <x-button wire:click='edit()' wire:loading.attr='disabled' wire:target="edit"
+                            class="ml-2 bg-yellow-500 disabled:opacity-25">
                             editar
                         </x-button>
                         <x-button wire:click='delete()' wire:loading.attr='disabled' wire:target="delete"
-                         class="ml-2 bg-red-600 disabled:opacity-25">
+                            class="ml-2 bg-red-600 disabled:opacity-25">
                             eliminar
                         </x-button>
                     @endif
                 </div>
             </div>
+            <div id="comparison-chart-{{ $correlation->id }}" class="mb-4"></div>
+        </div>
+    </div>
+    <div style="page-break-before: always;"></div>
+    <div
+        class="border border-gray-300 mb-6 mt-4 bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform sm:w-full">
+        <div class="inline-block w-full">
             @if ($correlation)
                 <div>
-                    <div id="comparison-chart-{{$correlation->id}}" class="mb-4"></div>
                     <div class="text-center mb-4 w-full dark:bg-gray-800 dark:text-gray-400">Filas:
                         {{ $variable1->name }}</div>
                     <div class="text-center mb-4 w-full dark:bg-gray-800 dark:text-gray-400">Columnas:
@@ -123,7 +129,7 @@
                                         grado de libertad de X<sup>2</sup>(chi cuadrado)
                                     </p>
                                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                        {{$responsed['degreesOfFreedomChiSquare']}}
+                                        {{ $responsed['degreesOfFreedomChiSquare'] }}
                                     </p>
                                 </div>
                             </div>
@@ -160,7 +166,7 @@
                                 </div>
                                 <div>
                                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                        grado de libertad V de Cramer 
+                                        grado de libertad V de Cramer
                                     </p>
                                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                                         {{ $responsed['degreesOfFreedomCramersV'] }}
@@ -185,10 +191,10 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:load', function () {
-            Livewire.on('updateChartData', function (chartData) {
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('updateChartData', function(chartData) {
                 console.log(Object.keys(chartData.tableData));
-                Highcharts.chart('comparison-chart-'+chartData.correlation.id.toString(), {
+                Highcharts.chart('comparison-chart-' + chartData.correlation.id.toString(), {
                     chart: {
                         type: 'column'
                     },
@@ -218,5 +224,5 @@
             });
         });
     </script>
-    
+
 </div>

@@ -37,11 +37,13 @@ class VariableCorrelation extends Component
     public function delete()
     {
         $this->emit('correlationDelete', $this->correlation->id);
+        $this->generateComparisonChart();
     }
 
     public function edit()
     {
         $this->emitTo('graphics.correlation.correlation-modal', 'correlationEdit', $this->correlation->id);
+        $this->generateComparisonChart();
     }
 
     public function unionVariables()
