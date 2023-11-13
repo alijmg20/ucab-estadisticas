@@ -27,16 +27,11 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="flex bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col flex-1">
-            <main class="h-full">
-                <!-- Remove everything INSIDE this div to a really blank page -->
-                <div class="mx-auto">
-                    {{ $slot }}
-                </div>
+        <div class="min-h-screen dark:bg-gray-900">
+            <main>
+                {{ $slot }}
             </main>
         </div>
-    </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/init-alpine.js') }}"></script>

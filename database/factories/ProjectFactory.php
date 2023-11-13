@@ -34,10 +34,8 @@ class ProjectFactory extends Factory
             'name' => $name,
             'description' => $this->faker->paragraph(),
             'slug' => Str::slug($name),
-            // 'user_id' => User::all()->random()->id,
             'user_id' => 1,
             'line_id' => Line::all()->random()->id,
-            // 'cost' => $this->faker->randomFloat(2,0,100000),
             'status' => $this->faker->randomElement([2]),
             'date_end' => $this->faker->date(),
         ];

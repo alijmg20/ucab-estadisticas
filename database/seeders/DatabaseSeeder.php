@@ -32,11 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LineSeeder::class);
         $this->call(GraphictypeSeeder::class);
         $this->call(VariabletypeSeeder::class);
-        // Line::factory(3)->create();
         $this->call(ProjectSeeder::class);
-        // Variable::factory(500)->create();
-        // Data::factory(1000)->create();
-        // Information::factory(1000)->create();
         
     }
 }
