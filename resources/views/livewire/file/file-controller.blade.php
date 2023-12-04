@@ -17,7 +17,7 @@
                     }"
                     href="#">Información</a>
             </li>
-            <li wire:click="$set('content',2)" class="w-full">
+            {{-- <li wire:click="$set('content',2)" class="w-full">
                 <a x-on:click.prevent="activeTab = 2"
                     :class="{
                         'inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg active focus:outline-none dark:bg-gray-700 dark:text-white': activeTab ===
@@ -26,7 +26,7 @@
                             2
                     }"
                     href="#">Encuestas</a>
-            </li>
+            </li> --}}
             <li wire:click="$set('content',3)" class="w-full">
                 <a x-on:click.prevent="activeTab = 3"
                     :class="{
@@ -53,9 +53,9 @@
             <div x-show="activeTab === 1">
                 @livewire('project.project-edit', ['project' => $project->id])
             </div>
-            <div x-show="activeTab === 2">
+            {{-- <div x-show="activeTab === 2">
                 @livewire('quiz.quiz-controller', ['project' => $project->id])
-            </div>
+            </div> --}}
             <div class="mt-4 mb-4" x-show="activeTab === 3">
                 @include('livewire.file._partials.fileControllerTable')
             </div>

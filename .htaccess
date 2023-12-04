@@ -17,6 +17,7 @@ ErrorDocument 404 /404.html
 
 # Establecer la zona horaria del servidor
 SetEnv TZ America/Caracas
+
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php82” package as the default “PHP” programming language.
 <IfModule mime_module>

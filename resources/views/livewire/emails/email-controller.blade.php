@@ -86,19 +86,21 @@
                         </x-slot>
                         <x-slot name="body">
                             @if ($emails && count($emails) == 0)
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 text-center">
-                                    <div class="container mt-4 mb-4">
-                                        <x-alert-loading-danger>
-                                            <x-slot name="title">¡No tiene mensajes disponibles!</x-slot>
-                                            <x-slot name="subtitle">Los mensajes que los usuarios enviarán apareceran en esta ventana</x-slot>
-                                        </x-alert-loading-danger>
-                                    </div>
-                                </td>
-                            </tr>
-                        @elseif ($emails && count($emails))
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center">
+                                        <div class="container mt-4 mb-4">
+                                            <x-alert-loading-danger>
+                                                <x-slot name="title">¡No tiene mensajes disponibles!</x-slot>
+                                                <x-slot name="subtitle">Los mensajes que los usuarios enviarán
+                                                    apareceran en esta ventana</x-slot>
+                                            </x-alert-loading-danger>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @elseif ($emails && count($emails))
                                 @foreach ($emails as $item)
-                                <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <tr
+                                        class="text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="px-6 py-3 text-sm">
                                             {{ $item->id }}
                                         </td>
@@ -114,19 +116,20 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
                                                 @can('admin.emails.edit')
-                                                <button wire:click='$emitTo("emails.email-modal","edit",{{ $item->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="edit">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
+                                                    <button
+                                                        wire:click='$emitTo("emails.email-modal","edit",{{ $item->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="edit">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
                                                 @endcan
                                                 @can('admin.emails.destroy')
-                                                <button wire:click='$emit("emailDelete",{{ $item->id }})'
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                                @endcam
+                                                    <button wire:click='$emit("emailDelete",{{ $item->id }})'
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
@@ -180,6 +183,6 @@
                     }
                 })
             });
-        }); 
+        });
     </script>
 </div>

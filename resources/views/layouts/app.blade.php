@@ -39,7 +39,7 @@
                 {{ $slot }}
             </main>
             {{-- Seccion de footer --}}
-            <x-front.front-footer/>
+            {{-- <x-front.front-footer/> --}}
         </div>
 
         <script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

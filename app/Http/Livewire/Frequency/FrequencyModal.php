@@ -24,7 +24,7 @@ class FrequencyModal extends Component
 
     public function render()
     {
-        return view('livewire.Frequency.frequency-modal');
+        return view('livewire.frequency.frequency-modal');
     }
 
     public function save()

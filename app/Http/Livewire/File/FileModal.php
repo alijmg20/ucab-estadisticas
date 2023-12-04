@@ -94,13 +94,17 @@ class FileModal extends Component
     {
         $variables = [];
         foreach ($filaVariable->getCellIterator() as $celdaCabecera) {
-            $variables[] = Variable::create([
-                'name' => $celdaCabecera->getValue(),
-                'file_id' => $file->id,
-            ]);
+            $value = $celdaCabecera->getValue();
+            if ($value !== null) {
+                $variables[] = Variable::create([
+                    'name' => $value,
+                    'file_id' => $file->id,
+                ]);
+            }
         }
         return $variables;
     }
+    
 
     private function addRegisters($sheet, $file, $variables)
     {
@@ -109,28 +113,34 @@ class FileModal extends Component
             $datos = [];
             $i = 0;
             foreach ($row->getCellIterator() as $cell) {
-                $datos[$variables[$i]->id] = $cell->getValue();
+                if ($variables[$i]) { // Verifica si la variable no es nula
+                    $datos[$variables[$i]->id] = $cell->getValue();
+                }
                 $i++;
             }
-            $registro = new Register();
-            $registro->file_id = $file->id;
-            $registro->save();
-            $registers[] = $registro;
+            if (count($datos) > 0) { // Verifica que al menos una variable tenga un valor no nulo
+                $registro = new Register();
+                $registro->file_id = $file->id;
+                $registro->save();
+                $registers[] = $registro;
+            }
         }
         return $registers;
     }
-
+    
     private function addData($sheet, $variables, $registers)
     {
         $registersTotal = 0;
         foreach ($sheet->getRowIterator(2) as $column) {
             $countColumn = 0;
             foreach ($column->getCellIterator() as $cell) {
-                Data::create([
-                    'value' => $cell->getValue(),
-                    'variable_id' => $variables[$countColumn]->id,
-                    'register_id' => $registers[$registersTotal]->id,
-                ]);
+                if ($variables[$countColumn]) { // Verifica si la variable no es nula
+                    Data::create([
+                        'value' => $cell->getValue(),
+                        'variable_id' => $variables[$countColumn]->id,
+                        'register_id' => $registers[$registersTotal]->id,
+                    ]);
+                }
                 $countColumn++;
             }
             $registersTotal++;

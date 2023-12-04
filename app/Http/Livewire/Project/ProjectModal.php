@@ -10,6 +10,7 @@ use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 class ProjectModal extends Component
 {
     use WithFileUploads;
@@ -18,7 +19,7 @@ class ProjectModal extends Component
     public $lines,$searchUser = '';
 
     public $name, $description, 
-    $slug, $status = 1,$date_end = null,$ended = false,
+    $slug, $status = 1,$date_end,$ended = false,
     $line_id, $file,$users_id = [];
     public $user_id;
 
@@ -60,7 +61,6 @@ class ProjectModal extends Component
     public function edit($id)
     {
         $this->reset(['name','slug','description','status','line_id','file','users_id','project','date_end','ended']);
-        
         $this->project = $project = Project::find($id);
         $this->name = $project->name;
         $this->description = $project->description;
@@ -137,7 +137,6 @@ class ProjectModal extends Component
         
         $this->users_id[] = $this->user_id;
         $file = $this->file->store('projects');
-
         $project = Project::create([
             'name' => $this->name,
             'description' => $this->description,
@@ -145,7 +144,7 @@ class ProjectModal extends Component
             'status' => $this->status,
             'user_id' => $this->user_id,
             'line_id' => $this->line_id,
-            'date_end' => date("Y-m-d 00:00:00", strtotime( $this->date_end)),
+            'date_end' => $this->date_end ? date("Y-m-d 00:00:00", strtotime( $this->date_end)) : Carbon::now()->format("Y-m-d 00:00:00"),
             'ended' => $this->ended == 2 ? '2' : '1',
         ]);
         $project->slug = Str::slug($project->id.' '.$this->name);
